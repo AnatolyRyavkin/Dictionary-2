@@ -10,7 +10,7 @@
 
 static NSString* identifaerHeader = @"IdentifaerHeader";
 NSString* const identifaerCell = @"identifaerCell";
-static NSInteger rectObjects = 5;
+static NSInteger rectObjects = 4;
 NSString* const keyOffset = @"keyOffset";
 NSString* const keyStartingPoint = @"keyStartingPoint";
 NSInteger const offsetConst = 1000;
@@ -63,6 +63,13 @@ NSInteger const offsetConst = 1000;
 
 #pragma mark - New metod
 
+-(void)loadForInputPoint:(NSInteger)inputPoint{
+    NSDictionary*dictionary = [self prepareLoadTableAtPointInput:inputPoint];
+    NSInteger offsetIntrestic = [[dictionary objectForKey:keyOffset] integerValue];
+    NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
+    [self loadTableAroundingForPoint:inputPoint atOffset:offsetIntrestic atStartingPoint:startingPoint];
+}
+
 -(void)loadTableAroundingForPoint:(NSInteger) pointInput atOffset:(NSInteger)offset atStartingPoint:(NSInteger)startingPoint{
         self.arrayVisible = [NSArray arrayWithArray:[self.manager.mainArray subarrayWithRange:NSMakeRange(startingPoint, offset)]];
         [self.tableView reloadData];
@@ -84,14 +91,16 @@ NSInteger const offsetConst = 1000;
 
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-
          self.numberObject = [searchText integerValue];
-         if(self.numberObject >=0 && self.numberObject <=38000){
+         if(self.numberObject >=0 && self.numberObject <=37793){
+             /*
              NSDictionary*dictionary = [self prepareLoadTableAtPointInput:self.numberObject];
              NSInteger offsetIntrestic = [[dictionary objectForKey:keyOffset] integerValue];
              NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
              [self loadTableAroundingForPoint:self.numberObject atOffset:offsetIntrestic atStartingPoint:startingPoint];
-         }
+              */
+             [self loadForInputPoint:self.numberObject];
+        }
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
@@ -270,19 +279,25 @@ NSInteger const offsetConst = 1000;
         if(rectRealDown == rectObjects){
             [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
+            /*
             NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
             NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
             NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
             [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
+            */
+            [self loadForInputPoint:pointInput];
         }
         if(countVisibleFirst == rectObjects && self.pointZiro > 0 ){
             [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             self.flagGoUp = YES;
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
+            /*
             NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
             NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
             NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
             [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
+            */
+            [self loadForInputPoint:pointInput];
         }
         self.flagGoUp = NO;
 }
