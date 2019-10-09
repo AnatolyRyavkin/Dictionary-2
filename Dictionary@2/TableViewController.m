@@ -10,10 +10,10 @@
 
 static NSString* identifaerHeader = @"IdentifaerHeader";
 NSString* const identifaerCell = @"identifaerCell";
-static NSInteger rectObjects = 30;
+static NSInteger rectObjects = 5;
 NSString* const keyOffset = @"keyOffset";
 NSString* const keyStartingPoint = @"keyStartingPoint";
-NSInteger const offsetConst = 80;
+NSInteger const offsetConst = 1000;
 
 @implementation UITableView (ReloadData)
 
@@ -43,26 +43,19 @@ NSInteger const offsetConst = 80;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    //self.flagOneScroll = YES;
 }
 
 
 -(id)initWithStyle:(UITableViewStyle)style{
     self = [super initWithStyle:style];
     if(self){
-        //CGRect frame = self.tableView.frame;
-        //self.tableView.frame = CGRectOffset(frame, 100, 100);
         UIBarButtonItem*barButtonEdit = [[UIBarButtonItem alloc]initWithTitle:@"edit" style:UIBarButtonItemStylePlain target:self action:@selector(beginEdit)];
         UIBarButtonItem*barDuttonSearch = [[UIBarButtonItem alloc]initWithTitle:@"SearchShow" style:UIBarButtonItemStylePlain target:self action:@selector(actionSearth:)];
         [self.navigationItem setRightBarButtonItems:@[barButtonEdit,barDuttonSearch]];
         self.barDuttonSearch = barDuttonSearch;
-        //self.flagOneScroll = YES;
-        //self.flagSearch = NO;
         self.numberObject = 0;
-        //self.offset = 1000;
         self.pointZiro = 0;
         self.flagGoUp = NO;
-        //self.arrayVisible = [NSArray arrayWithArray:[self.manager.mainArray subarrayWithRange:NSMakeRange(0, 1000)]];
         [self loadTableAroundingForPoint:0 atOffset:offsetConst atStartingPoint:0];
     }
     return self;
@@ -78,7 +71,6 @@ NSInteger const offsetConst = 80;
     else
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:pointInput-startingPoint] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     [self.tableView reloadData];
-    //self.flagOneScroll = YES;
 };
 
 -(NSDictionary*)prepareLoadTableAtPointInput:(NSInteger)pointInput{
@@ -96,25 +88,14 @@ NSInteger const offsetConst = 80;
          self.numberObject = [searchText integerValue];
          if(self.numberObject >=0 && self.numberObject <=38000){
              NSDictionary*dictionary = [self prepareLoadTableAtPointInput:self.numberObject];
-             NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
+             NSInteger offsetIntrestic = [[dictionary objectForKey:keyOffset] integerValue];
              NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
-             [self loadTableAroundingForPoint:self.numberObject atOffset:offset atStartingPoint:startingPoint];
-             /*
-             self.pointZiro = 100;
-             if(self.numberObject - self.pointZiro < 0)
-                 self.pointZiro = self.numberObject;
-             self.arrayVisible = [NSArray arrayWithArray:[self.manager.mainArray subarrayWithRange:NSMakeRange(self.numberObject-self.pointZiro,self.offset)]];
-             self.flagSearch = YES;
-             [self.tableView reloadData];
-             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:self.pointZiro] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-             [self.tableView reloadData];*/
+             [self loadTableAroundingForPoint:self.numberObject atOffset:offsetIntrestic atStartingPoint:startingPoint];
          }
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     searchBar.placeholder = @"input number at object";
-    //searchBar.prompt =  @"search";
-    //searchBar.barTintColor = [[UIColor purpleColor]colorWithAlphaComponent:0.1];
     [searchBar setShowsCancelButton:YES animated:YES];
 }
 
@@ -130,7 +111,6 @@ NSInteger const offsetConst = 80;
 -(void)actionSearth:(UIBarButtonItem*)sender{
     if([sender.title isEqual: @"SearchShow"]){
         sender.title = @"SearchDown";
-        //sender.tintColor = [[UIColor purpleColor]colorWithAlphaComponent:0.2];
         UISearchBar *searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(200, 75, 400, 27)];
         searchBar.delegate = self;
         [[self.tableView superview] addSubview:searchBar];
@@ -284,12 +264,11 @@ NSInteger const offsetConst = 80;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.textFieldEditRow removeFromSuperview];
-    //if(self.flagOneScroll == YES){
         NSInteger countVisibleFirst = self.tableView.indexPathsForVisibleRows.firstObject.section;
         NSLog(@"first = %ld", (long)countVisibleFirst);
         NSInteger rectRealDown = offsetConst - countVisibleFirst;
         if(rectRealDown == rectObjects){
-            //self.flagOneScroll = NO;
+            [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
             NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
             NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
@@ -297,7 +276,7 @@ NSInteger const offsetConst = 80;
             [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
         }
         if(countVisibleFirst == rectObjects && self.pointZiro > 0 ){
-            //self.flagOneScroll = NO;
+            [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             self.flagGoUp = YES;
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
             NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
@@ -306,23 +285,6 @@ NSInteger const offsetConst = 80;
             [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
         }
         self.flagGoUp = NO;
-    //}
-
-/*
-    NSInteger countVisibleFirst = self.tableView.indexPathsForVisibleRows.firstObject.section;
-    if(countVisibleFirst == 800){
-        if(self.flagOneScroll == YES){
-            self.pointZiro = self.pointZiro + 600;
-            self.arrayVisible = [NSArray arrayWithArray:[self.manager.mainArray subarrayWithRange:NSMakeRange(self.numberObject+self.pointZiro, self.offset)]];
-            [self.tableView reloadData:nil];
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:200] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            [self.tableView reloadData:nil];
-            self.flagOneScroll = NO;
-            self.flagSearch = NO;
-        }
-    }else
-        self.flagOneScroll = YES;
-     */
 }
 
 #pragma mark - textFieldDelegate
