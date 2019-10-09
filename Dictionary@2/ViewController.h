@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TableViewController.h"
 
 @interface ViewController : UIViewController
+
+@property (nonatomic) AVMainManager*manager;
+
+-(void)inputTable;
 
 
 @end

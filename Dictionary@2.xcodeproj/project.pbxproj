@@ -13,6 +13,8 @@
 		FD2386A72340E3DD001A7B18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A62340E3DD001A7B18 /* Assets.xcassets */; };
 		FD2386AA2340E3DD001A7B18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */; };
 		FD2386AD2340E3DD001A7B18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386AC2340E3DD001A7B18 /* main.m */; };
+		FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6A23436C8E00DC80F5 /* TableViewController.m */; };
+		FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		FD2386A92340E3DD001A7B18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD2386AB2340E3DD001A7B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD2386AC2340E3DD001A7B18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FDA49D6923436C8E00DC80F5 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		FDA49D6A23436C8E00DC80F5 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMainManager.h; sourceTree = "<group>"; };
+		FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVMainManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,10 @@
 				FD23869E2340E3D9001A7B18 /* AppDelegate.m */,
 				FD2386A02340E3D9001A7B18 /* ViewController.h */,
 				FD2386A12340E3D9001A7B18 /* ViewController.m */,
+				FDA49D6923436C8E00DC80F5 /* TableViewController.h */,
+				FDA49D6A23436C8E00DC80F5 /* TableViewController.m */,
+				FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */,
+				FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */,
 				FD2386A32340E3D9001A7B18 /* Main.storyboard */,
 				FD2386A62340E3DD001A7B18 /* Assets.xcassets */,
 				FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */,
@@ -143,7 +153,9 @@
 			files = (
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
+				FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */,
 				FD23869F2340E3D9001A7B18 /* AppDelegate.m in Sources */,
+				FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
