@@ -14,18 +14,22 @@
 
 @property (nonatomic) AVMainManager*manager;
 @property NSArray*arrayVisible;
-@property NSInteger offsetDown;
-@property NSInteger offsetUp;
+//@property NSInteger offsetDown;
+//@property NSInteger offsetUp;
 @property UITextField *textFieldEditRow;
 @property (weak) UITableViewCell* cellEdit;
 @property NSIndexPath*indexPathForEditRow;
-@property UISearchBar*searchBar;
+@property (weak) UISearchBar*searchBar;
 @property UIBarButtonItem*barDuttonSearch;
 @property NSInteger numberObject;
-@property BOOL flagOneScroll;
+//@property BOOL flagOneScroll;
 @property NSInteger offset;
 @property NSInteger pointZiro;
-@property BOOL flagSearch;
+//@property BOOL flagSearch;
+@property BOOL flagGoUp;
+
+-(void)loadTableAroundingForPoint:(NSInteger) pointInput atOffset:(NSInteger)offset atStartingPoint:(NSInteger)startingPoint;
+-(NSDictionary*)prepareLoadTableAtPointInput:(NSInteger)pointInput;
 
 @end
 
