@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD15C426234F4E9100F3B69C /* AVButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD15C425234F4E9100F3B69C /* AVButton.m */; };
+		FD18379F235DA72700334EDF /* arrayCommit.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD18379E235DA72600334EDF /* arrayCommit.txt */; };
 		FD23869F2340E3D9001A7B18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD23869E2340E3D9001A7B18 /* AppDelegate.m */; };
 		FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386A12340E3D9001A7B18 /* ViewController.m */; };
 		FD2386A52340E3D9001A7B18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A32340E3D9001A7B18 /* Main.storyboard */; };
 		FD2386A72340E3DD001A7B18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A62340E3DD001A7B18 /* Assets.xcassets */; };
 		FD2386AA2340E3DD001A7B18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */; };
 		FD2386AD2340E3DD001A7B18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386AC2340E3DD001A7B18 /* main.m */; };
+		FD696BA923543C1A0032423F /* savedStringEndingData.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD696BA823543C1A0032423F /* savedStringEndingData.txt */; };
 		FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6A23436C8E00DC80F5 /* TableViewController.m */; };
 		FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD15C424234F4E9100F3B69C /* AVButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVButton.h; sourceTree = "<group>"; };
+		FD15C425234F4E9100F3B69C /* AVButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVButton.m; sourceTree = "<group>"; };
+		FD18379E235DA72600334EDF /* arrayCommit.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arrayCommit.txt; sourceTree = "<group>"; };
 		FD23869A2340E3D9001A7B18 /* Dictionary@2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dictionary@2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD23869D2340E3D9001A7B18 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FD23869E2340E3D9001A7B18 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -28,6 +34,7 @@
 		FD2386A92340E3DD001A7B18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD2386AB2340E3DD001A7B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD2386AC2340E3DD001A7B18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FD696BA823543C1A0032423F /* savedStringEndingData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = savedStringEndingData.txt; sourceTree = "<group>"; };
 		FDA49D6923436C8E00DC80F5 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		FDA49D6A23436C8E00DC80F5 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMainManager.h; sourceTree = "<group>"; };
@@ -64,8 +71,9 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
-				FD23869D2340E3D9001A7B18 /* AppDelegate.h */,
-				FD23869E2340E3D9001A7B18 /* AppDelegate.m */,
+				FD18379E235DA72600334EDF /* arrayCommit.txt */,
+				FD15C424234F4E9100F3B69C /* AVButton.h */,
+				FD15C425234F4E9100F3B69C /* AVButton.m */,
 				FD2386A02340E3D9001A7B18 /* ViewController.h */,
 				FD2386A12340E3D9001A7B18 /* ViewController.m */,
 				FDA49D6923436C8E00DC80F5 /* TableViewController.h */,
@@ -73,10 +81,13 @@
 				FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */,
 				FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */,
 				FD2386A32340E3D9001A7B18 /* Main.storyboard */,
+				FD23869D2340E3D9001A7B18 /* AppDelegate.h */,
+				FD23869E2340E3D9001A7B18 /* AppDelegate.m */,
 				FD2386A62340E3DD001A7B18 /* Assets.xcassets */,
 				FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */,
 				FD2386AB2340E3DD001A7B18 /* Info.plist */,
 				FD2386AC2340E3DD001A7B18 /* main.m */,
+				FD696BA823543C1A0032423F /* savedStringEndingData.txt */,
 			);
 			path = "Dictionary@2";
 			sourceTree = "<group>";
@@ -138,6 +149,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD696BA923543C1A0032423F /* savedStringEndingData.txt in Resources */,
+				FD18379F235DA72700334EDF /* arrayCommit.txt in Resources */,
 				FD2386AA2340E3DD001A7B18 /* LaunchScreen.storyboard in Resources */,
 				FD2386A72340E3DD001A7B18 /* Assets.xcassets in Resources */,
 				FD2386A52340E3D9001A7B18 /* Main.storyboard in Resources */,
@@ -151,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD15C426234F4E9100F3B69C /* AVButton.m in Sources */,
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
 				FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */,

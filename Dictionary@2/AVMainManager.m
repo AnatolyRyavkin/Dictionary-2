@@ -9,16 +9,24 @@
 #import "AVMainManager.h"
 #import <UIKit/UIKit.h>
 
+
+
 @implementation AVMainManager
+
 
 @synthesize mainArray = _mainArray;
 
 +(id)managerData{
+        //for real devace ->
+        //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
+
     static AVMainManager*manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[AVMainManager alloc]init];
-        manager.mainArray = [[NSArray alloc]initWithContentsOfFile:@"/Users/ryavkinto/Documents/Objective C/1/savedStringEndingData.txt"];
+        NSString*nameFileForArrayWork = @"/Users/ryavkinto/Documents/Objective C/Dictionary@2/Dictionary@2/arrayCommit.txt";
+        manager.mainArray = [[NSArray alloc]initWithContentsOfFile:nameFileForArrayWork];
+        //manager.mainArray = [[NSArray alloc]initWithContentsOfFile:nameTextFileInBandle];
     });
     return manager;
 }

@@ -5,6 +5,7 @@
 //  Created by Anatoly Ryavkin on 01/10/2019.
 //  Copyright © 2019 AnatolyRyavkin. All rights reserved.
 //
+//nameTextFileInBandle
 
 #import "TableViewController.h"
 
@@ -13,9 +14,12 @@ NSString* const identifaerCell = @"identifaerCell";
 static NSInteger rectObjects = 4;
 NSString* const keyOffset = @"keyOffset";
 NSString* const keyStartingPoint = @"keyStartingPoint";
-NSInteger const offsetConst = 1000;
+NSInteger const offsetConst = 100;
+
 
 @implementation UITableView (ReloadData)
+
+
 
 -(void)reloadData:(UITextField*)textField{
     if(textField)
@@ -51,7 +55,11 @@ NSInteger const offsetConst = 1000;
     if(self){
         UIBarButtonItem*barButtonEdit = [[UIBarButtonItem alloc]initWithTitle:@"edit" style:UIBarButtonItemStylePlain target:self action:@selector(beginEdit)];
         UIBarButtonItem*barDuttonSearch = [[UIBarButtonItem alloc]initWithTitle:@"SearchShow" style:UIBarButtonItemStylePlain target:self action:@selector(actionSearth:)];
-        [self.navigationItem setRightBarButtonItems:@[barButtonEdit,barDuttonSearch]];
+        UIBarButtonItem*barBattonSaveArray = [[UIBarButtonItem alloc]initWithTitle:@"SaveArrayToFile" style:UIBarButtonItemStylePlain target:self action:@selector(saveArray)];
+        barBattonSaveArray.tintColor = [UIColor redColor];
+        UIBarButtonItem*empty = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+        empty.width = 100;
+        [self.navigationItem setRightBarButtonItems:@[barButtonEdit,barDuttonSearch,empty,barBattonSaveArray]];
         self.barDuttonSearch = barDuttonSearch;
         self.numberObject = 0;
         self.pointZiro = 0;
@@ -59,6 +67,23 @@ NSInteger const offsetConst = 1000;
         [self loadTableAroundingForPoint:0 atOffset:offsetConst atStartingPoint:0];
     }
     return self;
+}
+
+-(void)saveArray{
+    NSError*errorData = nil;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:self.manager.mainArray format:NSPropertyListXMLFormat_v1_0 options:0 error:&errorData];
+    if(errorData!=nil)
+        NSLog(@"error :%@",[errorData description]);
+
+    NSString* nameFileForArrayWork = @"/Users/ryavkinto/Documents/Objective C/Dictionary@2/Dictionary@2/arrayCommit.txt";
+
+//for real devace ->
+    //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
+
+    [[NSFileManager defaultManager] createFileAtPath:nameFileForArrayWork contents:nil attributes:nil];
+
+    [data writeToFile:nameFileForArrayWork atomically:YES];
+
 }
 
 #pragma mark - New metod
@@ -93,12 +118,6 @@ NSInteger const offsetConst = 1000;
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
          self.numberObject = [searchText integerValue];
          if(self.numberObject >=0 && self.numberObject <=37793){
-             /*
-             NSDictionary*dictionary = [self prepareLoadTableAtPointInput:self.numberObject];
-             NSInteger offsetIntrestic = [[dictionary objectForKey:keyOffset] integerValue];
-             NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
-             [self loadTableAroundingForPoint:self.numberObject atOffset:offsetIntrestic atStartingPoint:startingPoint];
-              */
              [self loadForInputPoint:self.numberObject];
         }
 }
@@ -201,7 +220,35 @@ NSInteger const offsetConst = 1000;
     myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
     myLabel.backgroundColor=[[UIColor grayColor] colorWithAlphaComponent:0.2];
     [headerView addSubview:myLabel];
+    NSInteger x = CGRectGetMaxX(self.tableView.frame);
+    AVButton*buttonAddRow = [[AVButton alloc]initWithFrame:CGRectMake(x-100, 5, 90, 27)];
+    [buttonAddRow setTitle:@"addRow" forState:UIControlStateNormal];
+    [buttonAddRow setTintColor: [UIColor blueColor]];
+    buttonAddRow.backgroundColor = [[UIColor orangeColor]colorWithAlphaComponent:0.7];
+    [headerView addSubview:buttonAddRow];
+    [buttonAddRow addTarget:self action:@selector(addRow:) forControlEvents:UIControlEventTouchDown];
+    buttonAddRow.section = section;
     return headerView;
+}
+
+
+-(void)addRow:(AVButton*)button{
+
+    NSMutableArray*arrVisTemp = [NSMutableArray arrayWithArray:self.arrayVisible];
+    NSMutableArray*arrTemp = [NSMutableArray arrayWithArray:arrVisTemp[button.section]];
+    [arrTemp insertObject:@"" atIndex:0];
+    [arrVisTemp replaceObjectAtIndex:button.section withObject:arrTemp];
+    self.arrayVisible = [NSArray arrayWithArray:arrVisTemp];
+
+    NSMutableArray*arrayTempMain = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
+    NSMutableArray*arrayWordsTempAtMain = [NSMutableArray arrayWithArray:arrayTempMain[button.section + self.pointZiro]];
+    [arrayWordsTempAtMain insertObject:@"" atIndex:0];
+    [arrayTempMain replaceObjectAtIndex:button.section+self.pointZiro withObject:arrayWordsTempAtMain];
+    self.manager.mainArray = arrayTempMain;
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:button.section]] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
+
 }
 
 
@@ -221,6 +268,8 @@ NSInteger const offsetConst = 1000;
         CGRect rect = cell.frame;
 
         self.textFieldEditRow = [[UITextField alloc]initWithFrame:rect];
+
+        self.textFieldEditRow.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
         UIFont*font = [UIFont systemFontOfSize:22];
         [self.textFieldEditRow setFont:font];
@@ -249,17 +298,25 @@ NSInteger const offsetConst = 1000;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
+        NSLog(@"indexPath = %@  pointZero = %li", indexPath,self.pointZiro);
+
+        
         NSMutableArray*arrVisTemp = [NSMutableArray arrayWithArray:self.arrayVisible];
         NSMutableArray*arrTemp = [NSMutableArray arrayWithArray:arrVisTemp[indexPath.section]];
         [arrTemp removeObjectAtIndex:indexPath.row];
         [arrVisTemp replaceObjectAtIndex:indexPath.section withObject:arrTemp];
         self.arrayVisible = [NSArray arrayWithArray:arrVisTemp];
+
+        NSMutableArray*arrayTempMain = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
+        NSMutableArray*arrayWordsTempAtMain = [NSMutableArray arrayWithArray:arrayTempMain[indexPath.section + self.pointZiro]];
+        [arrayWordsTempAtMain removeObjectAtIndex:indexPath.row];
+        [arrayTempMain replaceObjectAtIndex:indexPath.section+self.pointZiro withObject:arrayWordsTempAtMain];
+        self.manager.mainArray = arrayTempMain;
         [tableView beginUpdates];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
         [tableView endUpdates];
-
-
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+    }else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        
 
     }
 }
@@ -274,29 +331,16 @@ NSInteger const offsetConst = 1000;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.textFieldEditRow removeFromSuperview];
         NSInteger countVisibleFirst = self.tableView.indexPathsForVisibleRows.firstObject.section;
-        NSLog(@"first = %ld", (long)countVisibleFirst);
         NSInteger rectRealDown = offsetConst - countVisibleFirst;
         if(rectRealDown == rectObjects){
             [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
-            /*
-            NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
-            NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
-            NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
-            [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
-            */
             [self loadForInputPoint:pointInput];
         }
         if(countVisibleFirst == rectObjects && self.pointZiro > 0 ){
             [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
             self.flagGoUp = YES;
             NSInteger pointInput = self.pointZiro + countVisibleFirst;
-            /*
-            NSDictionary*dictionary = [self prepareLoadTableAtPointInput:pointInput];
-            NSInteger offset = [[dictionary objectForKey:keyOffset] integerValue];
-            NSInteger startingPoint = [[dictionary objectForKey:keyStartingPoint] integerValue];
-            [self loadTableAroundingForPoint:pointInput atOffset:offset atStartingPoint:startingPoint];
-            */
             [self loadForInputPoint:pointInput];
         }
         self.flagGoUp = NO;
@@ -340,6 +384,10 @@ NSInteger const offsetConst = 1000;
 
 
     [textField resignFirstResponder];
+
+    UITableViewCell*cell = [self.tableView cellForRowAtIndexPath:self.indexPathForEditRow];
+    [cell setSelected:NO];
+
     [self.tableView reloadData:textField];
     return YES;
 }

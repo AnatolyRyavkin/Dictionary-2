@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AVMainManager.h"
+#import "AVButton.h"
 
 
 @interface TableViewController : UITableViewController<UITableViewDelegate,UITextFieldDelegate,UISearchBarDelegate>
@@ -26,6 +27,7 @@
 
 -(void)loadTableAroundingForPoint:(NSInteger) pointInput atOffset:(NSInteger)offset atStartingPoint:(NSInteger)startingPoint;
 -(NSDictionary*)prepareLoadTableAtPointInput:(NSInteger)pointInput;
+-(void)saveArray;
 
 @end
 
