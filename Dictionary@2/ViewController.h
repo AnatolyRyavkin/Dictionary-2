@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "TableViewController.h"
 
+typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, NSArray *arrayMain);
+
 @interface ViewController : UIViewController
+
+@property BlockExecution block;
 
 @property (nonatomic) AVMainManager*manager;
 

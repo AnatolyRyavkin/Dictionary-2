@@ -12,6 +12,7 @@
 @property NSMutableArray*arrayEnObjects;
 @end
 
+
 @implementation ViewController
 
 @synthesize manager = _manager;
@@ -39,17 +40,82 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSArray*mainArray = [[NSArray alloc]initWithArray:self.manager.mainArray];
-        NSMutableArray*mainArrayMut = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
+    __weak ViewController*weakSelf = self;
 
-    [self array:self.manager.mainArray block: ^(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) {
+    NSMutableArray*mainArrayMut = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
 
+    self.block = ^(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) {
+        BOOL firstIn = YES;
+        for(int k = 0; k < string.length; k++){
 
+            unichar simbol = [string characterAtIndex:k];
+            int simInt = [string characterAtIndex:k];
+            NSString*strSimbol = [NSString stringWithCharacters:&simbol length:1];
 
-    }];
+            unichar firstSimbol = [string characterAtIndex:0];
+            int firstSimInt = [string characterAtIndex:0];
+            NSString*strFirstSimbol = [NSString stringWithCharacters:&firstSimbol length:1];
+
+            unichar lastSimbol = [string characterAtIndex:string.length-1];
+            int lastSimInt = [string characterAtIndex:string.length-1];
+            NSString*strLastSimbol = [NSString stringWithCharacters:&lastSimbol length:1];
+
+            if(firstIn && [strSimbol isEqualToString:@" "] && ![strFirstSimbol isEqualToString:@"["] && ![strFirstSimbol isEqualToString:@"("]
+               && ![strLastSimbol isEqualToString:@")"] ){
+
+                //разделить по пробелам
+                
+
+                firstIn = NO;
+                NSLog(@"object j = %d  i = %d, string = %@",j,i,string);
+                //[weakSelf printArrayObject:array];
+                NSLog(@"");
+            }
+        }
+    };
+
+   [self array:self.manager.mainArray block: self.block];
 
     //self.manager.mainArray = [NSArray arrayWithArray:mainArrayMut];
 }
+
+//if(firstIn && [strFirstSimbol isEqualToString:@"["] && i == 2 && ((NSString*)array[0]).length + ((NSString*)array[1]).length > string.length){
+//    firstIn = NO;
+    //        if(i==0 && ![string isEqualToString:@""]){
+    //            unichar simbol = [string characterAtIndex:0];
+    //            int simInt = [string characterAtIndex:0];
+    //            NSString*strSimbol = [NSString stringWithCharacters:&simbol length:1];
+    //
+    //            unichar simbolNext;
+    //            int simIntNext;
+    //            NSString*strSimbolNext;
+    //
+    //            if(1 < string.length){
+    //                simbolNext = [string characterAtIndex:1];
+    //                simIntNext = [string characterAtIndex:1];
+    //                strSimbolNext = [NSString stringWithCharacters:&simbolNext length:1];
+    //            }
+    //
+    //            if([strSimbol isEqualToString:@"["]  && ![strSimbolNext isEqualToString:@"■"]){
+    //                NSMutableArray*arrayMut = [NSMutableArray arrayWithArray:mainArrayMut[j-1]];
+    //                [arrayMut addObjectsFromArray:array];
+    //                mainArrayMut[j-1] = [NSArray arrayWithArray:arrayMut];
+    //                [mainArrayMut replaceObjectAtIndex:j withObject:[NSArray new]];
+    //
+    //                //self.manager.mainArray = [NSArray arrayWithArray:mainArrayMut];
+    //
+    //                NSLog(@"object j = %d  i = %d, string = %@",j,i,string);
+    //
+    //                NSLog(@" [self printArrayObject:arrayMain[j-1]]");
+    //                [self printArrayObject:mainArrayMut[j-1]];
+    //                NSLog(@" [self printArrayObject:arrayMain[j]]");
+    //                [self printArrayObject:mainArrayMut[j]];
+    //                NSLog(@" [self printArrayObject:array");
+    //                [self printArrayObject:array];
+    //                NSLog(@"");
+    //            }
+    //        }
+
 
 
     //                                    BOOL firstIn = YES;
@@ -271,8 +337,8 @@
 }
 
 
--(void)array:(NSArray*)arrayMain block: (void(^)(NSString*string,NSArray*array,int i,int j,NSArray*arrayMain)) block{
-
+//-(void)array:(NSArray*)arrayMain block: (void(^)(NSString*string,NSArray*array,int i,int j,NSArray*arrayMain)) block{
+-(void)array:(NSArray*)arrayMain block: (BlockExecution) block {
     int j = 0;
     for(NSArray*array in arrayMain){
         int i = 0;
