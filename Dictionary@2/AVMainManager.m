@@ -18,7 +18,7 @@
 
 +(id)managerData{
         //for real devace ->
-        //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
+    //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
 
     static AVMainManager*manager = nil;
     static dispatch_once_t onceToken;
@@ -26,7 +26,10 @@
         manager = [[AVMainManager alloc]init];
         NSString*nameFileForArrayWork = @"/Users/ryavkinto/Documents/Objective C/Dictionary@2/Dictionary@2/arrayCommit.txt";
         manager.mainArray = [[NSArray alloc]initWithContentsOfFile:nameFileForArrayWork];
+
         //manager.mainArray = [[NSArray alloc]initWithContentsOfFile:nameTextFileInBandle];
+
+        manager.arrayObjectWords = [[NSArray alloc]init];
     });
     return manager;
 }

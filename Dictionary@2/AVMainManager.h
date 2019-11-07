@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AVEnglWord.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,9 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic) NSArray*mainArray;
 
+@property NSArray<AVEnglWord*>* arrayObjectWords;
+
 +(id)managerData;
 
 -(void)removeStringAtIndexPath:(NSIndexPath*)indexPath;
+
+
 
 @end;
 

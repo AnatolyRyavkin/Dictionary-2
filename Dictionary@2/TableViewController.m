@@ -173,18 +173,24 @@ NSInteger const offsetConst = 100;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
+    if(section==51)
+        NSLog(@"");
+
     NSArray*arrTemp = (NSArray*)self.arrayVisible[section];
     NSInteger num = arrTemp.count;
     return num;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([indexPath isEqual:[NSIndexPath indexPathForRow:6 inSection:51]])
+        NSLog(@"");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifaerCell];
     if(!cell)
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifaerCell];
     UIFont*font = [UIFont systemFontOfSize:22];
     cell.textLabel.font = font;
-    cell.textLabel.text = [(NSArray*)self.self.arrayVisible[indexPath.section] objectAtIndex:indexPath.row];
+    //cell.textLabel.text = [(NSArray*)self.self.arrayVisible[indexPath.section] objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.arrayVisible[indexPath.section] objectAtIndex:indexPath.row];
     cell.contentView.backgroundColor = [[UIColor greenColor]colorWithAlphaComponent:0.01];
     return cell;
 }
@@ -376,11 +382,11 @@ NSInteger const offsetConst = 100;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSString*string = self.cellEdit.textLabel.text;
 
-    NSLog(@"str1 = %@",self.manager.mainArray[0][0]);
+    //NSLog(@"str1 = %@",self.manager.mainArray[0][0]);
 
     self.arrayVisible[self.indexPathForEditRow.section][self.indexPathForEditRow.row] = string;  ///!!!!!!! mutate main
 
-    NSLog(@"str1 = %@",self.manager.mainArray[0][0]);
+    //NSLog(@"str1 = %@",self.manager.mainArray[0][0]);
 
 
     [textField resignFirstResponder];

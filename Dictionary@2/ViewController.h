@@ -17,6 +17,10 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 @property (nonatomic) AVMainManager*manager;
 
+@property BOOL flagName;
+
+@property (nonatomic) AVMeaningShortWords* sharedMeaningShortWords;
+
 -(void)inputTable;
 
 
