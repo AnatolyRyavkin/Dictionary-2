@@ -43,10 +43,12 @@ typedef enum{
 
 @property NSArray* arrayShortRusProperty;
 @property NSArray* arrayLongRusProperty;
+
 @property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongProperty;
 
 @property NSArray* arrayShortRusReduct;
 @property NSArray* arrayLongRusReduct;
+
 @property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongReduct;
 
 @property NSArray*arrayEngPredlog;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD1236D3237997B200F23E56 /* AVExample.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1236D2237997B200F23E56 /* AVExample.m */; };
 		FD1271982369BA1200C2B8A4 /* AVEnglWord.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1271972369BA1200C2B8A4 /* AVEnglWord.m */; };
 		FD12719B236C289700C2B8A4 /* AVMeaningShortWords.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12719A236C289700C2B8A4 /* AVMeaningShortWords.m */; };
 		FD15C426234F4E9100F3B69C /* AVButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD15C425234F4E9100F3B69C /* AVButton.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD1236D1237997B200F23E56 /* AVExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVExample.h; sourceTree = "<group>"; };
+		FD1236D2237997B200F23E56 /* AVExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVExample.m; sourceTree = "<group>"; };
 		FD1271962369BA1200C2B8A4 /* AVEnglWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVEnglWord.h; sourceTree = "<group>"; };
 		FD1271972369BA1200C2B8A4 /* AVEnglWord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVEnglWord.m; sourceTree = "<group>"; };
 		FD127199236C289700C2B8A4 /* AVMeaningShortWords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMeaningShortWords.h; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 				FD2386A12340E3D9001A7B18 /* ViewController.m */,
 				FD1271962369BA1200C2B8A4 /* AVEnglWord.h */,
 				FD1271972369BA1200C2B8A4 /* AVEnglWord.m */,
+				FD1236D1237997B200F23E56 /* AVExample.h */,
+				FD1236D2237997B200F23E56 /* AVExample.m */,
 				FDB522D3237420B1008F199F /* PhrasalVerb.h */,
 				FDB522D4237420B1008F199F /* PhrasalVerb.m */,
 				FDA49D6923436C8E00DC80F5 /* TableViewController.h */,
@@ -186,6 +191,7 @@
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
 				FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */,
 				FD12719B236C289700C2B8A4 /* AVMeaningShortWords.m in Sources */,
+				FD1236D3237997B200F23E56 /* AVExample.m in Sources */,
 				FD23869F2340E3D9001A7B18 /* AppDelegate.m in Sources */,
 				FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */,
 			);

@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#define NSLOGSTRING NSLog(@"object j = %d  i = %d, string = %@",j,i,string);
+#define NSLOGSTRING NSLog(@"==========================object j = %d  i = %d, string = %@",j,i,string);
 #define PRINT_OBJECT [self printArrayObject:array];
 #define AVL NSLog(@"");
 
@@ -54,60 +54,145 @@
     [super viewDidLoad];
 
 
-    __weak ViewController*weakSelf = self;
+    //__weak ViewController*weakSelf = self;
 
-    NSMutableArray*mainArrayMut = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
+    //NSMutableArray*mainArrayMut = [[NSMutableArray alloc]initWithArray:self.manager.mainArray];
 
     //void(^blockInMainArray)(NSArray*,int,NSArray*) = ^(NSArray*array,int j,NSArray*mainArray){};
 
+    __block NSString*stringCheck = [NSString new];
+    __block BOOL flagInset = NO;
+
+    void(^blockInArrayWordAddition)(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) = ^(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) {
+
+        //NSString *stringWithoutLastChar = ([string length]>1) ? [string substringToIndex:string.length-1] : string;
+
+        //NSString *stringLastChar = ([string length]>1) ? [string substringFromIndex:string.length-1] : @"";
+        //if([stringLastChar integerValue] && !([string intValue])){
+        if(([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"]) && i!=1){
+            NSLOGSTRING
+            AVL
+            PRINT_OBJECT
+        }
+
+
+//        if(([stringWithoutLastChar isEqualToString:stringCheck]) )
+//            NSLog(@"--------str = %@",string);
+
+        //if(([stringWithoutLastChar isEqualToString:stringCheck] && [stringLastChar isEqualToString:@","]) && !flagInset)
+            //flagInset = YES;
+
+
+    };
 
     void(^blockInArrayWord)(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) = ^(NSString *string, NSArray *array, int i, int j, NSArray *arrayMain) {
 
-        BOOL f = NO;
+        //NSString*strState = @"амер";
+//        if(i>1){
+//            NSString*stringPred = arrayMain[j][i-1];
+//            NSString*stringKeyPred = nil;
+//            NSString*objetAtKeyPred = nil;
+//            if([stringPred length]>1){
+//                stringKeyPred = [stringPred substringToIndex:stringPred.length-1];
+//                objetAtKeyPred = [dicRus objectForKey:stringKeyPred];
+//            }
+        //for(NSString*stringCheck in self.sharedMeaningShortWords.arrayShortRusProperty){
+//            if( [string isEqualToString:stringCheck] && ([string isEqualToString:[NSString stringWithFormat:@",%@",strState]] || [string isEqualToString:[NSString stringWithFormat:@"%@,",strState]] ||
+//                                                           [string isEqualToString:[NSString stringWithFormat:@"%@;",strState]] || [string isEqualToString:[NSString stringWithFormat:@"%@",strState]]) ){
+            //if([string isEqualToString:stringCheck]){
 
-        unichar chFirst = [string characterAtIndex:0];
-        NSString*strFirst = [NSString stringWithCharacters:&chFirst length:1];
+                //if([self.sharedMeaningShortWords.arrayShortRusProperty containsObject:string]){
+        NSString *stringWithoutLastChar = ([string length]>1) ? [string substringToIndex:string.length-1] : string;
+        NSString *stringLastChar = ([string length]>1) ? [string substringFromIndex:string.length-1] : string;
+        stringCheck = @"сев";
+        if(i>0){
+            if(([string isEqualToString:stringCheck] || [stringWithoutLastChar isEqualToString:stringCheck])){
+             //&& [stringLastChar isEqualToString:@","]
+                    //                if([string isEqualToString:stringCheck] &&![self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:array[i-1]] && ![array[i-1] intValue] && ![self.sharedMeaningShortWords.arrayShortRusProperty containsObject:array[i-1]]){
+//
+//                    if(i>1){
+//                        NSString*stringPred = arrayMain[j][i-1];
+//                        NSString*stringPredWithoutLastChar= nil;
+//                        stringPredWithoutLastChar = ([stringPred length]>1) ? [stringPred substringToIndex:stringPred.length-1] : @"";
+//
+//                        if(![self.sharedMeaningShortWords.arrayShortRusProperty containsObject:stringPredWithoutLastChar]){
 
-        if( [string isEqualToString:@"="]){
+                    //PRINT_OBJECT
 
-//            int chSecond = [string characterAtIndex:1];
-//            int chDoLast = [string characterAtIndex:string.length-2];
-//            if(chSecond > 64 && chSecond < 123 && chDoLast > 64 && chDoLast < 123 ){
-//                if(i>1){
-//                    NSString*stringPred = arrayMain[j][i-1];
-//                    if( ([self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:stringPred] || [stringPred integerValue]) ){
-//                        for(NSString*stringCheck in self.sharedMeaningShortWords.arrayEngPredlog){
-//                            if([string containsString:stringCheck]){
-//                                f = YES;
-//                            }
-//                        }
-//                        if(!f){
-                            NSLOGSTRING
-                            PRINT_OBJECT
-//                            AVL
+                        NSLOGSTRING
+                        AVL
+
+                        if(i > 0){
+                            NSLog(@"--------------------------           pred =                          %@",array[i-1]);
+                            //NSLOGSTRING
+                        }
+                        else
+                            NSLog(@"--------------------------          ----------------------- firs!!!!!");
+
+
+                            NSLog(@"-------------------------            present =     %@",array[i]);
+
+                        if(i < array.count-1)
+                            NSLog(@"-------------------------            post =                          %@",array[i+1]);
+                        else
+                            NSLog(@"-------------------------            ---------------------------------------last!!!!!");
+        //                PRINT_OBJECT
+
+                        AVL
 //                        }
 //                    }
-//                }
-//            }
+//
+            }
         }
+        else  if([string isEqualToString:stringCheck])
+
+             NSLog(@"--------------------------          ----------------------- firs!!!!!");
+
     };
 
-    [self array:self.manager.mainArray block:blockInArrayWord andBlockExecutInExternCycle:nil];
+
+    //for(stringCheck in self.sharedMeaningShortWords.arrayShortRusProperty){
+        //flagInset = NO;
+        [self array:self.manager.mainArray block:blockInArrayWordAddition andBlockExecutInExternCycle:nil];
+        //if(!flagInset)
+            //NSLog(@"str = %@",stringCheck);
+    //}
 
     //self.manager.mainArray = [NSArray arrayWithArray:mainArrayMut];
 
 }
 
 
-
-
-
-
-
-
-
-
     #pragma mark - Check at ziro ArrayString - need incommiting and array.count = 0
+
+    //        BOOL f = NO;
+    //
+    //        unichar chFirst = [string characterAtIndex:0];
+    //        NSString*strFirst = [NSString stringWithCharacters:&chFirst length:1];
+
+    //        if( [string isEqualToString:@"="]){
+    //
+    //            int chSecond = [string characterAtIndex:1];
+    //            int chDoLast = [string characterAtIndex:string.length-2];
+    //
+    //            if(chSecond > 64 && chSecond < 123 && chDoLast > 64 && chDoLast < 123 ){
+    //                if(i>1){
+    //                    NSString*stringPred = arrayMain[j][i-1];
+    //                    if( ([self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:stringPred] || [stringPred integerValue]) ){
+    //                        for(NSString*stringCheck in self.sharedMeaningShortWords.arrayEngPredlog){
+    //                            if([string containsString:stringCheck]){
+    //                                f = YES;
+    //                            }
+    //                        }
+    //                        if(!f){
+    //                            NSLOGSTRING
+    //                            PRINT_OBJECT
+    //                            AVL
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
 
 
 
