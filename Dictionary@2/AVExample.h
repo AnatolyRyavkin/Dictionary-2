@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVExample : NSObject
-@property NSString*name;
+@property NSString*meaning;
 @property NSString*accessory;
 @end
 

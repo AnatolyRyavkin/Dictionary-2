@@ -8,6 +8,6 @@
 
 #import "PhrasalVerb.h"
 
-@implementation PhrasalVerb
+@implementation AVPhrasalVerb
 
 @end

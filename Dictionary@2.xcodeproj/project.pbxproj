@@ -19,9 +19,11 @@
 		FD2386AA2340E3DD001A7B18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */; };
 		FD2386AD2340E3DD001A7B18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386AC2340E3DD001A7B18 /* main.m */; };
 		FD696BA923543C1A0032423F /* savedStringEndingData.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD696BA823543C1A0032423F /* savedStringEndingData.txt */; };
+		FDA01122237D1CDD00326094 /* AVRusMeaning.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01121237D1CDD00326094 /* AVRusMeaning.m */; };
+		FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01124237D237D00326094 /* AVMakeBASE.m */; };
 		FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6A23436C8E00DC80F5 /* TableViewController.m */; };
 		FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */; };
-		FDB522D5237420B1008F199F /* PhrasalVerb.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB522D4237420B1008F199F /* PhrasalVerb.m */; };
+		FDB522D5237420B1008F199F /* AVPhrasalVerb.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB522D4237420B1008F199F /* AVPhrasalVerb.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,12 +47,16 @@
 		FD2386AB2340E3DD001A7B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD2386AC2340E3DD001A7B18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FD696BA823543C1A0032423F /* savedStringEndingData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = savedStringEndingData.txt; sourceTree = "<group>"; };
+		FDA01120237D1CDD00326094 /* AVRusMeaning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRusMeaning.h; sourceTree = "<group>"; };
+		FDA01121237D1CDD00326094 /* AVRusMeaning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRusMeaning.m; sourceTree = "<group>"; };
+		FDA01123237D237D00326094 /* AVMakeBASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMakeBASE.h; sourceTree = "<group>"; };
+		FDA01124237D237D00326094 /* AVMakeBASE.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVMakeBASE.m; sourceTree = "<group>"; };
 		FDA49D6923436C8E00DC80F5 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		FDA49D6A23436C8E00DC80F5 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMainManager.h; sourceTree = "<group>"; };
 		FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVMainManager.m; sourceTree = "<group>"; };
-		FDB522D3237420B1008F199F /* PhrasalVerb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhrasalVerb.h; sourceTree = "<group>"; };
-		FDB522D4237420B1008F199F /* PhrasalVerb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhrasalVerb.m; sourceTree = "<group>"; };
+		FDB522D3237420B1008F199F /* AVPhrasalVerb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVPhrasalVerb.h; sourceTree = "<group>"; };
+		FDB522D4237420B1008F199F /* AVPhrasalVerb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVPhrasalVerb.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,30 +89,34 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
+				FDA01123237D237D00326094 /* AVMakeBASE.h */,
+				FDA01124237D237D00326094 /* AVMakeBASE.m */,
 				FD127199236C289700C2B8A4 /* AVMeaningShortWords.h */,
 				FD12719A236C289700C2B8A4 /* AVMeaningShortWords.m */,
-				FD18379E235DA72600334EDF /* arrayCommit.txt */,
 				FD15C424234F4E9100F3B69C /* AVButton.h */,
 				FD15C425234F4E9100F3B69C /* AVButton.m */,
 				FD2386A02340E3D9001A7B18 /* ViewController.h */,
 				FD2386A12340E3D9001A7B18 /* ViewController.m */,
 				FD1271962369BA1200C2B8A4 /* AVEnglWord.h */,
 				FD1271972369BA1200C2B8A4 /* AVEnglWord.m */,
+				FDA01120237D1CDD00326094 /* AVRusMeaning.h */,
+				FDA01121237D1CDD00326094 /* AVRusMeaning.m */,
 				FD1236D1237997B200F23E56 /* AVExample.h */,
 				FD1236D2237997B200F23E56 /* AVExample.m */,
-				FDB522D3237420B1008F199F /* PhrasalVerb.h */,
-				FDB522D4237420B1008F199F /* PhrasalVerb.m */,
+				FDB522D3237420B1008F199F /* AVPhrasalVerb.h */,
+				FDB522D4237420B1008F199F /* AVPhrasalVerb.m */,
 				FDA49D6923436C8E00DC80F5 /* TableViewController.h */,
 				FDA49D6A23436C8E00DC80F5 /* TableViewController.m */,
 				FDA49D6C23436D0D00DC80F5 /* AVMainManager.h */,
 				FDA49D6D23436D0D00DC80F5 /* AVMainManager.m */,
-				FD2386A32340E3D9001A7B18 /* Main.storyboard */,
 				FD23869E2340E3D9001A7B18 /* AppDelegate.m */,
-				FD2386A62340E3DD001A7B18 /* Assets.xcassets */,
 				FD23869D2340E3D9001A7B18 /* AppDelegate.h */,
-				FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */,
+				FD2386A62340E3DD001A7B18 /* Assets.xcassets */,
 				FD2386AB2340E3DD001A7B18 /* Info.plist */,
 				FD2386AC2340E3DD001A7B18 /* main.m */,
+				FD2386A32340E3D9001A7B18 /* Main.storyboard */,
+				FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */,
+				FD18379E235DA72600334EDF /* arrayCommit.txt */,
 				FD696BA823543C1A0032423F /* savedStringEndingData.txt */,
 			);
 			path = "Dictionary@2";
@@ -186,11 +196,13 @@
 			files = (
 				FD15C426234F4E9100F3B69C /* AVButton.m in Sources */,
 				FD1271982369BA1200C2B8A4 /* AVEnglWord.m in Sources */,
-				FDB522D5237420B1008F199F /* PhrasalVerb.m in Sources */,
+				FDB522D5237420B1008F199F /* AVPhrasalVerb.m in Sources */,
+				FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */,
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
 				FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */,
 				FD12719B236C289700C2B8A4 /* AVMeaningShortWords.m in Sources */,
+				FDA01122237D1CDD00326094 /* AVRusMeaning.m in Sources */,
 				FD1236D3237997B200F23E56 /* AVExample.m in Sources */,
 				FD23869F2340E3D9001A7B18 /* AppDelegate.m in Sources */,
 				FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */,

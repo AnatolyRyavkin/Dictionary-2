@@ -9,8 +9,8 @@
 #import "AVEnglWord.h"
 
 
-AVRangeMeaning makeRangeMeaning(int globalMeaning, int lokalMeaning){
-    AVRangeMeaning r;
+AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
+    AVIndexPathMeaning r;
     r.numberGlobalMeaning = globalMeaning;
     r.numberLocalMeaning = lokalMeaning;
     return r;
@@ -24,31 +24,32 @@ AVRangeMeaning makeRangeMeaning(int globalMeaning, int lokalMeaning){
 -(id)init{
     self = [super init];
     if(self){
-        self.engNameObject = [[NSString alloc] init];
-        self.rangeMeaningWord = makeRangeMeaning(10, 1);
-        self.engNameObject  = @"";
+        self.engMeaningObject = [[NSString alloc] init];
+        self.rangeMeaningWord = makeIndexPathMeaning(0, 0);
+        self.engMeaningObject  = @"";
         self.engTranscript = @"";
         self.grammaticType = [NSArray new];
         self.addition = [NSArray new];
-        self.arrayMeaning = [NSArray new];
-        self.example = [NSArray new];
-        self.idiom = @"";
-        self.phrasalVerb = [PhrasalVerb new];
+        self.arrayRusMeaning = [NSArray new];
+        self.arrayExample = [NSArray new];
+        self.arrayIdiom = [NSArray new];
+        self.arrayPhrasalVerb = [NSArray new];
     }
     return self;
 }
 
+
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
     AVEnglWord*new = [[AVEnglWord alloc]init];
     new.rangeMeaningWord = self.rangeMeaningWord;
-    new.engNameObject = self.engNameObject;
-    new.engTranscript = self.engTranscript;
-    new.grammaticType = self.grammaticType;
-    new.addition = self.addition;
-    new.arrayMeaning = self.arrayMeaning;
-    new.example = self.example;
-    new.idiom = self.idiom;
-    new.phrasalVerb = self.phrasalVerb;
+    new.engMeaningObject = [NSString stringWithString: self.engMeaningObject];
+    new.engTranscript = [NSString stringWithString: self.engTranscript];
+    new.grammaticType = [NSArray arrayWithArray: self.grammaticType];
+    new.addition = [NSArray arrayWithArray: self.addition];
+    new.arrayRusMeaning = [NSArray arrayWithArray: self.arrayRusMeaning];
+    new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
+    new.arrayIdiom = [NSArray arrayWithArray: self.arrayIdiom];
+    new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
     return new;
 }
 

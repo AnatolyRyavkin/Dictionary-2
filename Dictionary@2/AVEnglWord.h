@@ -8,15 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "AVMeaningShortWords.h"
-#import "PhrasalVerb.h"
+#import "AVPhrasalVerb.h"
 #import "AVExample.h"
+#import "AVRusMeaning.h"
 
-struct AVRangeMeaning {
+struct AVIndexPathMeaning {
     int numberGlobalMeaning;
     int numberLocalMeaning;
 };
 
-typedef struct AVRangeMeaning AVRangeMeaning;
+typedef struct AVIndexPathMeaning AVIndexPathMeaning;
 
 
 
@@ -24,15 +25,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AVEnglWord : NSObject <NSCopying>
 
-@property (readwrite) AVRangeMeaning rangeMeaningWord;
-@property NSString*engNameObject;
+@property (readwrite) AVIndexPathMeaning rangeMeaningWord;
+@property NSString*engMeaningObject;
 @property NSString*engTranscript;
-@property NSArray*grammaticType;
-@property NSArray*addition;
-@property NSArray<NSString *>*arrayMeaning;
-@property NSArray<AVExample*>*example; 
-@property NSString*idiom;
-@property PhrasalVerb*phrasalVerb;
+@property NSArray<NSString*>*grammaticType;
+@property NSArray<NSString*>*addition;
+@property NSArray<AVRusMeaning *>*arrayRusMeaning;
+@property NSArray<AVExample*>*arrayExample;
+@property NSArray<NSString*>*arrayIdiom;
+@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
 
 - (id)copyWithZone:(nullable NSZone *)zone;
 
