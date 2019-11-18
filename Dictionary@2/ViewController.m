@@ -68,18 +68,23 @@
    //__block BOOL flagInset = NO;
 
     void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
-        int countClog = 0;
-        BOOL flagInsertClosur = NO;
-        BOOL flagInsertQuart = NO;
-
+//        int countClog = 0;
+//        BOOL flagInsertClosur = NO;
+//        BOOL flagInsertQuart = NO;
+        int i = 0;
+        typeof(self) weakSelf = self;
         for(NSString*string in array){
-            countClog = ( [[string firstCharString] isEqualToString:@"["]) ? countClog+1 : countClog;
-            flagInsertQuart = ( [string  isEqualToString:@"[■]"] ) ? YES : flagInsertQuart;
-        }
-        if(flagInsertQuart && countClog > 1 ){
-            AVL
-            NSLog(@"j = %d",j);
-            PRINT_OBJECT
+
+            unichar lastChar = [string characterAtIndex:string.length - 1];
+            NSString*stringlastChar = [NSString stringWithCharacters:&lastChar length:1];
+            //if([string isEqualToString:@"pres"] || [[string stringWithoutLastSimbolIfSibolComma] isEqualToString:@"pres"] ){
+            if([stringlastChar intValue] && string.length != 1 && i != 0 && ![string intValue]){
+                AVL
+                NSLog(@"j = %d",j);
+                PRINT_OBJECT_SELECT
+            }
+
+            i++;
         }
 
     };
@@ -90,6 +95,22 @@
 
 
     #pragma mark - Check at ziro ArrayString - need incommiting and array.count = 0
+//
+//if(([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"]) && i == i){
+//        //                NSString *stringNext = (i < array.count - 1) ? array[i+1] : @" ";
+//        //                unichar firstChar = [stringNext characterAtIndex:0];
+//        //                NSString*stringNextAtFirstChar = [NSString stringWithCharacters:&firstChar length:1];
+//        //                if([stringNextAtFirstChar isEqualToString:@"["]){
+//    NSString *stringPrev = (i > 0) ? array[i-1] : @" ";
+//    unichar firstChar = [stringPrev characterAtIndex:0];
+//    NSString*stringPrevAtFirstChar = [NSString stringWithCharacters:&firstChar length:1];
+//    if([stringPrevAtFirstChar isEqualToString:@"["]){
+//        NSLOGSTRING
+//        AVL
+//        PRINT_OBJECT_SELECT
+//    }
+//
+//}
 
     //for(stringCheck in self.sharedMeaningShortWords.arrayShortRusProperty){
     //flagInset = NO;

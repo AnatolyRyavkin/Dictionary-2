@@ -16,6 +16,15 @@ AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
     return r;
 };
 
+void makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r){
+    r.numberGlobalMeaning = r.numberGlobalMeaning + 1;
+    r.numberLocalMeaning = 0;
+};
+
+void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r){
+    r.numberLocalMeaning = r.numberLocalMeaning + 1;
+};
+
 
 @implementation AVEnglWord
 
@@ -25,7 +34,7 @@ AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
     self = [super init];
     if(self){
         self.engMeaningObject = [[NSString alloc] init];
-        self.rangeMeaningWord = makeIndexPathMeaning(0, 0);
+        self.indexPathMeaningWord = makeIndexPathMeaning(0, 0);
         self.engMeaningObject  = @"";
         self.engTranscript = @"";
         self.grammaticType = [NSArray new];
@@ -41,7 +50,7 @@ AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
 
 - (nonnull id)copyWithZone:(nullable NSZone *)zone {
     AVEnglWord*new = [[AVEnglWord alloc]init];
-    new.rangeMeaningWord = self.rangeMeaningWord;
+    new.indexPathMeaningWord = self.indexPathMeaningWord;
     new.engMeaningObject = [NSString stringWithString: self.engMeaningObject];
     new.engTranscript = [NSString stringWithString: self.engTranscript];
     new.grammaticType = [NSArray arrayWithArray: self.grammaticType];
@@ -53,4 +62,20 @@ AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
     return new;
 }
 
+-(void)nextIndexPathGlobal{
+
+    AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
+    indexPath.numberGlobalMeaning = indexPath.numberGlobalMeaning + 1;
+    indexPath.numberLocalMeaning = 0;
+    self.indexPathMeaningWord = indexPath;
+    
+}
+
+-(void)nextIndexPathLocal{
+
+    AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
+    indexPath.numberLocalMeaning = indexPath.numberLocalMeaning + 1;
+    self.indexPathMeaningWord = indexPath;
+
+}
 @end

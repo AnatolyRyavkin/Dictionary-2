@@ -16,6 +16,14 @@
 NS_ASSUME_NONNULL_BEGIN
 @implementation NSString (FirstEndLastChar)
 
+-(NSString*)stringWithoutLastSimbol{
+    return ([self length]>1) ? [self substringToIndex:self.length-1] : @"";
+}
+
+-(NSString*)stringWithoutLastSimbolIfSibolComma{
+    return ([[self lastCharString] isEqualToString:@","]) ? [self stringWithoutLastSimbol] : @"";
+}
+
 -(NSString*)firstCharString{
     unichar ch = [self characterAtIndex:0];
     return [NSString stringWithCharacters:&ch length:1];
@@ -54,6 +62,8 @@ NS_ASSUME_NONNULL_END
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVMakeBASE : NSObject
+
+@property AVMeaningShortWords *managerMeaningShort;
 
 @property AVMainManager *manager;
 @property NSArray<AVEnglWord*>* arrayEngWords;

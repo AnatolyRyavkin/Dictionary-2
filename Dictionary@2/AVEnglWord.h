@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AVEnglWord : NSObject <NSCopying>
 
-@property (readwrite) AVIndexPathMeaning rangeMeaningWord;
+@property (readwrite) AVIndexPathMeaning indexPathMeaningWord;
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
 @property NSArray<NSString*>*grammaticType;
@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
 
 - (id)copyWithZone:(nullable NSZone *)zone;
+-(void)nextIndexPathGlobal;
+-(void)nextIndexPathLocal;
 
 @end
 
