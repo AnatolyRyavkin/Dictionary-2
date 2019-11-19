@@ -15,10 +15,10 @@
 struct AVIndexPathMeaning {
     int numberGlobalMeaning;
     int numberLocalMeaning;
+    int numberMeaning;
 };
 
 typedef struct AVIndexPathMeaning AVIndexPathMeaning;
-
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -38,6 +38,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)copyWithZone:(nullable NSZone *)zone;
 -(void)nextIndexPathGlobal;
 -(void)nextIndexPathLocal;
+
+AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
+
+void makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r);
+void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r);
+void makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r);
+
+void setIndexPathGlobal(AVIndexPathMeaning r, int i);
+void setIndexPathLocal(AVIndexPathMeaning r, int i);
+void setIndexPathMeaning(AVIndexPathMeaning r, int i);
 
 @end
 

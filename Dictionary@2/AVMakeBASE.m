@@ -9,6 +9,8 @@
 
 #import "AVMakeBASE.h"
 
+
+
 typedef NS_ENUM(NSInteger, AVStatusPrevios) {
     AVStatusPreviosBegin = 0,
     AVStatusPreviosMeaningEng,
@@ -18,7 +20,10 @@ typedef NS_ENUM(NSInteger, AVStatusPrevios) {
     AVStatusPreviosArrayRusMeaning,
     AVStatusPreviosExamle,
     AVStatusPreviosIdiom,
-    AVStatusPreviosPhrasalVerb
+    AVStatusPreviosPhrasalVerb,
+    AVStatusPreviosNumberLat,
+    AVStatusPreviosNumberRom
+
 };
 
 typedef NS_ENUM(NSInteger, AVDefineObjectType) {
@@ -30,6 +35,7 @@ typedef NS_ENUM(NSInteger, AVCurrentState) {
     AVCurrentStateBegin = 0,
     AVCurrentStateEngMeanEnd,
     AVCurrentStateTranscriptEnd,
+    AVCurrentStateWorkBaseLinks
 };
 
 typedef NS_ENUM(NSInteger, AVDefineString) {
@@ -45,22 +51,24 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
     AVDefineStringRusWithCommaAtEnding,
     AVDefineStringRusWithPointCommaAtEnding,
     AVDefineStringRusWithPointAtEnding,
+    AVDefineStringRusNumberLat,
+    AVDefineStringRusNumberRom
 
 };
-
 
 
 @interface AVMakeBASE ()
 {
 
-    AVStatusPrevios statePrevios;
-    AVCurrentState currentState;
+    AVStatusPrevios statePreviosLink;
+    AVCurrentState currentStateBuildingObject;
     AVDefineObjectType defineObjectType;
     AVEnglWord *objEngWord;
     AVPhrasalVerb *phrasalVerb;
     AVRusMeaning *rusMeaning;
     NSMutableArray<AVEnglWord *>*tempMainArray;
-    AVDefineString defineString;
+    AVDefineString stateCurrentDefineString;
+    AVMeaningShortWords*managerShortWords;
     int j;
 
 
@@ -76,10 +84,11 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
     objEngWord = [[AVEnglWord alloc] init];
     phrasalVerb = [[AVPhrasalVerb alloc]init];
     rusMeaning = [[AVRusMeaning alloc]init];
-    currentState = AVCurrentStateBegin;
-    statePrevios = AVStatusPreviosBegin;
+    currentStateBuildingObject = AVCurrentStateBegin;
+    statePreviosLink = AVStatusPreviosBegin;
     defineObjectType = AVDefineObjectTypeWord;
     tempMainArray = [NSMutableArray arrayWithArray:self.manager.mainArray];
+    managerShortWords = [AVMeaningShortWords sharedShortWords];
     j = 0;
 
 }
@@ -106,7 +115,7 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
         if([string isEqualToString:@""] || [string isEqualToString:@" "])
             i++;
         if(defineObjectType == AVDefineObjectTypeWord){
-            defineString = [self defineString:string];
+            stateCurrentDefineString = [self defineString:string];
             [self makeObjectEngWord:string];
         }
         else
@@ -131,303 +140,83 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
 
 -(void)makeObjectEngWord:(NSString *) string{
 
-    if(statePrevios == AVStatusPreviosBegin){
+#pragma mark - begin----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    if(statePreviosLink == AVStatusPreviosBegin){
         NSString *stringTemp;
-
-        switch (defineString) {
+        switch (stateCurrentDefineString) {
             case AVDefineStringEng:
                 stringTemp = string;
                 break;
             case AVDefineStringEngWithNumberAtEnding:
                 stringTemp = [string substringToIndex:string.length-2];
+                if(string.intValue > 0)
+                    setIndexPathGlobal(objEngWord.indexPathMeaningWord, string.intValue-1);
+                else
+                     NSLog(@"Error string.intValue < 1  ");
+
                 break;
             default:
                 break;
         }
         objEngWord.engMeaningObject = stringTemp;
-        statePrevios = AVStatusPreviosMeaningEng;
+        statePreviosLink = AVStatusPreviosMeaningEng;
+    }
+
+#pragma mark - Previos English Word and string is english(may be with number at ending) and  current status dont ending meanining------------------------------------------------------------------------------------
+
+     if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringEng && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
+         objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",string];
+         statePreviosLink = AVStatusPreviosMeaningEng;
+     }
+    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringEngWithNumberAtEnding && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
+        NSString *stringTemp = [string substringToIndex:string.length-2];
+        objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",stringTemp];
+        if(string.intValue > 0)
+            setIndexPathGlobal(objEngWord.indexPathMeaningWord, string.intValue-1);
+        else
+            NSLog(@"Error string.intValue < 1  ");
+        statePreviosLink = AVStatusPreviosMeaningEng;
+    }
+
+#pragma mark - Previos English Word and string is number Roma and  current status dont ending meanining
+    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringRusNumberRom && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
+        currentStateBuildingObject = AVCurrentStateEngMeanEnd;
+        setIndexPathLocal(objEngWord.indexPathMeaningWord, [string makeNumFromRomaNum]);
+        statePreviosLink = AVStatusPreviosNumberRom;
+    }
+
+#pragma mark - String is squarte brackspase
+
+    if (currentStateBuildingObject == !AVCurrentStateTranscriptEnd && stateCurrentDefineString == AVDefineStringSquareBrackets){
+        objEngWord.engTranscript = string;
+        currentStateBuildingObject = AVCurrentStateTranscriptEnd;
+        statePreviosLink = AVStatusPreviosTranscript;
+    }else if(stateCurrentDefineString == AVDefineStringSquareBrackets)
+         NSLog(@"Error squarte bracket  ");
+
+#pragma mark - Previos transcript  and string is English
+
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng)  && stateCurrentDefineString == AVDefineStringEng){
+
+        if([managerShortWords.arrayShortWordGrammaticProperty containsObject:string]){
+            objEngWord.grammaticType = [objEngWord.grammaticType arrayByAddingObject:string];
+            statePreviosLink = AVStatusPreviosGrammaticEng;
+            currentStateBuildingObject = AVCurrentStateWorkBaseLinks;
+        }else
+             NSLog(@"Error Previos transcript  and string is English  ");
     }
 
 
-    if(statePrevios == AVStatusPreviosMeaningEng){
-        NSString* stringTemp;
-        switch (defineString) {
-            case AVDefineStringEng:
-                objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",string];
-                statePrevios = AVStatusPreviosMeaningEng;
-                break;
-            case AVDefineStringEngWithNumberAtEnding:
-                stringTemp = [string substringToIndex:string.length-2];
-                objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",stringTemp];
-                statePrevios = AVStatusPreviosMeaningEng;
-                break;
-            case AVDefineStringSquareBrackets:
-                objEngWord.engTranscript = string;
-                statePrevios = AVStatusPreviosTranscript;
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-    if(statePrevios == AVStatusPreviosTranscript){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-        if(statePrevios == AVStatusPreviosGrammaticEng){
-            switch (defineString) {
-                case AVDefineStringEng:
-
-                    break;
-                case AVDefineStringEngWithCommaAtEnding:
-
-                    break;
-                case AVDefineStringEngWithPointCommaAtEnding:
-
-                    break;
-                case AVDefineStringEngWithPointAtEnding:
-
-                    break;
-                case AVDefineStringRus:
-
-                    break;
-                case AVDefineStringRusWithCommaAtEnding:
-
-                    break;
-                case AVDefineStringRusWithPointCommaAtEnding:
-
-                    break;
-                case AVDefineStringRusWithPointAtEnding:
-
-                    break;
-                case AVDefineStringRoundBrackets:
-
-                    break;
-                default:
-                    NSLog(@"AVDefineString!!!");
-                    break;
-            }
-
-    }
-
-    if(statePrevios == AVStatusPreviosAddition){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-
-    if(statePrevios == AVStatusPreviosArrayRusMeaning){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-    if(statePrevios == AVStatusPreviosExamle){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-    if(statePrevios == AVStatusPreviosIdiom){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
-
-    if(statePrevios == AVStatusPreviosPhrasalVerb){
-        switch (defineString) {
-            case AVDefineStringEng:
-
-                break;
-            case AVDefineStringEngWithCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringEngWithPointAtEnding:
-
-                break;
-            case AVDefineStringRus:
-
-                break;
-            case AVDefineStringRusWithCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointCommaAtEnding:
-
-                break;
-            case AVDefineStringRusWithPointAtEnding:
-
-                break;
-            case AVDefineStringRoundBrackets:
-
-                break;
-            default:
-                NSLog(@"AVDefineString!!!");
-                break;
-        }
-
-    }
+////   stoping -----------
 
 
 }
+
+
+
+
+
 
 #pragma mark - Check word at AVDefineString
 
@@ -435,6 +224,13 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
 //    const char* chars = string.UTF8String;
     BOOL flagEng = YES;
     BOOL flagRus = YES;
+
+    if([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"] || [string isEqualToString:@"VII"] || [string isEqualToString:@"VIII"]){
+        return AVDefineStringRusNumberRom;
+    }
+
+    if(string.intValue)
+        return AVDefineStringRusNumberLat;
 
     if([[string firstCharString] isEqualToString:@"["] && [[string lastCharString] isEqualToString:@"]"])
         return AVDefineStringSquareBrackets;

@@ -12,6 +12,7 @@
 		FD12719B236C289700C2B8A4 /* AVMeaningShortWords.m in Sources */ = {isa = PBXBuildFile; fileRef = FD12719A236C289700C2B8A4 /* AVMeaningShortWords.m */; };
 		FD15C426234F4E9100F3B69C /* AVButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD15C425234F4E9100F3B69C /* AVButton.m */; };
 		FD18379F235DA72700334EDF /* arrayCommit.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD18379E235DA72600334EDF /* arrayCommit.txt */; };
+		FD1E5D0F238412610082DA44 /* NSStrign+extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1E5D0E238412610082DA44 /* NSStrign+extension.m */; };
 		FD23869F2340E3D9001A7B18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD23869E2340E3D9001A7B18 /* AppDelegate.m */; };
 		FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386A12340E3D9001A7B18 /* ViewController.m */; };
 		FD2386A52340E3D9001A7B18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A32340E3D9001A7B18 /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 		FD15C424234F4E9100F3B69C /* AVButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVButton.h; sourceTree = "<group>"; };
 		FD15C425234F4E9100F3B69C /* AVButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVButton.m; sourceTree = "<group>"; };
 		FD18379E235DA72600334EDF /* arrayCommit.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arrayCommit.txt; sourceTree = "<group>"; };
+		FD1E5D0D238412610082DA44 /* NSStrign+extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSStrign+extension.h"; sourceTree = "<group>"; };
+		FD1E5D0E238412610082DA44 /* NSStrign+extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSStrign+extension.m"; sourceTree = "<group>"; };
 		FD23869A2340E3D9001A7B18 /* Dictionary@2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dictionary@2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD23869D2340E3D9001A7B18 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FD23869E2340E3D9001A7B18 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
+				FD1E5D0D238412610082DA44 /* NSStrign+extension.h */,
+				FD1E5D0E238412610082DA44 /* NSStrign+extension.m */,
 				FDA01123237D237D00326094 /* AVMakeBASE.h */,
 				FDA01124237D237D00326094 /* AVMakeBASE.m */,
 				FD127199236C289700C2B8A4 /* AVMeaningShortWords.h */,
@@ -197,6 +202,7 @@
 				FD15C426234F4E9100F3B69C /* AVButton.m in Sources */,
 				FD1271982369BA1200C2B8A4 /* AVEnglWord.m in Sources */,
 				FDB522D5237420B1008F199F /* AVPhrasalVerb.m in Sources */,
+				FD1E5D0F238412610082DA44 /* NSStrign+extension.m in Sources */,
 				FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */,
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,

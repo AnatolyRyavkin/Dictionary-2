@@ -9,21 +9,46 @@
 #import "AVEnglWord.h"
 
 
-AVIndexPathMeaning makeIndexPathMeaning(int globalMeaning, int lokalMeaning){
+AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning){
     AVIndexPathMeaning r;
-    r.numberGlobalMeaning = globalMeaning;
-    r.numberLocalMeaning = lokalMeaning;
+    r.numberGlobalMeaning = numberGlobalMeaning;
+    r.numberLocalMeaning = numberLokalMeaning;
+    r.numberMeaning = numberMeaning;
     return r;
 };
 
 void makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r){
     r.numberGlobalMeaning = r.numberGlobalMeaning + 1;
     r.numberLocalMeaning = 0;
+    r.numberMeaning = 0;
 };
 
 void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r){
     r.numberLocalMeaning = r.numberLocalMeaning + 1;
+    r.numberMeaning = 0;
 };
+
+void makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r){
+    r.numberMeaning = r.numberMeaning + 1;
+};
+
+void setIndexPathGlobal(AVIndexPathMeaning r, int i){
+    r.numberGlobalMeaning = i;
+    r.numberLocalMeaning = 0;
+    r.numberMeaning = 0;
+}
+void setIndexPathLocal(AVIndexPathMeaning r, int i){
+    r.numberLocalMeaning = i;
+    r.numberMeaning = 0;
+}
+
+void setIndexPathMeaning(AVIndexPathMeaning r, int i){
+    r.numberMeaning = i;
+}
+
+
+
+
 
 
 @implementation AVEnglWord
@@ -34,7 +59,7 @@ void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r){
     self = [super init];
     if(self){
         self.engMeaningObject = [[NSString alloc] init];
-        self.indexPathMeaningWord = makeIndexPathMeaning(0, 0);
+        self.indexPathMeaningWord = makeIndexPathMeaning(0, 0, 0);
         self.engMeaningObject  = @"";
         self.engTranscript = @"";
         self.grammaticType = [NSArray new];
@@ -63,19 +88,23 @@ void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r){
 }
 
 -(void)nextIndexPathGlobal{
-
     AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
     indexPath.numberGlobalMeaning = indexPath.numberGlobalMeaning + 1;
     indexPath.numberLocalMeaning = 0;
     self.indexPathMeaningWord = indexPath;
-    
 }
 
 -(void)nextIndexPathLocal{
-
     AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
     indexPath.numberLocalMeaning = indexPath.numberLocalMeaning + 1;
+    indexPath.numberMeaning = 0;
     self.indexPathMeaningWord = indexPath;
-
 }
+
+-(void)nextIndexPathMeaning{
+    AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
+    indexPath.numberMeaning = indexPath.numberMeaning + 1;
+    self.indexPathMeaningWord = indexPath;
+}
+
 @end
