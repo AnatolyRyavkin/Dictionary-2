@@ -32,25 +32,28 @@ typedef enum{
 
 @interface AVMeaningShortWords : NSObject
 
-@property NSArray*arrayShortWordGrammatic;
-
+//@property NSArray*arrayShortWordGrammatic;
+//
 @property NSArray* arrayShortWordGrammaticProperty;
-@property NSArray* arrayLongWordGrammaticProperty;
-@property NSArray* arrayMeaningWordGrammaticProperty;
-
-@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjLongWordGrammaticProperty;
-@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjMeaningWordGrammaticProperty;
-
+//@property NSArray* arrayLongWordGrammaticProperty;
+//@property NSArray* arrayMeaningWordGrammaticProperty;
+//
+//@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjLongWordGrammaticProperty;
+//@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjMeaningWordGrammaticProperty;
+//
 @property NSArray* arrayShortRusProperty;
-@property NSArray* arrayLongRusProperty;
 
-@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongProperty;
+//@property NSArray* arrayShortRusPropertyAndWords;
 
-@property NSArray* arrayShortRusReduct;
-@property NSArray* arrayLongRusReduct;
-
-@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongReduct;
-
+//@property NSArray* arrayLongRusProperty;
+//
+//@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongProperty;
+//
+//@property NSArray* arrayShortRusReduct;
+//@property NSArray* arrayLongRusReduct;
+//
+//@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongReduct;
+//
 @property NSArray*arrayEngPredlog;
 
 +(id)sharedShortWords;

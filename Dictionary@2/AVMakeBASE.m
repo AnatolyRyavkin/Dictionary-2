@@ -16,14 +16,15 @@ typedef NS_ENUM(NSInteger, AVStatusPrevios) {
     AVStatusPreviosMeaningEng,
     AVStatusPreviosTranscript,
     AVStatusPreviosGrammaticEng,
-    AVStatusPreviosAddition,
+    AVStatusPreviosAdditionBase,
     AVStatusPreviosArrayRusMeaning,
     AVStatusPreviosExamle,
     AVStatusPreviosIdiom,
     AVStatusPreviosPhrasalVerb,
-    AVStatusPreviosNumberLat,
-    AVStatusPreviosNumberRom
-
+    AVStatusPreviosNumberLatMakeNewRusObj,
+    AVStatusPreviosNumberRom,
+    AVStatusPreviosRoundBrackets,
+    AVStatusPreviosForm
 };
 
 typedef NS_ENUM(NSInteger, AVDefineObjectType) {
@@ -32,10 +33,13 @@ typedef NS_ENUM(NSInteger, AVDefineObjectType) {
 };
 
 typedef NS_ENUM(NSInteger, AVCurrentState) {
-    AVCurrentStateBegin = 0,
-    AVCurrentStateEngMeanEnd,
-    AVCurrentStateTranscriptEnd,
-    AVCurrentStateWorkBaseLinks
+    AVCurrentStateBuildingBegin = 0,
+    AVCurrentStateBuildingEngMeanEnd,
+    AVCurrentStateBuildingTranscriptEnd,
+    AVCurrentStateBuildingObjectGlobal,
+    AVCurrentStateBuildingObjectLocal,
+    AVCurrentStateBuildingDerevativeObjectGlobal,
+    AVCurrentStateBuildingDerevativeObjectLocal
 };
 
 typedef NS_ENUM(NSInteger, AVDefineString) {
@@ -51,8 +55,9 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
     AVDefineStringRusWithCommaAtEnding,
     AVDefineStringRusWithPointCommaAtEnding,
     AVDefineStringRusWithPointAtEnding,
-    AVDefineStringRusNumberLat,
-    AVDefineStringRusNumberRom
+    AVDefineStringNumberLat,
+    AVDefineStringNumberRom,
+    AVDefineStringDerevative
 
 };
 
@@ -84,7 +89,7 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
     objEngWord = [[AVEnglWord alloc] init];
     phrasalVerb = [[AVPhrasalVerb alloc]init];
     rusMeaning = [[AVRusMeaning alloc]init];
-    currentStateBuildingObject = AVCurrentStateBegin;
+    currentStateBuildingObject = AVCurrentStateBuildingBegin;
     statePreviosLink = AVStatusPreviosBegin;
     defineObjectType = AVDefineObjectTypeWord;
     tempMainArray = [NSMutableArray arrayWithArray:self.manager.mainArray];
@@ -108,6 +113,9 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
 #pragma mark -  Cycle Words
 
 -(void)makeEngWordsObjFromArrayStrings:(NSArray*) array{
+
+        //определяем вид обекта и запускаем цикл построчно , создаем обжект
+
     if([array[0] isEqualToString:@"[■]"])
         defineObjectType = AVDefineObjectTypePhraseVerb;
     for(int i = 0; i < array.count - 1; i++){
@@ -115,16 +123,69 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
         if([string isEqualToString:@""] || [string isEqualToString:@" "])
             i++;
         if(defineObjectType == AVDefineObjectTypeWord){
+
+//определяем статус строки
+
             stateCurrentDefineString = [self defineString:string];
+
+//изменяем статус строки если проходим
+
+            if(([string isEqualToString:@"pl"] && [array[i+1] isEqualToString:@"от"]) ||
+                ([string isEqualToString:@"superl"] && [array[i+1] isEqualToString:@"от"]) ||
+                ([string isEqualToString:@"compare"] && [array[i+1] isEqualToString:@"от"]) ||
+                ([string isEqualToString:@"past"] && [array[i+1] isEqualToString:@"от"]) ||
+                ([string isEqualToString:@"p"] && [array[i+1] isEqualToString:@"p"] && [array[i+2] isEqualToString:@"от"])){
+
+                    currentStateBuildingObject = (currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal) ? AVCurrentStateBuildingDerevativeObjectGlobal : AVCurrentStateBuildingDerevativeObjectLocal;
+
+                }
+
+//изменяем статус строки если проходим
+
+            if(currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal &&
+               (statePreviosLink == AVStatusPreviosRoundBrackets || statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng || statePreviosLink == AVStatusPreviosAdditionBase ||
+                statePreviosLink == AVStatusPreviosNumberRom || statePreviosLink == AVStatusPreviosForm ) &&
+               ([string isEqualToString:@"от"] || [string isEqualToString:@"="]) ) {
+                    if(i < array.count - 1){
+                        if( [array[i+1] isContaintEngChars ]){
+                            currentStateBuildingObject = AVCurrentStateBuildingDerevativeObjectGlobal;
+                        }
+                    }
+               }
+
+            if(currentStateBuildingObject == AVCurrentStateBuildingDerevativeObjectLocal || currentStateBuildingObject == AVCurrentStateBuildingDerevativeObjectGlobal)
+                stateCurrentDefineString = AVDefineStringDerevative;
+
+//изменяем статус строки если проходим
+
+            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2)){
+                rusMeaning = [[AVRusMeaning alloc]init];
+                statePreviosLink = AVStatusPreviosNumberLatMakeNewRusObj;
+                currentStateBuildingObject = AVCurrentStateBuildingObjectLocal;
+                [objEngWord nextIndexPathCountMeaningInObject];
+                objEngWord.arrayRusMeaning = [objEngWord.arrayRusMeaning arrayByAddingObject:rusMeaning];
+                break;
+            }
+
+
             [self makeObjectEngWord:string];
+
         }
+
+// если обьект фразовый глагол
+
         else
             [self makeObjectPhraseVerb:string];
-        //cycle end
+
     }
-    if(objEngWord)
+
+
+//слдфдываем в массив готовые обьекты
+
+    if(defineObjectType == AVDefineObjectTypeWord)
        [tempMainArray addObject:objEngWord];
-    else if(phrasalVerb){
+
+    else if(defineObjectType == AVDefineObjectTypePhraseVerb){
         if(j != arc4random()){
             NSMutableArray *mutArrayVerbal = [NSMutableArray arrayWithArray:tempMainArray[j-1].arrayPhrasalVerb];
             [mutArrayVerbal addObject:phrasalVerb];
@@ -148,6 +209,9 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
             case AVDefineStringEng:
                 stringTemp = string;
                 break;
+            case AVDefineStringEngWithCommaAtEnding:
+                stringTemp = string;
+                break;
             case AVDefineStringEngWithNumberAtEnding:
                 stringTemp = [string substringToIndex:string.length-2];
                 if(string.intValue > 0)
@@ -161,57 +225,154 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
         }
         objEngWord.engMeaningObject = stringTemp;
         statePreviosLink = AVStatusPreviosMeaningEng;
+        return;
     }
 
 #pragma mark - Previos English Word and string is english(may be with number at ending) and  current status dont ending meanining------------------------------------------------------------------------------------
 
-     if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringEng && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
+     if(statePreviosLink == AVStatusPreviosMeaningEng && (stateCurrentDefineString == AVDefineStringEng || stateCurrentDefineString == AVDefineStringEngWithCommaAtEnding)  && currentStateBuildingObject == AVCurrentStateBuildingBegin){
          objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",string];
          statePreviosLink = AVStatusPreviosMeaningEng;
+         return;
      }
-    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringEngWithNumberAtEnding && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
+    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringEngWithNumberAtEnding && currentStateBuildingObject == AVCurrentStateBuildingBegin){
         NSString *stringTemp = [string substringToIndex:string.length-2];
         objEngWord.engMeaningObject = [objEngWord.engMeaningObject stringByAppendingFormat:@" %@",stringTemp];
-        if(string.intValue > 0)
+        if([string lastCharString].intValue > 0){
             setIndexPathGlobal(objEngWord.indexPathMeaningWord, string.intValue-1);
+        }
         else
             NSLog(@"Error string.intValue < 1  ");
         statePreviosLink = AVStatusPreviosMeaningEng;
+        return;
     }
 
 #pragma mark - Previos English Word and string is number Roma and  current status dont ending meanining
-    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringRusNumberRom && currentStateBuildingObject == !AVCurrentStateEngMeanEnd){
-        currentStateBuildingObject = AVCurrentStateEngMeanEnd;
+    if(statePreviosLink == AVStatusPreviosMeaningEng && stateCurrentDefineString == AVDefineStringNumberRom && currentStateBuildingObject == AVCurrentStateBuildingBegin){
         setIndexPathLocal(objEngWord.indexPathMeaningWord, [string makeNumFromRomaNum]);
         statePreviosLink = AVStatusPreviosNumberRom;
+        currentStateBuildingObject = AVCurrentStateBuildingObjectGlobal;
+        return;
     }
 
 #pragma mark - String is squarte brackspase
 
-    if (currentStateBuildingObject == !AVCurrentStateTranscriptEnd && stateCurrentDefineString == AVDefineStringSquareBrackets){
+    if ( stateCurrentDefineString == AVDefineStringSquareBrackets){
         objEngWord.engTranscript = string;
-        currentStateBuildingObject = AVCurrentStateTranscriptEnd;
+        currentStateBuildingObject = AVCurrentStateBuildingObjectGlobal;
         statePreviosLink = AVStatusPreviosTranscript;
+        return;
     }else if(stateCurrentDefineString == AVDefineStringSquareBrackets)
          NSLog(@"Error squarte bracket  ");
 
-#pragma mark - Previos transcript  and string is English
+#pragma mark - Previos transcript or english grammatic   and string is English and curent state Build is AVCurrentStateBuildingBaseObject
 
-    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng)  && stateCurrentDefineString == AVDefineStringEng){
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng)  && stateCurrentDefineString == AVDefineStringEng && currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal){
 
         if([managerShortWords.arrayShortWordGrammaticProperty containsObject:string]){
             objEngWord.grammaticType = [objEngWord.grammaticType arrayByAddingObject:string];
             statePreviosLink = AVStatusPreviosGrammaticEng;
-            currentStateBuildingObject = AVCurrentStateWorkBaseLinks;
+            return;
+
         }else
-             NSLog(@"Error Previos transcript  and string is English  ");
+             NSLog(@"Error Previos transcript or english grammatic   and string is English and curent state Build is AVCurrentStateBuildingBaseObject  ");
     }
 
+#pragma mark - Previos transcript or english grammatic  and string is English with ending comma and curent state Build is AVCurrentStateBuildingBaseObject
 
-////   stoping -----------
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng)  && stateCurrentDefineString == AVDefineStringEngWithCommaAtEnding  && currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal){
+
+        if([managerShortWords.arrayShortWordGrammaticProperty containsObject:[string stringWithoutLastSimbolIfSibolComma]]){
+            objEngWord.grammaticType = [objEngWord.grammaticType arrayByAddingObject:[string stringWithoutLastSimbolIfSibolComma]];
+            statePreviosLink = AVStatusPreviosGrammaticEng;
+            return;
+        }else
+            NSLog(@"Error Previos transcript or english grammatic  and string is English with ending comma and curent state Build is AVCurrentStateBuildingBaseObject  ");
+    }
+
+#pragma mark - Previos english grammatic  and string is round and curent state Build is AVCurrentStateBuildingBaseObject
+
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng || statePreviosLink == AVStatusPreviosRoundBrackets)  && stateCurrentDefineString == AVDefineStringRoundBrackets &&
+       currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal){
+
+        statePreviosLink = AVStatusPreviosRoundBrackets;
+        if(![string containsString:@"обычно"] && [string containsString:@"множ.число"]){
+            objEngWord.grammaticForm = [objEngWord.grammaticForm arrayByAddingObject:string];
+            return;
+        }
+
+        NSMutableCharacterSet*set = [[NSMutableCharacterSet alloc]init];
+        [set addCharactersInString:@"(),; "];
+        NSArray*arraySeparatedString = [string componentsSeparatedByCharactersInSet:set];
+        BOOL isEqualSeparatedStringInBracetsWithEnglishPredlog = NO;
+        for(NSString* oneSeparatedString in arraySeparatedString){
+            for(NSString *oneStringFromManagerEngPredlog in self.managerMeaningShort.arrayEngPredlog){
+                if([oneSeparatedString isEqualToString:oneStringFromManagerEngPredlog])
+                    isEqualSeparatedStringInBracetsWithEnglishPredlog = YES;  //разделяем стринг и проверяем каждую часть на вхождение в массив предлогов
+            }
+        }
+        if(isEqualSeparatedStringInBracetsWithEnglishPredlog){
+            NSString *stringAccessoryWithPredlog = [ @"сочетание с " stringByAppendingString: [[string stringWithoutLastSimbol] stringWithoutFirstSimbol]];
+            objEngWord.additionBase = [objEngWord.additionBase arrayByAddingObject:stringAccessoryWithPredlog];
+            return;
+        }
+
+        if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && ![string isContaintRusChars] && [string isContaintEngChars]){
+            objEngWord.grammaticForm = [objEngWord.grammaticForm arrayByAddingObject:string];
+            statePreviosLink = AVStatusPreviosRoundBrackets;
+            return;
+        }
+        if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && [string isContaintRusChars] && ![string isContaintEngChars]){
+            objEngWord.additionBase = [objEngWord.additionBase arrayByAddingObject:string];
+            return;
+        }
+        if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && [string isContaintRusChars] && [string isContaintEngChars]){
+            objEngWord.additionBase = [objEngWord.additionBase arrayByAddingObject:string];
+            return;
+        }
+
+            NSLog(@"Error Previos english grammatic  and string is round and curent state Build is AVCurrentStateBuildingBaseObject  ");
+    }
+
+#pragma mark - Previos english grammatic or round brackets or transcription  and string is inter in arrayShortRusProperty and curent state Build is AVCurrentStateBuildingBaseObject
+
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng || statePreviosLink == AVStatusPreviosRoundBrackets )
+       && (stateCurrentDefineString == AVDefineStringRus )
+       && currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal){
+            if([self.managerMeaningShort.arrayShortRusProperty containsObject:string]){
+                statePreviosLink = AVStatusPreviosAdditionBase;
+                objEngWord.additionBase =  [objEngWord.additionBase arrayByAddingObject:string];
+                return;
+            }
+    }
+
+    if((statePreviosLink == AVStatusPreviosTranscript || statePreviosLink == AVStatusPreviosGrammaticEng || statePreviosLink == AVStatusPreviosRoundBrackets )
+       && (stateCurrentDefineString == AVDefineStringRusWithCommaAtEnding)
+       && currentStateBuildingObject == AVCurrentStateBuildingObjectGlobal){
+        if([self.managerMeaningShort.arrayShortRusProperty containsObject:[string stringWithoutLastSimbolIfSibolComma]]){
+            statePreviosLink = AVStatusPreviosAdditionBase;
+            objEngWord.additionBase = [objEngWord.additionBase arrayByAddingObject: [string stringWithoutLastSimbol]];
+            return;
+        }
+    }
+
+#pragma mark - Previos english grammatic or round brackets or transcription  and string isEqual "pl" or "past" ... "=" ... "от" and curent state Build is AVCurrentStateBuildingBaseObject
+
+    if(stateCurrentDefineString == AVDefineStringDerevative
+       && currentStateBuildingObject == AVCurrentStateBuildingDerevativeObjectGlobal){
+        objEngWord.dereviative = [objEngWord.dereviative stringByAppendingFormat:@" %@",string];
+        return;
+    }
+
+#pragma mark - state building is Lokal
+
+        // проверить если ранее была цифра с : то пример (сделать еще один статус AVStatusPreviosTranscript) !!!
+
+////   stoping ----------- на лат цифре!!!
 
 
 }
+
 
 
 
@@ -226,11 +387,11 @@ typedef NS_ENUM(NSInteger, AVDefineString) {
     BOOL flagRus = YES;
 
     if([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"] || [string isEqualToString:@"VII"] || [string isEqualToString:@"VIII"]){
-        return AVDefineStringRusNumberRom;
+        return AVDefineStringNumberRom;
     }
 
     if(string.intValue)
-        return AVDefineStringRusNumberLat;
+        return AVDefineStringNumberLat;
 
     if([[string firstCharString] isEqualToString:@"["] && [[string lastCharString] isEqualToString:@"]"])
         return AVDefineStringSquareBrackets;

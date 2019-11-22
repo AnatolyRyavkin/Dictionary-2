@@ -13,37 +13,37 @@ AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokal
     AVIndexPathMeaning r;
     r.numberGlobalMeaning = numberGlobalMeaning;
     r.numberLocalMeaning = numberLokalMeaning;
-    r.numberMeaning = numberMeaning;
+    r.countMeaningInObject = numberMeaning;
     return r;
 };
 
 void makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r){
     r.numberGlobalMeaning = r.numberGlobalMeaning + 1;
     r.numberLocalMeaning = 0;
-    r.numberMeaning = 0;
+    r.countMeaningInObject = 0;
 };
 
 void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r){
     r.numberLocalMeaning = r.numberLocalMeaning + 1;
-    r.numberMeaning = 0;
+    r.countMeaningInObject = 0;
 };
 
 void makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r){
-    r.numberMeaning = r.numberMeaning + 1;
+    r.countMeaningInObject = r.countMeaningInObject + 1;
 };
 
 void setIndexPathGlobal(AVIndexPathMeaning r, int i){
     r.numberGlobalMeaning = i;
     r.numberLocalMeaning = 0;
-    r.numberMeaning = 0;
+    r.countMeaningInObject = 0;
 }
 void setIndexPathLocal(AVIndexPathMeaning r, int i){
     r.numberLocalMeaning = i;
-    r.numberMeaning = 0;
+    r.countMeaningInObject = 0;
 }
 
-void setIndexPathMeaning(AVIndexPathMeaning r, int i){
-    r.numberMeaning = i;
+void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
+    r.countMeaningInObject = i;
 }
 
 
@@ -63,11 +63,13 @@ void setIndexPathMeaning(AVIndexPathMeaning r, int i){
         self.engMeaningObject  = @"";
         self.engTranscript = @"";
         self.grammaticType = [NSArray new];
-        self.addition = [NSArray new];
+        self.grammaticForm = [NSArray new];
+        self.additionBase = [NSArray new];
         self.arrayRusMeaning = [NSArray new];
         self.arrayExample = [NSArray new];
         self.arrayIdiom = [NSArray new];
         self.arrayPhrasalVerb = [NSArray new];
+        self.dereviative = @"";
     }
     return self;
 }
@@ -79,11 +81,13 @@ void setIndexPathMeaning(AVIndexPathMeaning r, int i){
     new.engMeaningObject = [NSString stringWithString: self.engMeaningObject];
     new.engTranscript = [NSString stringWithString: self.engTranscript];
     new.grammaticType = [NSArray arrayWithArray: self.grammaticType];
-    new.addition = [NSArray arrayWithArray: self.addition];
+    new.grammaticForm = [NSArray arrayWithArray: self.grammaticForm];
+    new.additionBase = [NSArray arrayWithArray: self.additionBase];
     new.arrayRusMeaning = [NSArray arrayWithArray: self.arrayRusMeaning];
     new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
     new.arrayIdiom = [NSArray arrayWithArray: self.arrayIdiom];
     new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
+    new.dereviative = self.dereviative;
     return new;
 }
 
@@ -97,13 +101,13 @@ void setIndexPathMeaning(AVIndexPathMeaning r, int i){
 -(void)nextIndexPathLocal{
     AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
     indexPath.numberLocalMeaning = indexPath.numberLocalMeaning + 1;
-    indexPath.numberMeaning = 0;
+    indexPath.countMeaningInObject = 0;
     self.indexPathMeaningWord = indexPath;
 }
 
--(void)nextIndexPathMeaning{
+-(void)nextIndexPathCountMeaningInObject{
     AVIndexPathMeaning indexPath = self.indexPathMeaningWord;
-    indexPath.numberMeaning = indexPath.numberMeaning + 1;
+    indexPath.countMeaningInObject = indexPath.countMeaningInObject + 1;
     self.indexPathMeaningWord = indexPath;
 }
 

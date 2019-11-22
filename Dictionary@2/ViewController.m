@@ -15,6 +15,7 @@
 #define PRINT_OBJECT_SELECT [weakSelf printArrayObject:array andSelectRow:i];
 
 #define AVL NSLog(@"");
+#define AV NSLog(@"-------------------------------");
 
 @interface ViewController ()
 
@@ -68,33 +69,253 @@
    //__block BOOL flagInset = NO;
 
     void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
-//        int countClog = 0;
-//        BOOL flagInsertClosur = NO;
-//        BOOL flagInsertQuart = NO;
+
         int i = 0;
-        typeof(self) weakSelf = self;
+        //typeof(self) weakSelf = self;
+
+        NSArray* arrayExeption =@[@"            "];
+
         for(NSString*string in array){
 
-            unichar lastChar = [string characterAtIndex:string.length - 1];
-            NSString*stringlastChar = [NSString stringWithCharacters:&lastChar length:1];
-            //if([string isEqualToString:@"pres"] || [[string stringWithoutLastSimbolIfSibolComma] isEqualToString:@"pres"] ){
-            if([stringlastChar intValue] && string.length != 1 && i != 0 && ![string intValue]){
+            if([string isEqualToString:@"  "]){
+                if(array.count  > i )
+                    NSLog(@"        %@",array[i-1]);
+
+                    NSLog(@"    %@",array[i]);
+
+                if(array.count  > i + 1)
+                    NSLog(@"        %@",array[i+1]);
+
+                if(array.count  > i + 2)
+                    NSLog(@"        %@",array[i+2]);
+
+                if(array.count  > i + 3)
+                    NSLog(@"        %@",array[i+3]);
+
+                NSLog(@"            j= %d",j);
                 AVL
-                NSLog(@"j = %d",j);
-                PRINT_OBJECT_SELECT
+                AV
+                AVL
             }
 
+
+// bool b = false;
+//            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
+//                b = true;
+//            if(!b){
+                NSString *stringPost = (i < array.count - 1) ? array[i+1] : @" ";
+//
+//                NSString *stringPostPost = (i < array.count - 2) ? array[i+1] : @" ";
+//
+//
+
+//                if( ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject: stringPost])) &&
+//                   ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:stringPost] ||
+//                    [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:[stringPost stringWithoutLastSimbolIfSibolComma]]) )
+
+            if( (([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2) ||
+               [ self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:string] )){
+
+                if( [arrayExeption containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [arrayExeption containsObject: stringPost] ){
+
+
+
+                        NSLog(@"        %@",array[i]);
+                        NSLog(@"  %@",array[i+1]);
+                    if(array.count  > i + 2)
+                        NSLog(@"        %@",array[i+2]);
+                    if(array.count  > i + 3)
+                        NSLog(@"        %@",array[i+3]);
+                    NSLog(@"            j= %d",j);
+                    AVL
+                    AV
+                    AVL
+
+                }
+
+                    //проверить все на :!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+            }
             i++;
         }
-
     };
+
+
+
+//    void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
+//
+//                    int i = 0;
+//                    typeof(self) weakSelf = self;
+//                    for(NSString*string in array){
+//                        if( i > 1){
+//                            if( ![array[i-1] intValue] && ![array[i-2] intValue]){
+//                                if(i < array.count - 2){
+//                                    if([string isEqualToString:@"pl"]){// && ![array[i+1] isContaintEngChars] && [array[i+1] isContaintRusChars]){
+//                                        AVL
+//                                        NSLog(@"--- j = %d",j);
+//                                        PRINT_OBJECT_SELECT
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        i++;
+//                        }
+//    };
+
+
 
     [self array:self.manager.mainArray block:nil andBlockExecutInExternCycle:block1];
 
 }
 
 
+
+
+
+
+
     #pragma mark - Check at ziro ArrayString - need incommiting and array.count = 0
+//
+//if([string isEqualToString:@"pl"] && [array[i+1] isEqualToString:@"от"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//if([string isEqualToString:@"superl"] && [array[i+1] isEqualToString:@"от"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//if([string isEqualToString:@"compare"] && [array[i+1] isEqualToString:@"от"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//
+//if([string isEqualToString:@"past"] && [array[i+1] isEqualToString:@"от"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//
+//if([string isEqualToString:@"p"] && [array[i+1] isEqualToString:@"p"] && [array[i+2] isEqualToString:@"от"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//
+//if([string isEqualToString:@"past"] && [array[i+1] isEqualToString:@"и"] && [array[i+2] isEqualToString:@"p"]){
+//    AVL
+//    NSLog(@"------------------------------------------ j = %d",j);
+//        //                                                    NSLog(@" pred = %@",array[i-1]);
+//        //                                                    NSLog(@" str = %@",array[i]);
+//        //                                                    NSLog(@" post = %@",array[i+1]);
+//    PRINT_OBJECT_SELECT
+//}
+//
+//
+//for(NSString*string in array){
+//
+//    if(string.intValue > 0 && string.intValue < 10 && string.length == 1){
+//
+//        if(string.intValue - num != 1 && num != 1){
+//
+//            AVL
+//            NSLog(@"------------------------------------------ j = %d",j);
+//            NSLog(@" pred = %@",array[i-1]);
+//            NSLog(@" str = %@",array[i]);
+//            NSLog(@" post = %@",array[i+1]);
+//        }
+//            //PRINT_OBJECT_SELECT
+//        num = string.intValue;
+//    }
+
+        //                        unichar firstChar = [string characterAtIndex:0];
+        //                        NSString*stringChar = [NSString stringWithCharacters:&firstChar length:1];
+        //                        unichar firstPrevChar = (i > 0 ) ? [array[i-1] characterAtIndex:0] : ' ';
+        //                        NSString*stringPrevChar = [NSString stringWithCharacters:&firstPrevChar length:1];
+        //
+        //                        if( [stringChar isEqualToString:@"("]  && [array[i-1] intValue]){
+        //                            NSMutableCharacterSet*set = [[NSMutableCharacterSet alloc]init];
+        //                            [set addCharactersInString:@"(),; "];
+        //                            NSArray*ar = [string componentsSeparatedByCharactersInSet:set];
+        //                            BOOL b = NO;
+        //                            for(NSString* stCheck in ar){
+        //                                for(NSString *st in self.sharedMeaningShortWords.arrayEngPredlog){
+        //                                    if([stCheck isEqualToString:st]){
+        //                                        b = YES;
+        //                                    }
+        //                                }
+        //                            }
+        //                            if(b && [string isContaintEngChars] && ![string isContaintRusChars] ){
+        //                                AVL
+        //                                NSLog(@"j = %d",j);
+        //                                PRINT_OBJECT_SELECT
+        //                            }
+        //                        }
+
+//    i++;
+//}
+    //
+    //        //NSLog(@"str =  %@     %@",[@"012345" stringWithoutLastSimbol],[@"012345" stringWithoutFirstSimbol]);
+    ////        int countClog = 0;
+    ////        BOOL flagInsertClosur = NO;
+    ////        BOOL flagInsertQuart = NO;
+    //        int i = 0;
+    //        typeof(self) weakSelf = self;
+    //        for(NSString*string in array){
+    //
+    ////            unichar lastChar = [string characterAtIndex:string.length - 1];
+    ////            NSString*stringlastChar = [NSString stringWithCharacters:&lastChar length:1];
+    ////            //if([string isEqualToString:@"pres"] || [[string stringWithoutLastSimbolIfSibolComma] isEqualToString:@"pres"] ){
+    ////            if([stringlastChar intValue] && string.length != 1 && i != 0 && ![string intValue]){
+    //            unichar firstChar = [string characterAtIndex:0];
+    //            NSString*stringChar = [NSString stringWithCharacters:&firstChar length:1];
+    //            unichar firstPrevChar = (i > 0 ) ? [array[i-1] characterAtIndex:0] : ' ';
+    //            NSString*stringPrevChar = [NSString stringWithCharacters:&firstPrevChar length:1];
+    //                //if([string isEqualToString:@"pres"] || [[string stringWithoutLastSimbolIfSibolComma] isEqualToString:@"pres"] ){
+    //            if(![string containsString:@"обычно"] && ![string containsString:@"множ.число"] && [stringChar isEqualToString:@"("] && ![stringPrevChar isEqualToString:@"["] && [self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject: array[i-1]]){
+    //                NSMutableCharacterSet*set = [[NSMutableCharacterSet alloc]init];
+    //                [set addCharactersInString:@"(),; "];
+    //                NSArray*ar = [string componentsSeparatedByCharactersInSet:set];
+    //                BOOL b = NO;
+    //                for(NSString* stCheck in ar){
+    //                    for(NSString *st in self.sharedMeaningShortWords.arrayEngPredlog){
+    //                        if([stCheck isEqualToString:st]){
+    //                            b = YES;
+    ////                            AVL
+    ////                            NSLog(@"j = %d",j);
+    ////                            PRINT_OBJECT_SELECT
+    //                        }
+    //                    }
+    //                }
+    //                if(!b && ![string isContaintEngChars] && [string isContaintRusChars] ){
+    //                    AVL
+    //                    NSLog(@"j = %d",j);
+    //                    PRINT_OBJECT_SELECT
+    //                }
+    //            }
+    //
+    //            i++;
+    //        }
+
 //
 //if(([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"]) && i == i){
 //        //                NSString *stringNext = (i < array.count - 1) ? array[i+1] : @" ";

@@ -15,7 +15,7 @@
 struct AVIndexPathMeaning {
     int numberGlobalMeaning;
     int numberLocalMeaning;
-    int numberMeaning;
+    int countMeaningInObject;
 };
 
 typedef struct AVIndexPathMeaning AVIndexPathMeaning;
@@ -29,15 +29,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
 @property NSArray<NSString*>*grammaticType;
-@property NSArray<NSString*>*addition;
+@property NSArray<NSString*>*additionBase;
 @property NSArray<AVRusMeaning *>*arrayRusMeaning;
 @property NSArray<AVExample*>*arrayExample;
 @property NSArray<NSString*>*arrayIdiom;
 @property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+@property NSArray<NSString*>*grammaticForm;
+@property NSString *dereviative;
 
 - (id)copyWithZone:(nullable NSZone *)zone;
+
 -(void)nextIndexPathGlobal;
 -(void)nextIndexPathLocal;
+-(void)nextIndexPathCountMeaningInObject;
 
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
 

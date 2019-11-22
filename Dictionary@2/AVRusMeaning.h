@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AVRusMeaning : NSObject
 
 @property NSString *meaning;
-@property NSString *accessory;
+@property NSArray<NSString *> *accessory;
 
 @end
 
