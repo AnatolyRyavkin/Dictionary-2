@@ -10,4 +10,17 @@
 
 @implementation AVRusMeaning
 
+-(id)init{
+    self = [super init];
+    if(self){
+        self.arrayMeaning = [NSArray new];
+        self.accessory = [NSArray new];
+        self.dereviative = [NSString new];
+        self.arrayExample = [NSArray new];
+        self.arrayIdiom = [NSArray new];
+        self.arrayPhrasalVerb = [NSArray new];
+    }
+    return self;
+}
+
 @end

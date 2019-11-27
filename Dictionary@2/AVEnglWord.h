@@ -29,13 +29,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
 @property NSArray<NSString*>*grammaticType;
-@property NSArray<NSString*>*additionBase;
-@property NSArray<AVRusMeaning *>*arrayRusMeaning;
-@property NSArray<AVExample*>*arrayExample;
-@property NSArray<NSString*>*arrayIdiom;
-@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+//@property NSArray<NSString*>*additionBase;
+//@property NSString *dereviative;
 @property NSArray<NSString*>*grammaticForm;
-@property NSString *dereviative;
+
+@property NSArray<AVRusMeaning *>*arrayRusMeaning;
+
+@property NSArray<NSString*>*arrayIdiom;
+//@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+//
+//@property NSArray<AVExample*>*arrayExample;  // ???
+
+
 
 - (id)copyWithZone:(nullable NSZone *)zone;
 

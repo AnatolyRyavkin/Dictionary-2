@@ -60,16 +60,15 @@ void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
     if(self){
         self.engMeaningObject = [[NSString alloc] init];
         self.indexPathMeaningWord = makeIndexPathMeaning(0, 0, 0);
-        self.engMeaningObject  = @"";
-        self.engTranscript = @"";
+        self.engTranscript =  [[NSString alloc] init];;
         self.grammaticType = [NSArray new];
         self.grammaticForm = [NSArray new];
-        self.additionBase = [NSArray new];
+        //self.additionBase = [NSArray new];
         self.arrayRusMeaning = [NSArray new];
-        self.arrayExample = [NSArray new];
-        self.arrayIdiom = [NSArray new];
-        self.arrayPhrasalVerb = [NSArray new];
-        self.dereviative = @"";
+        //self.arrayExample = [NSArray new];
+        //self.arrayIdiom = [NSArray new];
+        //self.arrayPhrasalVerb = [NSArray new];
+        //self.dereviative =  [[NSString alloc] init];;
     }
     return self;
 }
@@ -82,12 +81,12 @@ void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
     new.engTranscript = [NSString stringWithString: self.engTranscript];
     new.grammaticType = [NSArray arrayWithArray: self.grammaticType];
     new.grammaticForm = [NSArray arrayWithArray: self.grammaticForm];
-    new.additionBase = [NSArray arrayWithArray: self.additionBase];
+    //new.additionBase = [NSArray arrayWithArray: self.additionBase];
     new.arrayRusMeaning = [NSArray arrayWithArray: self.arrayRusMeaning];
-    new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
+    //new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
     new.arrayIdiom = [NSArray arrayWithArray: self.arrayIdiom];
-    new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
-    new.dereviative = self.dereviative;
+    //new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
+    //new.dereviative = self.dereviative;
     return new;
 }
 

@@ -7,13 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AVExample.h"
+#import "AVPhrasalVerb.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVRusMeaning : NSObject
 
-@property NSString *meaning;
+@property NSArray<NSString *>* arrayMeaning;
 @property NSArray<NSString *> *accessory;
+@property NSString *dereviative;
+@property NSArray<AVExample*>*arrayExample;
+@property NSArray<NSString*>*arrayIdiom;
+@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
 
 @end
 

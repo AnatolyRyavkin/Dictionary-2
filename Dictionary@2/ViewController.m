@@ -68,83 +68,142 @@
     //__block NSString*stringCheck = [NSString new];
    //__block BOOL flagInset = NO;
 
+    typeof(self) weakSelf = self;
+
     void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
 
-        int i = 0;
-        //typeof(self) weakSelf = self;
+        int numString = 0;
 
-        NSArray* arrayExeption =@[@"            "];
+        BOOL b = NO;
 
         for(NSString*string in array){
+            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
+                b = true;
 
-            if([string isEqualToString:@"  "]){
-                if(array.count  > i )
-                    NSLog(@"        %@",array[i-1]);
-
-                    NSLog(@"    %@",array[i]);
-
-                if(array.count  > i + 1)
-                    NSLog(@"        %@",array[i+1]);
-
-                if(array.count  > i + 2)
-                    NSLog(@"        %@",array[i+2]);
-
-                if(array.count  > i + 3)
-                    NSLog(@"        %@",array[i+3]);
-
-                NSLog(@"            j= %d",j);
+            if(!b && ([string isEqualToString:@"от"] || [string isEqualToString:@"="]) && [array[numString - 1] isContaintEngChars]){
+//            if(([string isEqualToString:@"pl"] && [array[numString+1] isEqualToString:@"от"]) ||
+//            ([string isEqualToString:@"superl"] && [array[numString+1] isEqualToString:@"от"]) ||
+//            ([string isEqualToString:@"compare"] && [array[numString+1] isEqualToString:@"от"]) ||
+//            ([string isEqualToString:@"past"] && [array[numString+1] isEqualToString:@"от"]) ||
+//            ([string isEqualToString:@"p"] && [array[numString+1] isEqualToString:@"p"] && [array[numString+2] isEqualToString:@"от"]) ||
+//            ([string isEqualToString:@"косв"] && [array[numString+1] isEqualToString:@"падеж"] && [array[numString+2] isEqualToString:@"от"])){
+                NSLog(@"               j=%d",j);
+                PRINT_OBJECT
                 AVL
-                AV
                 AVL
             }
 
-
-// bool b = false;
-//            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
-//                b = true;
-//            if(!b){
-                NSString *stringPost = (i < array.count - 1) ? array[i+1] : @" ";
-//
-//                NSString *stringPostPost = (i < array.count - 2) ? array[i+1] : @" ";
-//
-//
-
-//                if( ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject: stringPost])) &&
-//                   ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:stringPost] ||
-//                    [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:[stringPost stringWithoutLastSimbolIfSibolComma]]) )
-
-            if( (([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2) ||
-               [ self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:string] )){
-
-                if( [arrayExeption containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [arrayExeption containsObject: stringPost] ){
-
-
-
-                        NSLog(@"        %@",array[i]);
-                        NSLog(@"  %@",array[i+1]);
-                    if(array.count  > i + 2)
-                        NSLog(@"        %@",array[i+2]);
-                    if(array.count  > i + 3)
-                        NSLog(@"        %@",array[i+3]);
-                    NSLog(@"            j= %d",j);
-                    AVL
-                    AV
-                    AVL
-
-                }
-
-                    //проверить все на :!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-            }
-            i++;
+            numString++;
         }
+
     };
 
 
 
+
+
+
+
+
+
+
+    
+//    if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
+//        b = true;
+//
+//    if([string isEqualToString:@"косв"]
+//
+//       ){
+//        a = true;
+//
+//            //if(!b && a && i == array.count - 1 ){
+//        PRINT_OBJECT_SELECT
+//        AVL
+//        AVL
+//            //}
+//    }
+
+//
+//    int i = 0;
+//        //typeof(self) weakSelf = self;
+//
+//    NSArray* arrayExeption =@[@"            "];
+//
+//    BOOL b = NO;
+//
+//    for(NSString*string in array){
+//
+//        if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
+//            b = true;
+//        if(!b ){
+//
+//                //                    if([[string firstCharString] isEqualToString:@"("]){
+//                //
+//                //                        if(array.count  > i )
+//                //                            NSLog(@"        %@",array[i-1]);
+//                //
+//                //                            NSLog(@"    %@",array[i]);
+//                //
+//                //                        if(array.count  > i + 1)
+//                //                            NSLog(@"        %@",array[i+1]);
+//                //
+//                //                        if(array.count  > i + 2)
+//                //                            NSLog(@"        %@",array[i+2]);
+//                //
+//                //                        if(array.count  > i + 3)
+//                //                            NSLog(@"        %@",array[i+3]);
+//                //
+//                //                        NSLog(@"            j= %d",j);
+//                //                        AVL
+//                //                        AV
+//                //                        AVL
+//                //                    }
+//        }
+//
+//            // bool b = false;
+//            //            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
+//            //                b = true;
+//            //            if(!b){
+//        NSString *stringPost = (i < array.count - 1) ? array[i+1] : @" ";
+//            //
+//            //                NSString *stringPostPost = (i < array.count - 2) ? array[i+1] : @" ";
+//            //
+//            //
+//
+//            //                if( ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords containsObject: stringPost])) &&
+//            //                   ([self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:stringPost] ||
+//            //                    [self.sharedMeaningShortWords.arrayShortRusPropertyAndWords[1] isEqualToString:[stringPost stringWithoutLastSimbolIfSibolComma]]) )
+//
+//        if( (([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2) ||
+//             [ self.sharedMeaningShortWords.arrayShortWordGrammaticProperty containsObject:string] )){
+//
+//            if( [arrayExeption containsObject:[stringPost stringWithoutLastSimbolIfSibolComma]] || [arrayExeption containsObject: stringPost] ){
+//
+//
+//
+//                NSLog(@"        %@",array[i]);
+//                NSLog(@"  %@",array[i+1]);
+//                if(array.count  > i + 2)
+//                    NSLog(@"        %@",array[i+2]);
+//                if(array.count  > i + 3)
+//                    NSLog(@"        %@",array[i+3]);
+//                NSLog(@"            j= %d",j);
+//                AVL
+//                AV
+//                AVL
+//
+//            }
+//
+//                //проверить все на :!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+//
+//
+//        }
+//        i++;
+//    }
+
 //    void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
+
 //
 //                    int i = 0;
 //                    typeof(self) weakSelf = self;

@@ -19,6 +19,7 @@
 		FD2386A72340E3DD001A7B18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A62340E3DD001A7B18 /* Assets.xcassets */; };
 		FD2386AA2340E3DD001A7B18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */; };
 		FD2386AD2340E3DD001A7B18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386AC2340E3DD001A7B18 /* main.m */; };
+		FD23C24B238D1F7F0010C95B /* AVCreateBaseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */; };
 		FD696BA923543C1A0032423F /* savedStringEndingData.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD696BA823543C1A0032423F /* savedStringEndingData.txt */; };
 		FDA01122237D1CDD00326094 /* AVRusMeaning.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01121237D1CDD00326094 /* AVRusMeaning.m */; };
 		FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01124237D237D00326094 /* AVMakeBASE.m */; };
@@ -49,6 +50,8 @@
 		FD2386A92340E3DD001A7B18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD2386AB2340E3DD001A7B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD2386AC2340E3DD001A7B18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FD23C249238D1F7F0010C95B /* AVCreateBaseObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCreateBaseObjects.h; sourceTree = "<group>"; };
+		FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCreateBaseObjects.m; sourceTree = "<group>"; };
 		FD696BA823543C1A0032423F /* savedStringEndingData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = savedStringEndingData.txt; sourceTree = "<group>"; };
 		FDA01120237D1CDD00326094 /* AVRusMeaning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRusMeaning.h; sourceTree = "<group>"; };
 		FDA01121237D1CDD00326094 /* AVRusMeaning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRusMeaning.m; sourceTree = "<group>"; };
@@ -92,10 +95,10 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
+				FD23C249238D1F7F0010C95B /* AVCreateBaseObjects.h */,
+				FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */,
 				FD1E5D0D238412610082DA44 /* NSStrign+extension.h */,
 				FD1E5D0E238412610082DA44 /* NSStrign+extension.m */,
-				FDA01123237D237D00326094 /* AVMakeBASE.h */,
-				FDA01124237D237D00326094 /* AVMakeBASE.m */,
 				FD127199236C289700C2B8A4 /* AVMeaningShortWords.h */,
 				FD12719A236C289700C2B8A4 /* AVMeaningShortWords.m */,
 				FD15C424234F4E9100F3B69C /* AVButton.h */,
@@ -123,6 +126,8 @@
 				FD2386A82340E3DD001A7B18 /* LaunchScreen.storyboard */,
 				FD18379E235DA72600334EDF /* arrayCommit.txt */,
 				FD696BA823543C1A0032423F /* savedStringEndingData.txt */,
+				FDA01123237D237D00326094 /* AVMakeBASE.h */,
+				FDA01124237D237D00326094 /* AVMakeBASE.m */,
 			);
 			path = "Dictionary@2";
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 				FD1271982369BA1200C2B8A4 /* AVEnglWord.m in Sources */,
 				FDB522D5237420B1008F199F /* AVPhrasalVerb.m in Sources */,
 				FD1E5D0F238412610082DA44 /* NSStrign+extension.m in Sources */,
+				FD23C24B238D1F7F0010C95B /* AVCreateBaseObjects.m in Sources */,
 				FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */,
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
