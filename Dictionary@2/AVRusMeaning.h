@@ -18,8 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSArray<NSString *> *accessory;
 @property NSString *dereviative;
 @property NSArray<AVExample*>*arrayExample;
-@property NSArray<NSString*>*arrayIdiom;
-@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+
+//@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+//@property NSArray<NSString*>*arrayIdiom;
 
 @end
 

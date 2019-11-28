@@ -37,9 +37,12 @@ void setIndexPathGlobal(AVIndexPathMeaning r, int i){
     r.numberLocalMeaning = 0;
     r.countMeaningInObject = 0;
 }
-void setIndexPathLocal(AVIndexPathMeaning r, int i){
-    r.numberLocalMeaning = i;
-    r.countMeaningInObject = 0;
+AVIndexPathMeaning setIndexPathLocal(AVIndexPathMeaning r, int i){
+    AVIndexPathMeaning indexPath;
+    indexPath.numberGlobalMeaning = r.numberGlobalMeaning;
+    indexPath.numberLocalMeaning = i;
+    indexPath.countMeaningInObject = 0;
+    return indexPath;
 }
 
 void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
@@ -63,11 +66,12 @@ void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
         self.engTranscript =  [[NSString alloc] init];;
         self.grammaticType = [NSArray new];
         self.grammaticForm = [NSArray new];
-        //self.additionBase = [NSArray new];
         self.arrayRusMeaning = [NSArray new];
+        self.arrayIdiom = [NSArray new];
+        self.arrayPhrasalVerb = [NSArray new];
+
         //self.arrayExample = [NSArray new];
-        //self.arrayIdiom = [NSArray new];
-        //self.arrayPhrasalVerb = [NSArray new];
+        //self.additionBase = [NSArray new];
         //self.dereviative =  [[NSString alloc] init];;
     }
     return self;
@@ -81,12 +85,14 @@ void setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i){
     new.engTranscript = [NSString stringWithString: self.engTranscript];
     new.grammaticType = [NSArray arrayWithArray: self.grammaticType];
     new.grammaticForm = [NSArray arrayWithArray: self.grammaticForm];
-    //new.additionBase = [NSArray arrayWithArray: self.additionBase];
     new.arrayRusMeaning = [NSArray arrayWithArray: self.arrayRusMeaning];
-    //new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
     new.arrayIdiom = [NSArray arrayWithArray: self.arrayIdiom];
-    //new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
+    new.arrayPhrasalVerb = [NSArray arrayWithArray: self.arrayPhrasalVerb];
+    
     //new.dereviative = self.dereviative;
+    //new.additionBase = [NSArray arrayWithArray: self.additionBase];
+    //new.arrayExample = [NSArray arrayWithArray: self.arrayExample];
+
     return new;
 }
 

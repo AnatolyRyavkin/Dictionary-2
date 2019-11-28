@@ -5,6 +5,8 @@
 //  Created by Anatoly Ryavkin on 26/11/2019.
 //  Copyright © 2019 AnatolyRyavkin. All rights reserved.
 //
+#define LLL  if(self.arrayEngWords.count > 0){AVEnglWord*ew = [self.arrayEngWords lastObject];NSLog(@"eng mean = %@",ew.engMeaningObject);NSLog(@"eng index = %@",ew.indexPathMeaningWord);NSLog(@"eng index = %@",ew.engTranscript);NSLog(@"eng index = %@",ew.grammaticForm);NSLog(@"eng index = %@",ew.arrayRusMeaning);NSLog(@"eng index = %@",ew.arrayPhrasalVerb);}
+
 
 #import "AVCreateBaseObjects.h"
 
@@ -62,6 +64,10 @@ typedef NS_ENUM(NSInteger, AVState) {
     AVExample*example;
     int numberObjectJ;
 
+    NSMutableArray<NSString *> * arrayIdiomTemp;
+    NSMutableArray<NSString *> * arrayRusMean;
+    AVExample*tempExample;
+
     //flags
 
     AVState engMeaning;
@@ -85,11 +91,11 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     -(void)setBeginMeaning{
 
-        self.managerMeaningShort = [[AVMeaningShortWords alloc]init];
+        self.arrayEngWords = [NSArray new];
+        self.managerMeaningShort = [AVMeaningShortWords sharedShortWords];
         self.manager = [AVMainManager managerData];
         tempArrayEngWords = [NSArray new];
         numberObjectJ = 0;
-
         engMeaning = engTranscript = accessory = grammatic = dereviative = grammaticForm = rusMeaning = arrayIdiom = arrayExample = AVStateBegin;
 
     }
@@ -102,6 +108,16 @@ typedef NS_ENUM(NSInteger, AVState) {
     for(NSArray*array in mainArray){
         typeObject = [self typeForArray:array];
         if(typeObject == AVTypeObjectSingle){
+            if(self.arrayEngWords.count > 0){
+                AVEnglWord*ew = [self.arrayEngWords lastObject];
+                NSLog(@"eng mean = %@",ew.engMeaningObject);
+                NSLog(@"eng index = %d %d %d",ew.indexPathMeaningWord.numberGlobalMeaning,ew.indexPathMeaningWord.numberLocalMeaning,ew.indexPathMeaningWord.countMeaningInObject);
+                NSLog(@"eng tr = %@",ew.engTranscript);
+                NSLog(@"eng grF = %@",ew.grammaticForm);
+                 NSLog(@"eng grT = %@",ew.grammaticType);
+                NSLog(@"eng rusM = %@",ew.arrayRusMeaning);
+                NSLog(@"eng phraseV = %@",ew.arrayPhrasalVerb);
+            }
             [self makeEngObjTypeSingle:array];
         }else if(typeObject == AVTypeObjectCompose){
             [self makeEngObjTypeCompose:array];
@@ -138,6 +154,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     AVStringType type = AVStringTypeInition;
 
+    if([string isEqualToString:@"◊"])
+        type = type | AVStringTypeMarkIdiom;
+
 
     if([string isEqualToString:@"I"] || [string isEqualToString:@"II"] || [string isEqualToString:@"III"] || [string isEqualToString:@"IV"] || [string isEqualToString:@"V"] || [string isEqualToString:@"VI"] || [string isEqualToString:@"VII"] || [string isEqualToString:@"VIII"]){
         type = type | AVStringTypeNumberRom;
@@ -162,13 +181,14 @@ typedef NS_ENUM(NSInteger, AVState) {
     for(int i = 0; i < string.length; i++){
 
         int ch = [string charIntAtNumber:i];
-        //NSString *strChar = [string charStringAtNumber:i];
-        NSString *strLastChar = [string lastCharString];
 
-        if( (ch > 64 || ch < 123))
+        if( (ch > 64 || ch < 123) && !(ch == 91 || ch == 92 || ch == 93 || ch == 94 || ch == 95 || ch == 96))
             type = type | AVStringTypeEng;
-         if(  ch >= 1040 || ch <= 1103)
+         if(  (ch >= 1040 && ch <= 1103) || (ch == 1025 || ch == 1105))
             type = type | AVStringTypeRus;
+    }
+
+    NSString *strLastChar = [string lastCharString];
 
         if([strLastChar integerValue] > 0)
             type = type | AVStringTypeEndNum;
@@ -183,7 +203,6 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         if(type == (AVStringTypeEndNum | AVStringTypeEng) )
             type = AVStringTypeEngEndNumberLat;
-    }
 
     if(type == AVStringTypeInition)
         NSLog(@"defolt AVStringType");
@@ -197,43 +216,90 @@ typedef NS_ENUM(NSInteger, AVState) {
 -(void)makeEngObjTypeSingle:(NSArray*) array{
 
     AVEnglWord*objectEng = [[AVEnglWord alloc] init];
+    self.arrayEngWords = [self.arrayEngWords arrayByAddingObject:objectEng];
     rusMeaningObject = [[AVRusMeaning alloc]init];
     objectEng.arrayRusMeaning = [objectEng.arrayRusMeaning arrayByAddingObject:rusMeaningObject];
+
+    engMeaning = engTranscript = accessory = grammatic = dereviative = grammaticForm = rusMeaning = arrayIdiom = arrayExample = AVStateBegin;
+
 
 #pragma mark - cycle Begin
 
 
+
     for(int numString = 0; numString < array.count; numString++){
+
         NSString * string = array[numString];
+
         if(!string || [string isEqualToString:@""] || [string isEqualToString:@" "])
-            break;
+            continue;
+
         AVStringType typeString = [self defineString:string];
 
 #pragma mark - Derevative Continios
         if(dereviative == AVStateWork){
             NSString *stringDer = (typeString & ( AVStringTypeEndComma | AVStringTypeEndPoint | AVStringTypeEndCommaPoint)) ? [string stringWithoutLastSimbol] :string;
             rusMeaningObject.dereviative = [rusMeaningObject.dereviative stringByAppendingFormat:@" %@",stringDer];
-            break;
+            continue;
         }
+
+#pragma mark - Idiom
+
+        if(arrayIdiom == AVStateWork){
+
+            if( (typeString & AVStringTypeEng) && ([array[numString-1] isContaintRusChars]) ){
+                [arrayIdiomTemp addObject:[NSString new]];
+            }
+
+            if( [self.managerMeaningShort.arrayShortRusProperty containsObject:string] || ( ([self.managerMeaningShort.arrayShortRusProperty containsObject:[string stringWithoutLastSimbol]]) &&
+               (typeString & (AVStringTypeEndComma | AVStringTypeEndCommaPoint | AVStringTypeEndPointPoint) ) )
+               ){
+                NSString *stringTemp = ( !(typeString & (AVStringTypeEndComma | AVStringTypeEndCommaPoint | AVStringTypeEndPointPoint))) ?
+                [NSString stringWithFormat:@"(%@) %@",string, [arrayIdiomTemp lastObject]]:
+                [NSString stringWithFormat:@"(%@) %@",[string stringWithoutLastSimbol], [arrayIdiomTemp lastObject]];
+
+                [arrayIdiomTemp replaceObjectAtIndex:arrayIdiomTemp.count - 1 withObject:stringTemp];
+                objectEng.arrayIdiom = [NSArray arrayWithArray:arrayIdiomTemp];
+                continue;
+
+            }
+
+            NSString *stringTemp = (!(typeString & AVStringTypeEndCommaPoint)) ? [[arrayIdiomTemp lastObject] stringByAppendingString:[NSString stringWithFormat:@" %@",string]] :
+            [[arrayIdiomTemp lastObject] stringByAppendingString:[NSString stringWithFormat:@" %@",[string stringWithoutLastSimbol]]];
+
+            [arrayIdiomTemp replaceObjectAtIndex:arrayIdiomTemp.count - 1 withObject:stringTemp];
+            objectEng.arrayIdiom = [NSArray arrayWithArray:arrayIdiomTemp];
+            continue;
+        }
+
+        if(typeString & AVStringTypeMarkIdiom){
+            arrayIdiom = AVStateWork;
+            arrayIdiomTemp = [NSMutableArray arrayWithObject:[NSString new]];
+            continue;
+        }
+
 
 #pragma mark - English Meaning
 
-        if(engMeaning == AVStateBegin || engMeaning == AVStateWork){
-            if(typeString & AVStringTypeEng ){
+        if( engMeaning == AVStateBegin || engMeaning == AVStateWork){
+            if( (typeString & AVStringTypeEng) & !(typeString & AVStringTypeNumberRom) & !(typeString & AVStringTypeSquareBrackets)){
+                engMeaning = AVStateWork;
                 objectEng.engMeaningObject = [objectEng.engMeaningObject stringByAppendingString:string];
-                break;
+                continue;
             }
             if(typeString & AVStringTypeEngEndNumberLat){
+                engMeaning = AVStateWork;
                 objectEng.engMeaningObject = [objectEng.engMeaningObject stringByAppendingString:[string stringWithoutLastSimbol]];
                 setIndexPathGlobal(objectEng.indexPathMeaningWord, [[string lastCharString] makeNumFromRomaNum]);
-                break;
+                continue;
             }
         }
 
+#pragma mark - Roma Number
 
         if(engMeaning == AVStateWork && (typeString & AVStringTypeNumberRom) ){
-            setIndexPathLocal(objectEng.indexPathMeaningWord, [string makeNumFromRomaNum]);
-            break;
+            objectEng.indexPathMeaningWord = setIndexPathLocal(objectEng.indexPathMeaningWord, [string makeNumFromRomaNum]);
+            continue;
         }
 
 #pragma mark - Transcription
@@ -241,8 +307,8 @@ typedef NS_ENUM(NSInteger, AVState) {
         if(engMeaning == AVStateWork && (typeString & AVStringTypeSquareBrackets) ){
             objectEng.engTranscript = string;
             engMeaning = AVStateEnd;
-            engTranscript = AVStateWork;
-            break;
+            engTranscript = AVStateEnd;
+            continue;
         }
 
 #pragma mark - derevative
@@ -256,27 +322,32 @@ typedef NS_ENUM(NSInteger, AVState) {
             [string isEqualToString:@"="]){
             rusMeaningObject.dereviative = string;
             dereviative = AVStateWork;
-            break;
+            continue;
         }
 
 #pragma mark - Grammatic
 
         if( (typeString & AVStringTypeEng)  && !(typeString & AVStringTypeRoundBrackets) && !(typeString & AVStringTypeRus) &&
-           (engTranscript == AVStateWork || grammatic == AVStateWork )){
+           (engTranscript == AVStateEnd || grammatic == AVStateWork || accessory == AVStateWork) ){
 
             if( typeString & (AVStringTypeEndComma | AVStringTypeEndCommaPoint | AVStringTypeEndPointPoint | AVStringTypeEndDash) ) {
 
                 if([self.managerMeaningShort.arrayShortWordGrammaticProperty containsObject:[string stringWithoutLastSimbol]]){
                     objectEng.grammaticType = [objectEng.grammaticType arrayByAddingObject:[string stringWithoutLastSimbol]];
                     grammatic = AVStateWork;
-                    break;
-                }else{
+                    continue;
+                }
+            }else{
+                if( [self.managerMeaningShort.arrayShortWordGrammaticProperty containsObject:string] ){
+
                     objectEng.grammaticType = [objectEng.grammaticType arrayByAddingObject:string];
                     grammatic = AVStateWork;
-                    break;
+                    continue;
                 }
+
             }
         }
+
 
 #pragma mark - Accessory brackets
 
@@ -286,7 +357,7 @@ typedef NS_ENUM(NSInteger, AVState) {
             if(![string containsString:@"обычно"] && [string containsString:@"множ.число"]){
                 objectEng.grammaticForm = [objectEng.grammaticForm arrayByAddingObject:string];
                 grammatic = AVStateWork;
-                break;
+                continue;
             }
 
             NSMutableCharacterSet*set = [[NSMutableCharacterSet alloc]init];
@@ -305,7 +376,7 @@ typedef NS_ENUM(NSInteger, AVState) {
                 [ @"сочетание с " stringByAppendingString: [[string stringWithoutLastSimbol] stringWithoutFirstSimbol]];
                 rusMeaningObject.accessory = [rusMeaningObject.accessory arrayByAddingObject:stringAccessoryWithPredlog];
                 accessory = AVStateWork;
-                break;
+                continue;
             }
 
             if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && (typeString & AVStringTypeEng) && !(typeString & AVStringTypeRus) ){
@@ -313,20 +384,20 @@ typedef NS_ENUM(NSInteger, AVState) {
                                                                                                                [objectEng.grammaticForm arrayByAddingObject:[string stringWithoutLastSimbol]];
 
                 grammatic = AVStateWork;
-                break;
+                continue;
             }
 
             if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && [string isContaintRusChars] && ![string isContaintEngChars]){
                 rusMeaningObject.accessory = (typeString & AVStringTypeRoundBracketsWithEndSimbol) ? [rusMeaningObject.accessory arrayByAddingObject:string]:
                 [rusMeaningObject.accessory arrayByAddingObject:[string stringWithoutLastSimbol]];
                 grammatic = AVStateWork;
-                break;
+                continue;
             }
             if(!isEqualSeparatedStringInBracetsWithEnglishPredlog && [string isContaintRusChars] && [string isContaintEngChars]){
                 rusMeaningObject.accessory = (typeString & AVStringTypeRoundBracketsWithEndSimbol) ? [rusMeaningObject.accessory arrayByAddingObject:string]:
                 [rusMeaningObject.accessory arrayByAddingObject:[string stringWithoutLastSimbol]];
                 grammatic = AVStateWork;
-                break;
+                continue;
             }
 
             NSLog(@"Error Previos english grammatic  and string is round and curent state Build is AVCurrentStateBuildingBaseObject  ");
@@ -340,7 +411,7 @@ typedef NS_ENUM(NSInteger, AVState) {
           ){
            rusMeaningObject.accessory =  [rusMeaningObject.accessory arrayByAddingObject:string];
             accessory = AVStateWork;
-           break;
+           continue;
        }
 
         if( ([self.managerMeaningShort.arrayShortRusProperty containsObject:[string stringWithoutLastSimbol]]) &&
@@ -349,14 +420,67 @@ typedef NS_ENUM(NSInteger, AVState) {
            ){
             rusMeaningObject.accessory =  [rusMeaningObject.accessory arrayByAddingObject:[string stringWithoutLastSimbol]];
             accessory = AVStateWork;
-            break;
+            continue;
         }
 
-#pragma mark - Rus meaning
-        здесь
+
+#pragma mark -  Status Rus Meaning OR Example
+
+        if(rusMeaning == AVStateWork && arrayExample == AVStateBegin && !(typeString & AVStringTypeRus) && [array[numString-1] isContaintRusChars]){
+            arrayExample = AVStateWork;
+            rusMeaning = AVStateEnd;
+            tempExample = [[AVExample alloc]init];
+        }
+
+        if( (engMeaning  == AVStateEnd && engTranscript == AVStateEnd && rusMeaning == AVStateBegin ) &&
+           (  typeString & AVStringTypeRus) ) {
+                rusMeaning = AVStateWork;
+                arrayRusMean = [NSMutableArray arrayWithArray: @[[NSString new]]];
+        }
+
+#pragma mark - Example
+
+        if( arrayExample ==AVStateWork){
+             if( !(typeString & AVStringTypeRus) && (typeString & AVStringTypeEng) && [array[numString-1] isContaintRusChars]){
+                 tempExample = [[AVExample alloc]init];
+                 rusMeaningObject.arrayExample = [rusMeaningObject.arrayExample arrayByAddingObject:tempExample];
+
+                 if(typeString & (AVStringTypeRoundBrackets | AVStringTypeRoundBracketsWithEndSimbol)){
+                     tempExample.accessory = (typeString & AVStringTypeRoundBrackets) ? [tempExample.accessory stringByAppendingFormat:@" %@",[[string stringWithoutLastSimbol] stringWithoutFirstSimbol]] :
+                     [tempExample.accessory stringByAppendingFormat:@" %@",[[[string stringWithoutLastSimbol] stringWithoutFirstSimbol] stringWithoutLastSimbol]];
+                     continue;
+                 }
+
+                 if( [self.managerMeaningShort.arrayShortRusProperty containsObject:string] || ( ([self.managerMeaningShort.arrayShortRusProperty containsObject:[string stringWithoutLastSimbol]]) &&
+                     (typeString & (AVStringTypeEndComma | AVStringTypeEndCommaPoint | AVStringTypeEndPointPoint) ) ) ){
+
+                     NSString *stringTemp = ( !(typeString & (AVStringTypeEndComma | AVStringTypeEndCommaPoint | AVStringTypeEndPointPoint))) ?
+                     [NSString stringWithFormat:@"%@ %@",string, tempExample.accessory] :
+                     [NSString stringWithFormat:@"%@ %@",[string stringWithoutLastSimbol], tempExample.accessory];
+                     tempExample.accessory = stringTemp;
+                     continue;
+                 }
+
+                 tempExample.meaning = [tempExample.meaning stringByAppendingFormat:@" %@",string];
+
+             }
+        }
+
+#pragma mark - Rus Meaning
+
+        if( rusMeaning == AVStateWork ){
+                if(typeString & AVStringTypeEndCommaPoint && ![[arrayRusMean lastObject] isEqualToString:@""] ){
+                   [arrayRusMean addObject:[NSString new]];
+                }
+                NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
+                [arrayRusMean replaceObjectAtIndex:arrayRusMean.count -1 withObject:tempString];
+                rusMeaningObject.arrayMeaning = [NSArray arrayWithArray:arrayRusMean];
+                continue;
+            }
+
+        }
 
 
-    }
 
     tempArrayEngWords = [tempArrayEngWords arrayByAddingObject:objectEng];
 
@@ -374,9 +498,13 @@ typedef NS_ENUM(NSInteger, AVState) {
 
 -(void)makeEngObjTypeCompose:(NSArray*) array{
 
+    NSLog(@"compose");
+
 }
 
 -(void)makePhraseVerbAndAddThemInObjectEng:(NSArray*) array{
+
+    NSLog(@"phraseVerb");
 
 }
 @end

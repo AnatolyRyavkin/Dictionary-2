@@ -29,15 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
 @property NSArray<NSString*>*grammaticType;
+@property NSArray<NSString*>*grammaticForm;
+@property NSArray<AVRusMeaning *>*arrayRusMeaning;
+@property NSArray<NSString*>*arrayIdiom;
+@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
+
 //@property NSArray<NSString*>*additionBase;
 //@property NSString *dereviative;
-@property NSArray<NSString*>*grammaticForm;
-
-@property NSArray<AVRusMeaning *>*arrayRusMeaning;
-
-@property NSArray<NSString*>*arrayIdiom;
-//@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
-//
 //@property NSArray<AVExample*>*arrayExample;  // ???
 
 
@@ -55,7 +53,7 @@ void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r);
 void makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r);
 
 void setIndexPathGlobal(AVIndexPathMeaning r, int i);
-void setIndexPathLocal(AVIndexPathMeaning r, int i);
+AVIndexPathMeaning setIndexPathLocal(AVIndexPathMeaning r, int i);
 void setIndexPathMeaning(AVIndexPathMeaning r, int i);
 
 @end

@@ -17,8 +17,9 @@
         self.accessory = [NSArray new];
         self.dereviative = [NSString new];
         self.arrayExample = [NSArray new];
-        self.arrayIdiom = [NSArray new];
-        self.arrayPhrasalVerb = [NSArray new];
+        
+        //self.arrayIdiom = [NSArray new];
+        //self.arrayPhrasalVerb = [NSArray new];
     }
     return self;
 }
