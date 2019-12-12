@@ -13,6 +13,7 @@
 #define NSLOGS NSLog(@"- - - - - - -  object j = %d  string = %@",j,string);
 #define PRINT_OBJECT [self printArrayObject:array];
 #define PRINT_OBJECT_SELECT [weakSelf printArrayObject:array andSelectRow:i];
+#define PRINT_OBJECT_COUNT_ATTEMP_countAttemp int i = 0; for(NSString*string in array){if(countAttemp <= i) break; NSLog(@"%@",string);i++;}
 
 #define AVL NSLog(@"");
 #define AV NSLog(@"-------------------------------");
@@ -70,38 +71,98 @@
 
 //    typeof(self) weakSelf = self;
 
+    __block int countVerb = 0;
+
+
     void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
 
-        int numString = 0;
+        if(j == 33540){
+
+        }
 
         BOOL b = NO;
+            if([array[0] isEqualToString:@"[■]"]){
+                for(NSString*string in array){
+                    if(string.intValue > 5){
+                        b = YES;
+                        break;
+                    }
+                }
+//                if(b){
+//                    NSLog(@"j= %d",j);
+//                    PRINT_OBJECT
+//                    AVL
+//                    NSLog(@" count = %d",countVerb);
+//                }
+                    countVerb++;
+//
+                BOOL isNumberQueue = YES;
+                int firstNumber = 0;
+                int secondNumber = -1;
+                for(NSString*string in array){
+                    secondNumber = string.intValue;
+                    if( ((secondNumber > 0 && secondNumber < 10 && string.length == 1) || (secondNumber > 9 && secondNumber < 340 && string.length == 2) ||
+                       (secondNumber > 99 && secondNumber < 1000 && string.length == 3)) ||
+                       (((secondNumber > 0 && secondNumber < 10 && string.length == 2) || (secondNumber > 9 && secondNumber < 340 && string.length == 3) ||
+                         (secondNumber > 99 && secondNumber < 1000 && string.length == 4)) &&     [[string lastCharString] isEqualToString:@":"])
+                       ){
+                        if(secondNumber - firstNumber == 1){
+                            firstNumber = secondNumber;
+                        }
+                        else{
+                            isNumberQueue = NO;
+                            break;
+                        }
+                    }
 
-        for(NSString*string in array){
+                }
 
-            if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))
-                b = true;
-            numString++;
-        }
-        if(!b){
-            PRINT_OBJECT
-            AVL
-            AVL
-
-        }
+                if(!isNumberQueue){
+                    NSLog(@"j= %d",j);
+                    PRINT_OBJECT
+                    AVL
+                }
+            }
 
     };
 
 
     AVCreateBaseObjects*cb = [[AVCreateBaseObjects alloc]init];
     
-    [cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
+    //[cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
 
-    [self array:self.manager.mainArray block:nil andBlockExecutInExternCycle:nil];
+    [self array:self.manager.mainArray block:nil andBlockExecutInExternCycle:block1];
 
 }
 
 
     #pragma mark - Check at ziro ArrayString - need incommiting and array.count = 0
+//
+//void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
+//    BOOL isNumberQueue = YES;
+//    int firstNumber = 0;
+//    int secondNumber = -1;
+//    for(NSString*string in array){
+//        secondNumber = string.intValue;
+//        if( ((secondNumber > 0 && secondNumber < 10 && string.length == 1) || (secondNumber > 9 && secondNumber < 34 && string.length == 2)) ||
+//           (((secondNumber > 0 && secondNumber < 10 && string.length == 2) || (secondNumber > 9 && secondNumber < 34 && string.length == 3)) && [[string lastCharString] isEqualToString:@":"])
+//           ){
+//            if(secondNumber - firstNumber == 1){
+//                firstNumber = secondNumber;
+//            }
+//            else{
+//                isNumberQueue = NO;
+//                break;
+//            }
+//        }
+//
+//    }
+//
+//    if(!isNumberQueue){
+//        NSLog(@"j= %d",j);
+//        PRINT_OBJECT
+//        AVL
+//    }
 
     //
     //if( ([string intValue] > 0 && [string intValue] < 10 && string.length == 1) || ([string intValue] > 9 && [string intValue] < 34 && string.length == 2))

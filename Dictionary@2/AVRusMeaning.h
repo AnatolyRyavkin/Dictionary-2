@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "AVExample.h"
-#import "AVPhrasalVerb.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSArray<NSString *> *accessory;
 @property NSString *dereviative;
 @property NSArray<AVExample*>*arrayExample;
+
+-(id)initForCompose;
 
 //@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
 //@property NSArray<NSString*>*arrayIdiom;

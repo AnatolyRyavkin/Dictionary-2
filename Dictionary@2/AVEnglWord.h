@@ -12,6 +12,7 @@
 #import "AVExample.h"
 #import "AVRusMeaning.h"
 
+
 struct AVIndexPathMeaning {
     int numberGlobalMeaning;
     int numberLocalMeaning;
@@ -20,41 +21,43 @@ struct AVIndexPathMeaning {
 
 typedef struct AVIndexPathMeaning AVIndexPathMeaning;
 
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AVEnglWord : NSObject <NSCopying>
 
-@property (readwrite) AVIndexPathMeaning indexPathMeaningWord;
+@property AVIndexPathMeaning indexPathMeaningWord;
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
 @property NSArray<NSString*>*grammaticType;
 @property NSArray<NSString*>*grammaticForm;
 @property NSArray<AVRusMeaning *>*arrayRusMeaning;
 @property NSArray<NSString*>*arrayIdiom;
-@property NSArray<AVPhrasalVerb*>*arrayPhrasalVerb;
-
-//@property NSArray<NSString*>*additionBase;
-//@property NSString *dereviative;
-//@property NSArray<AVExample*>*arrayExample;  // ???
+@property NSArray *arrayPhrasalVerb;
 
 
+-(AVIndexPathMeaning *)getAdressStr;
 
 - (id)copyWithZone:(nullable NSZone *)zone;
 
 -(void)nextIndexPathGlobal;
 -(void)nextIndexPathLocal;
 -(void)nextIndexPathCountMeaningInObject;
+-(void)printObject:(int)num;
 
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
 
-void makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r);
-void makeIndexPathMeaningNextLocal(AVIndexPathMeaning r);
-void makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r);
+AVIndexPathMeaning makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r);
+AVIndexPathMeaning makeIndexPathMeaningNextLocal(AVIndexPathMeaning r);
+AVIndexPathMeaning makeIndexPathMeaningNextMeaning(AVIndexPathMeaning r);
 
-void setIndexPathGlobal(AVIndexPathMeaning r, int i);
+AVIndexPathMeaning setIndexPathGlobal(AVIndexPathMeaning r, int i);
 AVIndexPathMeaning setIndexPathLocal(AVIndexPathMeaning r, int i);
-void setIndexPathMeaning(AVIndexPathMeaning r, int i);
+AVIndexPathMeaning setIndexPathMeaning(AVIndexPathMeaning r, int i);
+
+
+#pragma mark - c-function
+
+void setIndexPathCount(AVIndexPathMeaning *r, int i);
 
 @end
 

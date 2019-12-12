@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AVPhrasalVerb : NSObject
 
-@property NSString*name;
-@property NSString*accessory;
+
 
 @end
 
