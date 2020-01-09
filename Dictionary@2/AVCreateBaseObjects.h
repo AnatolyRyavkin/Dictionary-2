@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AVMainManager.h"
 #import "NSStrign+extension.m"
+#import "AVPhrasalVerb.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

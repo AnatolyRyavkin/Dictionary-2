@@ -11,6 +11,7 @@
 #import "NSStrign+extension.h"
 #import "AVCreateBaseObjects.h"
 
+#import "AVConstants.h"
 
 typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, NSArray *arrayMain);
 
@@ -24,8 +25,18 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 @property (nonatomic) AVMeaningShortWords* sharedMeaningShortWords;
 
+@property (nonatomic) NSArray* JSONObjects;
+
 -(void)inputTable;
 
+//-(NSArray*)makeJSONFromArrayObjectsAVEngWord: (NSArray<AVEnglWord*>*) arrayEngWordObjects;
+-(NSArray*)makeJSONFromArrayObjectsAVEngWord1: (NSArray<AVEnglWord*>*) arrayEngWordObjects;
+
+-(void)printObjectJSON: (NSDictionary*) objectDictionaryJSON;
+
+-(void)printObjectJSONOnleEngMeaningAndRusMeaning: (NSDictionary*) objectDictionaryJSON;
+
+-(void)printObjectJSONWithShortWord: (NSDictionary*) objectDictionaryJSON;
 
 @end
 

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "AVMeaningShortWords.h"
-#import "AVPhrasalVerb.h"
 #import "AVExample.h"
 #import "AVRusMeaning.h"
+
+@class AVPhrasalVerb;
 
 
 struct AVIndexPathMeaning {
@@ -23,8 +24,12 @@ typedef struct AVIndexPathMeaning AVIndexPathMeaning;
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern const NSString *SelfTypeEngWord;
+extern const NSString *SelfTypePhraseVerb;
+
 @interface AVEnglWord : NSObject <NSCopying>
 
+@property NSString *selfType;
 @property AVIndexPathMeaning indexPathMeaningWord;
 @property NSString*engMeaningObject;
 @property NSString*engTranscript;
@@ -32,7 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSArray<NSString*>*grammaticForm;
 @property NSArray<AVRusMeaning *>*arrayRusMeaning;
 @property NSArray<NSString*>*arrayIdiom;
-@property NSArray *arrayPhrasalVerb;
+@property NSArray <AVPhrasalVerb*>*arrayPhrasalVerb;
+
+@property AVMeaningShortWords *managerMeaningShort;
 
 
 -(AVIndexPathMeaning *)getAdressStr;
@@ -43,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)nextIndexPathLocal;
 -(void)nextIndexPathCountMeaningInObject;
 -(void)printObject:(int)num;
+-(void)insteadShortWord;
 
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
 

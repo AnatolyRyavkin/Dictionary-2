@@ -32,28 +32,15 @@ typedef enum{
 
 @interface AVMeaningShortWords : NSObject
 
-//@property NSArray*arrayShortWordGrammatic;
-//
-@property NSArray* arrayShortWordGrammaticProperty;
-//@property NSArray* arrayLongWordGrammaticProperty;
-//@property NSArray* arrayMeaningWordGrammaticProperty;
-//
-//@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjLongWordGrammaticProperty;
-//@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjMeaningWordGrammaticProperty;
-//
+@property NSArray *arrayShortWordGrammaticProperty;
+@property NSArray *arrayLongWordGrammaticProperty;
+@property NSArray *arrayMeaningWordGrammaticProperty;
+@property NSDictionary<NSString*,NSString*>*dictionaryFromKeysAsShortAndMeaningAsLongGrammatic;
+
 @property NSArray* arrayShortRusProperty;
+@property NSArray* arrayLongRusProperty;
+@property NSDictionary<NSString*,NSString*>*dictionaryFromKeysAsShortAndMeaningAsLongRusProperty;
 
-//@property NSArray* arrayShortRusPropertyAndWords;
-
-//@property NSArray* arrayLongRusProperty;
-//
-//@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongProperty;
-//
-//@property NSArray* arrayShortRusReduct;
-//@property NSArray* arrayLongRusReduct;
-//
-//@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongReduct;
-//
 @property NSArray*arrayEngPredlog;
 
 +(id)sharedShortWords;
@@ -61,3 +48,25 @@ typedef enum{
 @end
 
 NS_ASSUME_NONNULL_END
+
+    //@property NSArray* arrayLongWordGrammaticProperty;
+    //@property NSArray* arrayMeaningWordGrammaticProperty;
+    //
+    //@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjLongWordGrammaticProperty;
+    //@property NSDictionary<NSNumber*,NSString*>*dictionaryKeyShortObjMeaningWordGrammaticProperty;
+    //
+
+
+    //@property NSArray* arrayShortRusPropertyAndWords;
+
+    //@property NSArray* arrayLongRusProperty;
+    //
+    //@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongProperty;
+    //
+    //@property NSArray* arrayShortRusReduct;
+    //@property NSArray* arrayLongRusReduct;
+    //
+    //@property NSDictionary<NSString*,NSString*>*dictionaryRusKeyShortObjLongReduct;
+    //
+    //@property NSArray*arrayShortWordGrammatic;
+    //

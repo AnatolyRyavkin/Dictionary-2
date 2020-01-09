@@ -20,15 +20,315 @@
 
 @interface ViewController ()
 
-
-
 @property NSMutableArray*arrayEnObjects;
+
 @end
 
 
 @implementation ViewController
 
 @synthesize manager = _manager,sharedMeaningShortWords = _sharedMeaningShortWords;
+
+
+#pragma mark - JSON1
+
+-(NSArray*)makeJSONFromArrayObjectsAVEngWord1: (NSArray<AVEnglWord*>*) arrayEngWordObjects{
+
+    NSMutableArray*tempJSON = [NSMutableArray new];
+
+    int count = 0;
+
+    for(AVEnglWord *objectEngWord in arrayEngWordObjects){
+
+        NSLog(@"count = %d",count);
+        count++;
+
+//        if(count == 105){
+//
+//        }
+
+        NSMutableArray* arrayRusMeaningObject = [NSMutableArray new];
+
+        if(objectEngWord.arrayRusMeaning.count > 0){
+
+            for(AVRusMeaning *rusMeaning in objectEngWord.arrayRusMeaning){
+
+                if(rusMeaning == nil)
+                    continue;
+
+                NSMutableDictionary*dictionaryRusMeaning = [NSMutableDictionary new];
+
+                NSMutableArray* arrayExample = [NSMutableArray new];
+
+                if(rusMeaning.arrayExample != nil && rusMeaning.arrayExample.count > 0){
+
+                    for(AVExample *example in rusMeaning.arrayExample){
+
+                        if(example == nil)
+                            continue;
+
+                        NSMutableDictionary*dictionaryExample = [NSMutableDictionary new];
+
+                        if(example.meaning != nil && ![example.meaning isEqualToString:@""])
+                            [dictionaryExample setObject: example.meaning forKey: meaningExampleKey];
+
+                        if(example.accessory != nil && ![example.accessory isEqualToString:@""])
+                            [dictionaryExample setObject: example.accessory forKey: accessoryExampleKey];
+
+                        if(dictionaryExample != nil)
+                            [arrayExample addObject: [NSDictionary dictionaryWithDictionary: dictionaryExample] ];
+
+                    }
+                }
+
+
+                if(arrayExample.count > 0 )
+                    [dictionaryRusMeaning setObject:arrayExample forKey:arrayExampleRusMeaningKey];
+
+                if(rusMeaning.arrayMeaning != nil && rusMeaning.arrayMeaning.count > 0)
+                    [dictionaryRusMeaning setObject: [NSArray arrayWithArray:rusMeaning.arrayMeaning] forKey: arrayMeaningRusMeaningKey];
+
+                if(rusMeaning.accessory != nil && rusMeaning.accessory.count > 0)
+                    [dictionaryRusMeaning setObject: [NSArray arrayWithArray:rusMeaning.accessory] forKey: accessoryRusMeaningKey];
+
+                if(rusMeaning.dereviative != nil && ![rusMeaning.dereviative isEqualToString:@""])
+                    [dictionaryRusMeaning setObject: rusMeaning.dereviative forKey: dereviativeRusMeaningKey];
+
+                if(dictionaryRusMeaning != nil)
+                    [arrayRusMeaningObject addObject: [NSMutableDictionary dictionaryWithDictionary: dictionaryRusMeaning] ];
+
+            }
+        }
+
+        NSMutableDictionary*dictionaryObjectEngWord = [NSMutableDictionary new];
+
+        [dictionaryObjectEngWord setObject: [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.numberGlobalMeaning] forKey: indexPathGlobalKey];
+        [dictionaryObjectEngWord setObject: [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.numberLocalMeaning] forKey: indexPathLocalKey];
+        [dictionaryObjectEngWord setObject: [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.countMeaningInObject] forKey: indexPathCountKey];
+
+        if(objectEngWord.selfType != nil && ![objectEngWord.selfType isEqualToString: @""])
+            [dictionaryObjectEngWord setObject:objectEngWord.selfType forKey:typeObjectKey];
+
+        if(objectEngWord.engMeaningObject != nil && ![objectEngWord.engMeaningObject isEqualToString: @""])
+            [dictionaryObjectEngWord setObject:objectEngWord.engMeaningObject forKey:engMeaningObjectKey];
+
+        if(objectEngWord.engTranscript != nil && ![objectEngWord.engTranscript isEqualToString: @""])
+            [dictionaryObjectEngWord setObject:objectEngWord.engTranscript forKey:engTranscriptKey];
+
+        if(objectEngWord.grammaticType != nil && objectEngWord.grammaticType.count > 0)
+            [dictionaryObjectEngWord setObject:objectEngWord.grammaticType forKey:grammaticTypeKey];
+
+        if(objectEngWord.grammaticForm != nil && objectEngWord.grammaticForm.count > 0)
+            [dictionaryObjectEngWord setObject:objectEngWord.grammaticForm forKey:grammaticFormKey];
+
+        if(objectEngWord.arrayIdiom != nil && objectEngWord.arrayIdiom.count > 0)
+            [dictionaryObjectEngWord setObject:objectEngWord.arrayIdiom forKey:arrayIdiomKey];
+
+        if(arrayRusMeaningObject != nil && arrayRusMeaningObject.count > 0)
+            [dictionaryObjectEngWord setObject:[NSArray arrayWithArray:arrayRusMeaningObject] forKey:arrayRusMeaningKey];
+
+        [self printObjectJSON: [NSDictionary dictionaryWithDictionary: dictionaryObjectEngWord]];
+
+        [tempJSON addObject: [NSDictionary dictionaryWithDictionary: dictionaryObjectEngWord] ];
+
+    }
+
+    return [NSArray arrayWithArray:tempJSON];
+
+}
+
+#pragma mark - Print Object JSON
+
+
+-(void)printObjectJSON: (NSDictionary*) objectDictionaryJSON{
+    AV AVL
+
+    if([objectDictionaryJSON objectForKey:typeObjectKey]){
+        NSLog(@"type object - %@",[objectDictionaryJSON objectForKey:typeObjectKey]);
+    }
+
+    NSLog(@"numberGlobalMeaning= %ld", [[objectDictionaryJSON objectForKey:indexPathGlobalKey] integerValue]);
+    NSLog(@"numberLocalMeaning= %ld", [[objectDictionaryJSON objectForKey:indexPathLocalKey] integerValue]);
+    NSLog(@"countMeaningInObject= %ld", [[objectDictionaryJSON objectForKey:indexPathCountKey] integerValue]);
+
+    if( [objectDictionaryJSON objectForKey:engMeaningObjectKey]){
+        NSLog(@"english meaning - %@",[objectDictionaryJSON objectForKey:engMeaningObjectKey]);
+    }
+
+    if( [objectDictionaryJSON objectForKey:engTranscriptKey]){
+        NSLog(@"english transcription - %@",[objectDictionaryJSON objectForKey:engTranscriptKey]);
+    }
+
+    if( [objectDictionaryJSON objectForKey:grammaticTypeKey]){
+        NSArray *arrayTemp = [objectDictionaryJSON objectForKey:grammaticTypeKey];
+        int i = 1;
+        for(NSString *stringTemp in arrayTemp){
+            NSLog(@"grammatic Type (%d) - %@",i,stringTemp);
+            i++;
+        }
+    }
+
+    if( [objectDictionaryJSON objectForKey:grammaticFormKey]){
+        NSArray *arrayTemp = [objectDictionaryJSON objectForKey:grammaticFormKey];
+        int i = 1;
+        for(NSString *stringTemp in arrayTemp){
+            NSLog(@"grammatic Form (%d) - %@",i,stringTemp);
+            i++;
+        }
+    }
+
+    if( [objectDictionaryJSON objectForKey:arrayIdiomKey]){
+        NSArray *arrayTemp = [objectDictionaryJSON objectForKey:arrayIdiomKey];
+        int i = 1;
+        for(NSString *stringTemp in arrayTemp){
+            NSLog(@"idiom (%d) - %@",i,stringTemp);
+            i++;
+        }
+    }
+
+    if( [objectDictionaryJSON objectForKey:arrayRusMeaningKey]){
+        
+        NSArray *arryaTempRusObject = [objectDictionaryJSON objectForKey:arrayRusMeaningKey];
+        int j = 1;
+        for(NSDictionary *dictionaryTemp in arryaTempRusObject){
+
+            if([dictionaryTemp objectForKey:arrayExampleRusMeaningKey]){
+                NSArray *arrayExample = [dictionaryTemp objectForKey:arrayExampleRusMeaningKey];
+                int i = 1;
+                for(NSDictionary *dictionaryExample in arrayExample){
+
+                    if( [dictionaryExample objectForKey: meaningExampleKey]){
+                        NSLog(@"example (%d : %d) - %@",j,i,[dictionaryExample objectForKey: meaningExampleKey]);
+                    }
+
+                    if( [dictionaryExample objectForKey: accessoryExampleKey]){
+                        NSLog(@"accessory for example (%d : %d) - %@",j,i,[dictionaryExample objectForKey: accessoryExampleKey]);
+                    }
+                    i++;
+                }
+            }
+
+            if( [dictionaryTemp objectForKey:arrayMeaningRusMeaningKey]){
+                NSArray *arrayTemp = [dictionaryTemp objectForKey:arrayMeaningRusMeaningKey];
+                int i = 1;
+                for(NSString *stringTemp in arrayTemp){
+                    NSLog(@"rus meaning (%d : %d) - %@",j,i,stringTemp);
+                    i++;
+                }
+            }
+
+            if( [dictionaryTemp objectForKey:accessoryRusMeaningKey]){
+                NSArray *arrayTemp = [dictionaryTemp objectForKey:accessoryRusMeaningKey];
+                int i = 1;
+                for(NSString *stringTemp in arrayTemp){
+                    NSLog(@"accessory rus meaning (%d : %d) - %@",j,i,stringTemp);
+                    i++;
+                }
+            }
+
+            if( [dictionaryTemp objectForKey:dereviativeRusMeaningKey]){
+                    NSLog(@"derevative (%d) - %@",j,[dictionaryTemp objectForKey:dereviativeRusMeaningKey]);
+            }
+
+            j++;
+
+        }
+    }
+}
+
+#pragma mark - Print Object JSON Onle Eng Meaning And RusMeaning
+
+-(void)printObjectJSONOnleEngMeaningAndRusMeaning: (NSDictionary*) objectDictionaryJSON{
+    AV AVL
+
+    if( [objectDictionaryJSON objectForKey:engMeaningObjectKey]){
+        NSLog(@"english meaning - %@",[objectDictionaryJSON objectForKey:engMeaningObjectKey]);
+    }
+
+    if( [objectDictionaryJSON objectForKey:arrayRusMeaningKey]){
+
+        NSArray *arryaTempRusObject = [objectDictionaryJSON objectForKey:arrayRusMeaningKey];
+        int j = 1;
+        for(NSDictionary *dictionaryTemp in arryaTempRusObject){
+
+
+            if( [dictionaryTemp objectForKey:arrayMeaningRusMeaningKey]){
+                NSArray *arrayTemp = [dictionaryTemp objectForKey:arrayMeaningRusMeaningKey];
+                int i = 1;
+                for(NSString *stringTemp in arrayTemp){
+                    NSLog(@"                                  rus meaning (%d : %d) - %@",j,i,stringTemp);
+                    i++;
+                }
+            }
+
+            j++;
+
+        }
+    }
+}
+
+#pragma mark - Print Object JSON
+
+
+-(void)printObjectJSONWithShortWord: (NSDictionary*) objectDictionaryJSON{
+    AV AVL
+
+    if( [objectDictionaryJSON objectForKey:engMeaningObjectKey]){
+        NSLog(@"                            english meaning - %@",[objectDictionaryJSON objectForKey:engMeaningObjectKey]);
+    }
+
+    if( [objectDictionaryJSON objectForKey:grammaticTypeKey]){
+        NSArray *arrayTemp = [objectDictionaryJSON objectForKey:grammaticTypeKey];
+        int i = 1;
+        for(NSString *stringTemp in arrayTemp){
+            NSLog(@"grammatic Type (%d) - %@",i,stringTemp);
+            i++;
+        }
+    }
+
+    if( [objectDictionaryJSON objectForKey:grammaticFormKey]){
+        NSArray *arrayTemp = [objectDictionaryJSON objectForKey:grammaticFormKey];
+        int i = 1;
+        for(NSString *stringTemp in arrayTemp){
+            NSLog(@"grammatic Form (%d) - %@",i,stringTemp);
+            i++;
+        }
+    }
+
+    if( [objectDictionaryJSON objectForKey:arrayRusMeaningKey]){
+
+        NSArray *arryaTempRusObject = [objectDictionaryJSON objectForKey:arrayRusMeaningKey];
+        int j = 1;
+        for(NSDictionary *dictionaryTemp in arryaTempRusObject){
+
+            if([dictionaryTemp objectForKey:arrayExampleRusMeaningKey]){
+                NSArray *arrayExample = [dictionaryTemp objectForKey:arrayExampleRusMeaningKey];
+                int i = 1;
+                for(NSDictionary *dictionaryExample in arrayExample){
+
+                    if( [dictionaryExample objectForKey: accessoryExampleKey]){
+                        NSLog(@"accessory for example (%d : %d) - %@",j,i,[dictionaryExample objectForKey: accessoryExampleKey]);
+                    }
+                    i++;
+                }
+            }
+
+
+            if( [dictionaryTemp objectForKey:accessoryRusMeaningKey]){
+                NSArray *arrayTemp = [dictionaryTemp objectForKey:accessoryRusMeaningKey];
+                int i = 1;
+                for(NSString *stringTemp in arrayTemp){
+                    NSLog(@"accessory rus meaning (%d : %d) - %@",j,i,stringTemp);
+                    i++;
+                }
+            }
+
+            j++;
+
+        }
+    }
+}
+
 
 -(AVMeaningShortWords*)sharedMeaningShortWords{
     if(!_sharedMeaningShortWords)
@@ -71,69 +371,130 @@
 
 //    typeof(self) weakSelf = self;
 
-    __block int countVerb = 0;
+//    __block int countVerb = 0;
 
 
     void(^block1)(NSArray *, int , NSArray *) = ^(NSArray *array, int j, NSArray *arrayMain) {
 
-        if(j == 33540){
-
-        }
-
-        BOOL b = NO;
-            if([array[0] isEqualToString:@"[■]"]){
                 for(NSString*string in array){
-                    if(string.intValue > 5){
-                        b = YES;
-                        break;
+                    if(string.intValue > 100){
+                        NSLog(@"j= %d",j);
+                        PRINT_OBJECT
+                        AVL
                     }
                 }
-//                if(b){
-//                    NSLog(@"j= %d",j);
-//                    PRINT_OBJECT
-//                    AVL
-//                    NSLog(@" count = %d",countVerb);
-//                }
-                    countVerb++;
-//
-                BOOL isNumberQueue = YES;
-                int firstNumber = 0;
-                int secondNumber = -1;
-                for(NSString*string in array){
-                    secondNumber = string.intValue;
-                    if( ((secondNumber > 0 && secondNumber < 10 && string.length == 1) || (secondNumber > 9 && secondNumber < 340 && string.length == 2) ||
-                       (secondNumber > 99 && secondNumber < 1000 && string.length == 3)) ||
-                       (((secondNumber > 0 && secondNumber < 10 && string.length == 2) || (secondNumber > 9 && secondNumber < 340 && string.length == 3) ||
-                         (secondNumber > 99 && secondNumber < 1000 && string.length == 4)) &&     [[string lastCharString] isEqualToString:@":"])
-                       ){
-                        if(secondNumber - firstNumber == 1){
-                            firstNumber = secondNumber;
-                        }
-                        else{
-                            isNumberQueue = NO;
-                            break;
-                        }
-                    }
-
-                }
-
-                if(!isNumberQueue){
-                    NSLog(@"j= %d",j);
-                    PRINT_OBJECT
-                    AVL
-                }
-            }
 
     };
 
 
     AVCreateBaseObjects*cb = [[AVCreateBaseObjects alloc]init];
     
-    //[cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
+    NSArray<AVEnglWord*>* arrayObjects = [cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
 
-    [self array:self.manager.mainArray block:nil andBlockExecutInExternCycle:block1];
+    NSArray *JSONMain = [self makeJSONFromArrayObjectsAVEngWord1:arrayObjects];
+
+    //[arrayObjects[0] printObject:0];
+
+    NSError*errorData = nil;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:JSONMain format:NSPropertyListXMLFormat_v1_0 options:0 error:&errorData];
+    if(errorData!=nil)
+        NSLog(@"error :%@",[errorData description]);
+
+    NSString* pathFileBase = @"/Users/ryavkinto/Documents/baseEnglishDictionary/fileBase.txt";
+
+        //for real devace ->
+        //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
+
+    [[NSFileManager defaultManager] createFileAtPath:pathFileBase contents:nil attributes:nil];
+
+    [data writeToFile:pathFileBase atomically:YES];
+
+//    [self array:self.manager.mainArray block:nil andBlockExecutInExternCycle:block1];
 
 }
+
+#pragma mark - End
+
+    //
+    //-(NSArray*)makeJSONFromArrayObjectsAVEngWord: (NSArray<AVEnglWord*>*) arrayEngWordObjects{
+    //
+    //    NSMutableArray*tempJSON = [NSMutableArray new];
+    //
+    //    for(AVEnglWord *objectEngWord in arrayEngWordObjects){
+    //
+    //        NSMutableArray* arrayRusMeaningObject = [NSMutableArray new];
+    //
+    //        if(objectEngWord.arrayRusMeaning.count > 0){
+    //        for(AVRusMeaning *rusMeaning in objectEngWord.arrayRusMeaning){
+    //
+    //            NSMutableArray* arrayExample = [NSMutableArray new];
+    //
+    //            if(rusMeaning.arrayExample.count > 0){
+    //            for(AVExample *example in rusMeaning.arrayExample){
+    //
+    //                example.meaning = (example.meaning == nil) ? @"" : example.meaning;
+    //                example.accessory = (example.accessory == nil) ? @"" : example.accessory;
+    //
+    //                NSDictionary*dictionaryExample = [NSDictionary dictionaryWithObjectsAndKeys:
+    //
+    //                                                example.meaning, meaningExampleKey,
+    //                                                example.accessory, accessoryExampleKey,
+    //
+    //                                                     nil];
+    //
+    //                [arrayExample addObject: dictionaryExample];
+    //
+    //            }
+    //            }else
+    //                [arrayExample addObject:@""];
+    //
+    //            rusMeaning.arrayMeaning = (rusMeaning.arrayMeaning == nil) ? @[@""] : rusMeaning.arrayMeaning;
+    //            rusMeaning.accessory = (rusMeaning.accessory == nil) ? @[@""] : rusMeaning.accessory;
+    //            rusMeaning.dereviative = (rusMeaning.dereviative == nil) ? @"" : rusMeaning.dereviative;
+    //
+    //            NSDictionary*dictionaryRusMeaning = [NSDictionary dictionaryWithObjectsAndKeys:
+    //
+    //                                         rusMeaning.arrayMeaning, arrayMeaningRusMeaningKey,
+    //                                         rusMeaning.accessory, accessoryRusMeaningKey,
+    //                                         rusMeaning.dereviative, dereviativeRusMeaningKey,
+    //                                         [NSArray arrayWithArray: arrayExample], arrayExampleRusMeaningKey,
+    //
+    //                                                 nil];
+    //            [arrayRusMeaningObject addObject: dictionaryRusMeaning];
+    //
+    //        }
+    //        }
+    //
+    //        objectEngWord.engMeaningObject = (objectEngWord.engMeaningObject == nil) ? @"" : objectEngWord.engMeaningObject;
+    //        objectEngWord.engTranscript = (objectEngWord.engTranscript == nil) ? @"" : objectEngWord.engTranscript;
+    //        objectEngWord.grammaticType = (objectEngWord.grammaticType == nil) ? @[@""] : objectEngWord.grammaticType;
+    //        objectEngWord.grammaticForm = (objectEngWord.grammaticForm == nil) ? @[@""] : objectEngWord.grammaticForm;
+    //        arrayRusMeaningObject = (arrayRusMeaningKey == nil) ? [NSMutableArray arrayWithArray: @[@""]] : arrayRusMeaningObject;
+    //        objectEngWord.arrayIdiom = (objectEngWord.arrayIdiom == nil) ? @[@""] : objectEngWord.arrayIdiom;
+    //        objectEngWord.arrayPhrasalVerb = (objectEngWord.arrayPhrasalVerb == nil) ? @[@""] : objectEngWord.arrayPhrasalVerb;
+    //
+    //        NSDictionary*dictionaryObjectEngWord = [NSDictionary dictionaryWithObjectsAndKeys:
+    //
+    //                            [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.numberGlobalMeaning], indexPathGlobalKey,
+    //                            [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.numberLocalMeaning], indexPathLocalKey,
+    //                            [NSNumber numberWithInteger: objectEngWord.indexPathMeaningWord.countMeaningInObject], indexPathCountKey,
+    //                            objectEngWord.engMeaningObject, engMeaningObjectKey,
+    //                            objectEngWord.engTranscript, engTranscriptKey,
+    //                            objectEngWord.grammaticType, grammaticTypeKey,
+    //                            objectEngWord.grammaticForm, grammaticFormKey,
+    //                            [NSArray arrayWithArray:arrayRusMeaningObject], arrayRusMeaningKey,
+    //                            objectEngWord.arrayIdiom, arrayIdiomKey,
+    //                            @"", arrayPhrasalVerbKey,
+    //
+    //                                                    nil];
+    //
+    //        [tempJSON addObject:dictionaryObjectEngWord];
+    //
+    //    }
+    //
+    //    return [NSArray arrayWithArray:tempJSON];
+    //
+    //}
 
 
     #pragma mark - Check at ziro ArrayString - need incommiting and array.count = 0
@@ -178,6 +539,34 @@
     //    NSLog(@"               j=%d",j);
 
 
+
+    //
+    //                BOOL isNumberQueue = YES;
+    //                int firstNumber = 0;
+    //                int secondNumber = -1;
+    //                for(NSString*string in array){
+    //                    secondNumber = string.intValue;
+    //                    if( ((secondNumber > 0 && secondNumber < 10 && string.length == 1) || (secondNumber > 9 && secondNumber < 340 && string.length == 2) ||
+    //                       (secondNumber > 99 && secondNumber < 1000 && string.length == 3)) ||
+    //                       (((secondNumber > 0 && secondNumber < 10 && string.length == 2) || (secondNumber > 9 && secondNumber < 340 && string.length == 3) ||
+    //                         (secondNumber > 99 && secondNumber < 1000 && string.length == 4)) &&     [[string lastCharString] isEqualToString:@":"])
+    //                       ){
+    //                        if(secondNumber - firstNumber == 1){
+    //                            firstNumber = secondNumber;
+    //                        }
+    //                        else{
+    //                            isNumberQueue = NO;
+    //                            break;
+    //                        }
+    //                    }
+    //
+    //                }
+    //
+    //                if(!isNumberQueue){
+    //                    NSLog(@"j= %d",j);
+    //                    PRINT_OBJECT
+    //                    AVL
+    //                }
 
 
 
