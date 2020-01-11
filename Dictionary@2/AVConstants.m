@@ -32,4 +32,7 @@ const NSString*accessoryExampleKey = @"accessoryExample";
 
 const NSString*typeObjectKey = @"typeObject";
 
+NSString const *example;
+const NSString *example1;
+
 @end

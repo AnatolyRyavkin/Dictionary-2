@@ -50,6 +50,8 @@ extern const NSString *SelfTypePhraseVerb;
 -(void)nextIndexPathLocal;
 -(void)nextIndexPathCountMeaningInObject;
 -(void)printObject:(int)num;
+-(void)printObject;
+-(void)printObjectWhole;
 -(void)insteadShortWord;
 
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);

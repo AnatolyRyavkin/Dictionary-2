@@ -40,7 +40,7 @@
 
     for(AVEnglWord *objectEngWord in arrayEngWordObjects){
 
-        NSLog(@"count = %d",count);
+//        NSLog(@"count = %d",count);
         count++;
 
 //        if(count == 105){
@@ -127,7 +127,7 @@
         if(arrayRusMeaningObject != nil && arrayRusMeaningObject.count > 0)
             [dictionaryObjectEngWord setObject:[NSArray arrayWithArray:arrayRusMeaningObject] forKey:arrayRusMeaningKey];
 
-        [self printObjectJSON: [NSDictionary dictionaryWithDictionary: dictionaryObjectEngWord]];
+        //[self printObjectJSON: [NSDictionary dictionaryWithDictionary: dictionaryObjectEngWord]];
 
         [tempJSON addObject: [NSDictionary dictionaryWithDictionary: dictionaryObjectEngWord] ];
 
@@ -391,12 +391,13 @@
     
     NSArray<AVEnglWord*>* arrayObjects = [cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
 
+
     NSArray *JSONMain = [self makeJSONFromArrayObjectsAVEngWord1:arrayObjects];
 
-    //[arrayObjects[0] printObject:0];
-
     NSError*errorData = nil;
+
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:JSONMain format:NSPropertyListXMLFormat_v1_0 options:0 error:&errorData];
+
     if(errorData!=nil)
         NSLog(@"error :%@",[errorData description]);
 

@@ -131,28 +131,41 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     [self setBeginMeaning];
     for(NSArray*array in mainArray){
-//        if(numberObjectJ < 0 || numberObjectJ > 0){
-//            numberObjectJ++;
-//            continue;
-//        }
+        if(numberObjectJ < 0){
+            numberObjectJ++;
+            continue;
+        }
         checkPrint = NO;
         typeObject = [self typeForArray:array];
         if(typeObject == AVTypeObjectSingle){
             [self makeEngObjTypeSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
+            [ew insteadShortWord];
+            [ew insteadShortWord];
+
+
         }else if(typeObject == AVTypeObjectCompose){
             [self makeEngObjTypeCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
+            [ew insteadShortWord];
+            [ew insteadShortWord];
+
         }else if(typeObject == AVTypeObjectPhraseVerbSingle){
             [self makePhraseVerbSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
+            [ew insteadShortWord];
+            [ew insteadShortWord];
+
         }else if(typeObject == AVTypeObjectPhraseVerbCompose){
             [self makePhraseVerbCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
+            [ew insteadShortWord];
+            [ew insteadShortWord];
+
         }else{
             NSLog(@"error type object");
         }
@@ -160,7 +173,7 @@ typedef NS_ENUM(NSInteger, AVState) {
         if(checkPrint){
 
         }
-        if(numberObjectJ == 1000)
+        if(numberObjectJ == 100000)
             break;
 
         if(numberObjectJ == 100000){
@@ -306,6 +319,10 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         NSString * string = array[numString];
+
+        if([string isEqualToString:@"текст"]){
+            
+        }
 
         if(!string || [string isEqualToString:@""] || [string isEqualToString:@" "])
             continue;
@@ -693,6 +710,10 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         NSString * string = array[numString];
+
+        if([string isEqualToString:@"текст"]){
+
+        }
 
         if([string containsString:@"л ед ч"]  || [string isEqualToString:@"л"]){
 
@@ -1292,6 +1313,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         NSString * string = array[numString];
 
+        if([string isEqualToString:@"текст"]){
+
+        }
+
         if([string isEqualToString:@"v"]){
             continue;
         }
@@ -1679,6 +1704,10 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         NSString * string = array[numString];
+
+        if([string isEqualToString:@"текст"]){
+
+        }
 
         if([string isEqualToString:@"v"]){
             continue;

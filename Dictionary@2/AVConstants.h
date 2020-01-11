@@ -31,23 +31,9 @@ extern NSString*accessoryExampleKey;
 
 extern NSString*typeObjectKey;
 
-//
-//@property AVIndexPathMeaning indexPathMeaningWord;
-//@property NSString*engMeaningObject;
-//@property NSString*engTranscript;
-//@property NSArray<NSString*>*grammaticType;
-//@property NSArray<NSString*>*grammaticForm;
-//@property NSArray<AVRusMeaning *>*arrayRusMeaning;
-//@property NSArray<NSString*>*arrayIdiom;
-//@property NSArray <AVPhrasalVerb*>*arrayPhrasalVerb;
+extern const NSString *example;
+extern NSString const *example1;
 
-//@property NSArray<NSString *>* arrayMeaning;
-//@property NSArray<NSString *> *accessory;
-//@property NSString *dereviative;
-//@property NSArray<AVExample*>*arrayExample;
-
-//@property NSString*meaning;
-//@property NSString*accessory;
 
 @interface AVConstants : NSObject
 
