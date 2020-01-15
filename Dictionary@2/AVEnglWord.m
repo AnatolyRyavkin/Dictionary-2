@@ -80,10 +80,10 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
     if(self.grammaticType.count > 0){
         NSMutableArray *arrayTemp = [NSMutableArray new];
         for(NSString *gramType in self.grammaticType){
-            if(![[self.managerMeaningShort.dictionaryFromKeysAsShortAndMeaningAsLongGrammatic allKeys] containsObject:gramType]){
-//                NSLog(@"error instead type!");
-            }else{
+            if([[self.managerMeaningShort.dictionaryFromKeysAsShortAndMeaningAsLongGrammatic allKeys] containsObject:gramType]){
                 [arrayTemp addObject:[self.managerMeaningShort.dictionaryFromKeysAsShortAndMeaningAsLongGrammatic objectForKey:gramType]];
+            }else{
+                [arrayTemp addObject:gramType];
             }
         }
         self.grammaticType = [NSArray arrayWithArray: arrayTemp];
@@ -103,6 +103,246 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
         self.grammaticForm = [NSArray arrayWithArray:arrayTemp];
     }
 
+    if(self.arrayIdiom.count > 0){
+        NSMutableArray *arrayTemp = [NSMutableArray new];
+        for(NSString *stringTempDontMut in self.arrayIdiom){
+            NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMut];
+
+            if([stringTemp containsString:@"чего-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чего-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"чего-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+
+            }
+            if([stringTemp containsString:@"кого-л"]){
+                NSRange range = [stringTemp rangeOfString:@"кого-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кого-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+
+            }
+            if([stringTemp containsString:@"чему-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чему-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чему-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+
+            }
+            if([stringTemp containsString:@"кому-л"]){
+                NSRange range = [stringTemp rangeOfString:@"кому-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кому-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+
+            }
+            if([stringTemp containsString:@"чем-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чем-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чем-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+            }
+            if([stringTemp containsString:@"кем-л"]){
+                NSRange range = [stringTemp rangeOfString:@"кем-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кем-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+            }
+            if([stringTemp containsString:@"что-л"]){
+                NSRange range = [stringTemp rangeOfString:@"что-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"что-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+            }
+            if([stringTemp containsString:@"чьему-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьему-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьему-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+            }
+            if([stringTemp containsString:@"чьим-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьим-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьим-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+            }
+            if([stringTemp containsString:@"чьей-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьей-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьей-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+            }
+            if([stringTemp containsString:@"чью-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чью-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чью-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+            }
+            if([stringTemp containsString:@"чьём-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьём-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьём-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                }
+            if([stringTemp containsString:@"ком-л"]){
+                NSRange range = [stringTemp rangeOfString:@"ком-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"ком-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
+                }
+                [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
+            }
+            if([stringTemp containsString:@"чьи-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьи-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьи-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+            }
+            if([stringTemp containsString:@"чьих-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьих-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьих-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+            }
+            if([stringTemp containsString:@"чьё-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьё-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьё-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+
+            }
+            if([stringTemp containsString:@"чём-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чём-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чём-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+            }
+            if([stringTemp containsString:@"чей-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чей-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чей-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+            }
+            if([stringTemp containsString:@"какой-л"]){
+                NSRange range = [stringTemp rangeOfString:@"какой-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какой-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+            }
+            if([stringTemp containsString:@"чья-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чья-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чья-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+            }
+            if([stringTemp containsString:@"чьего-л"]){
+                NSRange range = [stringTemp rangeOfString:@"чьего-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьего-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+            }
+            if([stringTemp containsString:@"куда-л"]){
+                NSRange range = [stringTemp rangeOfString:@"куда-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"куда-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+            }
+
+            if([stringTemp containsString:@"множ.число"]){
+                NSRange range = [stringTemp rangeOfString:@"множ.число"];
+                [stringTemp replaceCharactersInRange:range withString:@"множественное число"];
+            }else
+
+                if([stringTemp containsString:@"ед.число"]){
+                    NSRange range = [stringTemp rangeOfString:@"ед.число"];
+                    [stringTemp replaceCharactersInRange:range withString:@"единственное число"];
+                }else
+
+                    if([stringTemp containsString:@"."]){
+                            //                        NSLog(@"....... %@",stringTemp);
+                            //                        NSLog(@"");
+                    }
+
+            if([stringTemp containsString:@"smb"]){
+                NSRange range = [stringTemp rangeOfString:@"smb"];
+                [stringTemp replaceCharactersInRange:range withString:@"somebody"];
+            }
+
+            if([stringTemp containsString:@"smth"]){
+                NSRange range = [stringTemp rangeOfString:@"smth"];
+                [stringTemp replaceCharactersInRange:range withString:@"something"];
+            }
+
+            [arrayTemp addObject:[NSString stringWithString:stringTemp]];
+        }
+        self.arrayIdiom = [NSArray arrayWithArray:arrayTemp];
+    }
+
 
     if(self.arrayRusMeaning.count > 0){
 
@@ -115,93 +355,210 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
 
                 for(NSString *stringTempNotMutable in rusMeaning.accessory){
                     NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempNotMutable];
+
                     if([stringTemp containsString:@"чего-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чего-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"чего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+
                     }
                     if([stringTemp containsString:@"кого-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кого-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кого-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+
                     }
                     if([stringTemp containsString:@"чему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чему-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+
                     }
                     if([stringTemp containsString:@"кому-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кому-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кому-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+
                     }
                     if([stringTemp containsString:@"чем-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чем-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
                     }
                     if([stringTemp containsString:@"кем-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кем-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
                     }
                     if([stringTemp containsString:@"что-л"]){
                         NSRange range = [stringTemp rangeOfString:@"что-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"что-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
                     }
                     if([stringTemp containsString:@"чьему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьему-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
                     }
                     if([stringTemp containsString:@"чьим-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьим-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьим-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
                     }
                     if([stringTemp containsString:@"чьей-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
                     }
                     if([stringTemp containsString:@"чью-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чью-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чью-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
                     }
                     if([stringTemp containsString:@"чьём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
                     }
                     if([stringTemp containsString:@"ком-л"]){
                         NSRange range = [stringTemp rangeOfString:@"ком-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"ком-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
+                        }
                         [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
                     }
                     if([stringTemp containsString:@"чьи-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьи-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьи-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
                     }
                     if([stringTemp containsString:@"чьих-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьих-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьих-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
                     }
                     if([stringTemp containsString:@"чьё-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьё-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьё-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+
                     }
                     if([stringTemp containsString:@"чём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
                     }
                     if([stringTemp containsString:@"чей-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
                     }
                     if([stringTemp containsString:@"какой-л"]){
                         NSRange range = [stringTemp rangeOfString:@"какой-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какой-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
                     }
                     if([stringTemp containsString:@"чья-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чья-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чья-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
                     }
                     if([stringTemp containsString:@"чьего-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьего-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
                     }
                     if([stringTemp containsString:@"куда-л"]){
                         NSRange range = [stringTemp rangeOfString:@"куда-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"куда-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
                     }
 
                     if([stringTemp containsString:@"множ.число"]){
@@ -209,15 +566,15 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                         [stringTemp replaceCharactersInRange:range withString:@"множественное число"];
                     }else
 
-                    if([stringTemp containsString:@"ед.число"]){
-                        NSRange range = [stringTemp rangeOfString:@"ед.число"];
-                        [stringTemp replaceCharactersInRange:range withString:@"единственное число"];
-                    }else
+                        if([stringTemp containsString:@"ед.число"]){
+                            NSRange range = [stringTemp rangeOfString:@"ед.число"];
+                            [stringTemp replaceCharactersInRange:range withString:@"единственное число"];
+                        }else
 
-                    if([stringTemp containsString:@"."]){
-//                        NSLog(@"....... %@",stringTemp);
-//                        NSLog(@"");
-                    }
+                            if([stringTemp containsString:@"."]){
+                                    //                        NSLog(@"....... %@",stringTemp);
+                                    //                        NSLog(@"");
+                            }
 
                     if([[self.managerMeaningShort.dictionaryFromKeysAsShortAndMeaningAsLongRusProperty allKeys] containsObject:stringTemp]){
 
@@ -246,91 +603,207 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
 
                     if([stringTemp containsString:@"чего-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чего-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"чего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+
                     }
                     if([stringTemp containsString:@"кого-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кого-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кого-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+
                     }
                     if([stringTemp containsString:@"чему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чему-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+
                     }
                     if([stringTemp containsString:@"кому-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кому-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
-                    }
-                    if([stringTemp containsString:@"чьему-л"]){
-                        NSRange range = [stringTemp rangeOfString:@"чьему-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
-                    }
-                    if([stringTemp containsString:@"чьим-л"]){
-                        NSRange range = [stringTemp rangeOfString:@"чьим-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
-                    }
-                    if([stringTemp containsString:@"чьей-л"]){
-                        NSRange range = [stringTemp rangeOfString:@"чьей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кому-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+
                     }
                     if([stringTemp containsString:@"чем-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чем-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
                     }
                     if([stringTemp containsString:@"кем-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кем-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
                     }
                     if([stringTemp containsString:@"что-л"]){
                         NSRange range = [stringTemp rangeOfString:@"что-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"что-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTemp containsString:@"чьему-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чьему-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                    }
+                    if([stringTemp containsString:@"чьим-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чьим-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьим-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                    }
+                    if([stringTemp containsString:@"чьей-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чьей-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
                     }
                     if([stringTemp containsString:@"чью-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чью-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чью-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
                     }
                     if([stringTemp containsString:@"чьём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
                     }
                     if([stringTemp containsString:@"ком-л"]){
                         NSRange range = [stringTemp rangeOfString:@"ком-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"ком-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
+                        }
                         [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
                     }
                     if([stringTemp containsString:@"чьи-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьи-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьи-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
                     }
                     if([stringTemp containsString:@"чьих-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьих-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьих-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
                     }
                     if([stringTemp containsString:@"чьё-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьё-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьё-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+
                     }
                     if([stringTemp containsString:@"чём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
                     }
                     if([stringTemp containsString:@"чей-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
                     }
                     if([stringTemp containsString:@"какой-л"]){
                         NSRange range = [stringTemp rangeOfString:@"какой-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какой-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
                     }
                     if([stringTemp containsString:@"чья-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чья-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чья-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
                     }
                     if([stringTemp containsString:@"чьего-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьего-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
                     }
                     if([stringTemp containsString:@"куда-л"]){
                         NSRange range = [stringTemp rangeOfString:@"куда-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"куда-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
                     }
 
                     if([stringTemp containsString:@"множ.число"]){
@@ -344,10 +817,9 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                         }else
 
                             if([stringTemp containsString:@"."]){
-//                                NSLog(@"....... %@",stringTemp);
-//                                NSLog(@"");
+                                    //                        NSLog(@"....... %@",stringTemp);
+                                    //                        NSLog(@"");
                             }
-
 
                     [meanTempArray addObject: [NSString stringWithString:stringTemp]];
                 }
@@ -362,109 +834,227 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
 
                     NSMutableString *stringTemp = [NSMutableString stringWithString: example.accessory];
 
-                        if([stringTemp containsString:@"чего-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"чего-л"];
+                    if([stringTemp containsString:@"чего-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чего-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"чего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                        }else
                             [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
-                        }
-                        if([stringTemp containsString:@"кого-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"кого-л"];
+
+                    }
+                    if([stringTemp containsString:@"кого-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"кого-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кого-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
+                        }else
                             [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
-                        }
-                        if([stringTemp containsString:@"чему-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"чему-л"];
+
+                    }
+                    if([stringTemp containsString:@"чему-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чему-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
+                        }else
                             [stringTemp replaceCharactersInRange:range withString:@"чему-либо"];
-                        }
+
+                    }
                     if([stringTemp containsString:@"кому-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кому-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кому-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кому-либо"];
+
                     }
-                        if([stringTemp containsString:@"чьему-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"чьему-л"];
+                    if([stringTemp containsString:@"чем-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чем-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
+                    }
+                    if([stringTemp containsString:@"кем-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"кем-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кем-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
+                    }
+                    if([stringTemp containsString:@"что-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"что-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"что-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTemp containsString:@"чьему-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"чьему-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьему-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
+                        }else
                             [stringTemp replaceCharactersInRange:range withString:@"чьему-либо"];
-                        }
+                    }
                     if([stringTemp containsString:@"чьим-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьим-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьим-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьим-либо"];
                     }
                     if([stringTemp containsString:@"чьей-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьей-либо"];
                     }
-                        if([stringTemp containsString:@"чем-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"чем-л"];
-                            [stringTemp replaceCharactersInRange:range withString:@"чем-либо"];
-                        }
-                    if([stringTemp containsString:@"кем-л"]){
-                        NSRange range = [stringTemp rangeOfString:@"кем-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"кем-либо"];
-                    }
-                        if([stringTemp containsString:@"что-л"]){
-                            NSRange range = [stringTemp rangeOfString:@"что-л"];
-                            [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
-                        }
                     if([stringTemp containsString:@"чью-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чью-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чью-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чью-либо"];
                     }
                     if([stringTemp containsString:@"чьём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьём-либо"];
                     }
                     if([stringTemp containsString:@"ком-л"]){
                         NSRange range = [stringTemp rangeOfString:@"ком-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"ком-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
+                        }
                         [stringTemp replaceCharactersInRange:range withString:@"ком-либо"];
                     }
                     if([stringTemp containsString:@"чьи-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьи-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьи-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьи-либо"];
                     }
                     if([stringTemp containsString:@"чьих-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьих-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьих-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьих-либо"];
                     }
                     if([stringTemp containsString:@"чьё-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьё-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьё-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьё-либо"];
+
                     }
                     if([stringTemp containsString:@"чём-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чём-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чём-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чём-либо"];
                     }
                     if([stringTemp containsString:@"чей-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чей-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чей-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чей-либо"];
                     }
                     if([stringTemp containsString:@"какой-л"]){
                         NSRange range = [stringTemp rangeOfString:@"какой-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какой-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"какой-либо"];
                     }
                     if([stringTemp containsString:@"чья-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чья-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чья-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чья-либо"];
                     }
                     if([stringTemp containsString:@"чьего-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьего-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"чьего-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"чьего-либо"];
                     }
                     if([stringTemp containsString:@"куда-л"]){
                         NSRange range = [stringTemp rangeOfString:@"куда-л"];
-                        [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"куда-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"куда-либо"];
                     }
 
-                        if([stringTemp containsString:@"множ.число"]){
-                            NSRange range = [stringTemp rangeOfString:@"множ.число"];
-                            [stringTemp replaceCharactersInRange:range withString:@"множественное число"];
+                    if([stringTemp containsString:@"множ.число"]){
+                        NSRange range = [stringTemp rangeOfString:@"множ.число"];
+                        [stringTemp replaceCharactersInRange:range withString:@"множественное число"];
+                    }else
+
+                        if([stringTemp containsString:@"ед.число"]){
+                            NSRange range = [stringTemp rangeOfString:@"ед.число"];
+                            [stringTemp replaceCharactersInRange:range withString:@"единственное число"];
                         }else
 
-                            if([stringTemp containsString:@"ед.число"]){
-                                NSRange range = [stringTemp rangeOfString:@"ед.число"];
-                                [stringTemp replaceCharactersInRange:range withString:@"единственное число"];
-                            }else
+                            if([stringTemp containsString:@"."]){
+                                    //                        NSLog(@"....... %@",stringTemp);
+                                    //                        NSLog(@"");
+                            }
 
-                                if([stringTemp containsString:@"."]){
-//                                    NSLog(@"....... %@",stringTemp);
-//                                    NSLog(@"");
-                                }
+
 
                         if([[self.managerMeaningShort.dictionaryFromKeysAsShortAndMeaningAsLongRusProperty allKeys] containsObject:stringTemp]){
                             NSRange range = [stringTemp rangeOfString:stringTemp];
@@ -479,91 +1069,207 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
 
                     if([stringTempExMean containsString:@"чего-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чего-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чего-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чего-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чего-либо"];
+
                     }
                     if([stringTempExMean containsString:@"кого-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"кого-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"кого-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"кого-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"кого-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"кого-либо"];
+
                     }
                     if([stringTempExMean containsString:@"чему-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чему-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чему-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чему-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чему-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чему-либо"];
+
                     }
                     if([stringTempExMean containsString:@"кому-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"кому-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"кому-либо"];
-                    }
-                    if([stringTempExMean containsString:@"чьему-л"]){
-                        NSRange range = [stringTempExMean rangeOfString:@"чьему-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьему-либо"];
-                    }
-                    if([stringTempExMean containsString:@"чьим-л"]){
-                        NSRange range = [stringTempExMean rangeOfString:@"чьим-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьим-либо"];
-                    }
-                    if([stringTempExMean containsString:@"чьей-л"]){
-                        NSRange range = [stringTempExMean rangeOfString:@"чьей-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"кому-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"кому-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"кому-либо"];
+
                     }
                     if([stringTempExMean containsString:@"чем-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чем-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чем-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чем-либо"];
+
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чем-либо"];
                     }
                     if([stringTempExMean containsString:@"кем-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"кем-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"кем-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"кем-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"кем-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"кем-либо"];
                     }
                     if([stringTempExMean containsString:@"что-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"что-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"что-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"что-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"что-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTempExMean containsString:@"чьему-л"]){
+                        NSRange range = [stringTempExMean rangeOfString:@"чьему-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьему-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьему-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьему-либо"];
+                    }
+                    if([stringTempExMean containsString:@"чьим-л"]){
+                        NSRange range = [stringTempExMean rangeOfString:@"чьим-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьим-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьим-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьим-либо"];
+                    }
+                    if([stringTempExMean containsString:@"чьей-л"]){
+                        NSRange range = [stringTempExMean rangeOfString:@"чьей-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьей-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьей-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьей-либо"];
                     }
                     if([stringTempExMean containsString:@"чью-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чью-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чью-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чью-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чью-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чью-либо"];
                     }
                     if([stringTempExMean containsString:@"чьём-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьём-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьём-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьём-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьём-либо"];
                     }
                     if([stringTempExMean containsString:@"ком-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"ком-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"ком-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"ком-либо"];
+                        }
                         [stringTempExMean replaceCharactersInRange:range withString:@"ком-либо"];
                     }
                     if([stringTempExMean containsString:@"чьи-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьи-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьи-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьи-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьи-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьи-либо"];
                     }
                     if([stringTempExMean containsString:@"чьих-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьих-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьих-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьих-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьих-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьих-либо"];
                     }
                     if([stringTempExMean containsString:@"чьё-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьё-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьё-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьё-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьё-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьё-либо"];
+
                     }
                     if([stringTempExMean containsString:@"чём-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чём-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чём-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чём-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чём-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чём-либо"];
                     }
                     if([stringTempExMean containsString:@"чей-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чей-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чей-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чей-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чей-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чей-либо"];
                     }
                     if([stringTempExMean containsString:@"какой-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"какой-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"какой-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"какой-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"какой-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"какой-либо"];
                     }
                     if([stringTempExMean containsString:@"чья-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чья-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чья-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чья-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чья-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чья-либо"];
                     }
                     if([stringTempExMean containsString:@"чьего-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьего-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"чьего-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"чьего-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"чьего-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"чьего-либо"];
                     }
                     if([stringTempExMean containsString:@"куда-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"куда-л"];
-                        [stringTempExMean replaceCharactersInRange:range withString:@"куда-либо"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"куда-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"куда-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"куда-либо"];
                     }
 
                     if([stringTempExMean containsString:@"множ.число"]){
@@ -577,18 +1283,17 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                         }else
 
                             if([stringTempExMean containsString:@"."]){
-//                                NSLog(@"....... %@",stringTempExMean);
-//                                NSLog(@"");
+                                    //                        NSLog(@"....... %@",stringTemp);
+                                    //                        NSLog(@"");
                             }
-
                     if([stringTempExMean containsString:@"smb"]){
-                        NSLog(@"%@",stringTempExMean);
+                        //NSLog(@"%@",stringTempExMean);
                         NSRange range = [stringTempExMean rangeOfString:@"smb"];
                         [stringTempExMean replaceCharactersInRange:range withString:@"somebody"];
                     }
 
                     if([stringTempExMean containsString:@"smth"]){
-                        NSLog(@"%@",stringTempExMean);
+                        //NSLog(@"%@",stringTempExMean);
                         NSRange range = [stringTempExMean rangeOfString:@"smth"];
                         [stringTempExMean replaceCharactersInRange:range withString:@"something"];
                     }
@@ -608,6 +1313,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"pl от"];
                     [tempString replaceCharactersInRange: range withString:@"множественное число от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"superl от"]){
@@ -615,6 +1322,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"superl от"];
                     [tempString replaceCharactersInRange: range withString:@"превосходная степень от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"compare от"]){
@@ -622,6 +1331,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"compare от"];
                     [tempString replaceCharactersInRange: range withString:@"сравнительная степень от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"compar от"]){
@@ -629,6 +1340,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"compar от"];
                     [tempString replaceCharactersInRange: range withString:@"сравнительная степень от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"past и pp от"]){
@@ -636,6 +1349,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"past и pp от"];
                     [tempString replaceCharactersInRange: range withString:@"прошедшее и причастие прошедшего времени от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"pp от"]){
@@ -643,6 +1358,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"pp от"];
                     [tempString replaceCharactersInRange: range withString:@"причастие прошедшего времени от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"past от"]){
@@ -650,6 +1367,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"past от"];
                     [tempString replaceCharactersInRange: range withString:@"прошедшее от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
                 if([rusMeaning.dereviative containsString :@"косв падеж от"]){
@@ -657,6 +1376,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"косв падеж от"];
                     [tempString replaceCharactersInRange: range withString:@"косвенный падеж от:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+
                     continue;
                 }
 
@@ -665,6 +1386,7 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     NSRange range = [tempString rangeOfString: @"="];
                     [tempString replaceCharactersInRange: range withString:@"равнозначно с:"];
                     rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
                     continue;
                 }
             }
@@ -756,6 +1478,13 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
                     }
                 }
             }
+        }
+    }
+
+    if(self.arrayIdiom.count > 0){
+        for(NSString *idiom in self.arrayIdiom){
+            if(idiom != nil && ![idiom isEqualToString:@""])
+                NSLog(@"Idiom -                I# %@",idiom);
         }
     }
 }
