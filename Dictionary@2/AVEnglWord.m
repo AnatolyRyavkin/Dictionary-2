@@ -67,11 +67,325 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
     return r;
 }
 
+NSString *etcWithoutPoint = @"и т п";
+NSString *etcWithPoint = @"и т.п.";
+
+NSString * SelfTypeEngWord = @"SelfTypeEngWord";
+NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
+
+
 @implementation AVEnglWord
 
 -(AVIndexPathMeaning *)getAdressStr{
     return &_indexPathMeaningWord;
 }
+
+#pragma mark - instad etc.
+
+
+-(void)instadEtc{
+
+
+    if(self.grammaticForm.count == 0){
+            //NSLog(@"Grammatic forms count = 0");
+    }else{
+        NSMutableArray *tempArray = [NSMutableArray new];
+        for(NSString *stringTempDontMutable in self.grammaticForm){
+            if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                    //NSLog(@"Type -  Empty or nil");
+            }else if([stringTempDontMutable containsString:etcWithoutPoint]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                [tempArray addObject: [NSString stringWithString:stringTemp]];
+            }else{
+                [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+            }
+        }
+        self.grammaticForm = [NSArray arrayWithArray:tempArray];
+    }
+
+
+    if(self.arrayRusMeaning.count > 0){
+
+        NSMutableArray *arrayRusMeaningTemp = [NSMutableArray new];
+
+        for(AVRusMeaning *rusMeaning in self.arrayRusMeaning){
+
+            NSArray<NSString *>* arrayMeaning = rusMeaning.arrayMeaning;
+            NSArray<NSString *> *accessory = rusMeaning.accessory;
+            NSString *dereviative = rusMeaning.dereviative;
+            NSArray<AVExample*>*arrayExample = rusMeaning.arrayExample;
+
+            if(arrayMeaning.count > 0){
+                NSMutableArray *tempArray = [NSMutableArray new];
+                for(NSString *stringTempDontMutable in arrayMeaning){
+                    if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                            //NSLog(@"Type -  Empty or nil");
+                    }else if([stringTempDontMutable containsString:etcWithoutPoint]){
+                        NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                        NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                        [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                        [tempArray addObject: [NSString stringWithString:stringTemp]];
+                    }else{
+                        [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+                    }
+                }
+                rusMeaning.arrayMeaning = [NSArray arrayWithArray:tempArray];
+            }
+
+            if(accessory.count > 0){
+                NSMutableArray *tempArray = [NSMutableArray new];
+                for(NSString *stringTempDontMutable in accessory){
+                    if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                            //NSLog(@"Type -  Empty or nil");
+                    }else if([stringTempDontMutable containsString:etcWithoutPoint]){
+                        NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                        NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                        [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                        [tempArray addObject: [NSString stringWithString:stringTemp]];
+                    }else{
+                        [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+                    }
+                }
+                rusMeaning.accessory = [NSArray arrayWithArray:tempArray];
+            }
+
+            if(dereviative == nil || [dereviative isEqualToString:@""]){
+                    //NSLog(@"England dereviative - Empty or nil");
+            }else if([dereviative containsString:etcWithoutPoint]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:dereviative];
+                NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                rusMeaning.dereviative = [NSString stringWithString:stringTemp];
+            }
+
+
+            if(arrayExample.count > 0){
+                NSMutableArray *tempArray = [NSMutableArray new];
+                for(AVExample *example in arrayExample){
+
+                    if(example.accessory == nil || [example.accessory isEqualToString:@""]){
+                            //NSLog(@"example.accessory - Empty or nil");
+                    }else if([example.accessory containsString:etcWithoutPoint]){
+                        NSMutableString *stringTemp = [NSMutableString stringWithString:example.accessory];
+                        NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                        [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                        example.accessory = [NSString stringWithString:stringTemp];
+                    }
+
+                    if(example.meaning == nil || [example.meaning isEqualToString:@""]){
+                            //NSLog(@"example.meaning - Empty or nil");
+                    }else if([example.meaning containsString:etcWithoutPoint]){
+                        NSMutableString *stringTemp = [NSMutableString stringWithString:example.meaning];
+                        NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                        [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                        example.meaning = [NSString stringWithString:stringTemp];
+                    }
+                    [tempArray addObject:example];
+                }
+                rusMeaning.arrayExample = [NSArray arrayWithArray: tempArray];
+            }
+            [arrayRusMeaningTemp addObject:rusMeaning];
+        }
+        self.arrayRusMeaning = [NSArray arrayWithArray:arrayRusMeaningTemp];
+    }
+
+    if(self.arrayIdiom.count == 0){
+            //NSLog(@"Idiom count = 0");
+    }else{
+        NSMutableArray *tempArray = [NSMutableArray new];
+        for(NSString *stringTempDontMutable in self.arrayIdiom){
+            if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                    //NSLog(@"Type -  Empty or nil");
+            }else if([stringTempDontMutable containsString:etcWithoutPoint]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
+                [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
+                [tempArray addObject: [NSString stringWithString:stringTemp]];
+            }else{
+                [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+            }
+        }
+        self.arrayIdiom = [NSArray arrayWithArray:tempArray];
+    }
+
+
+}
+
+
+
+#pragma mark - Delete semicolon
+
+
+-(void)deleteSemicolon{
+
+    if(self.engMeaningObject == nil || [self.engMeaningObject isEqualToString:@""]){
+        //NSLog(@"England meaning - Empty or nil");
+    }else if([self.engMeaningObject containsString:@";"]){
+            NSMutableString *stringTemp = [NSMutableString stringWithString:self.engMeaningObject];
+            NSRange range = [stringTemp rangeOfString:@";"];
+            [stringTemp deleteCharactersInRange:range];
+            self.engMeaningObject = [NSString stringWithString:stringTemp];
+    }
+
+//    if(self.engTranscript == nil || [self.engTranscript isEqualToString:@""]){
+//        //NSLog(@"England Transcript - Empty or nil");
+//    }else if([self.engTranscript containsString:@";"]){
+//        NSMutableString *stringTemp = [NSMutableString stringWithString:self.engTranscript];
+//        NSRange range = [stringTemp rangeOfString:@";"];
+//        [stringTemp deleteCharactersInRange:range];
+//        self.engTranscript = [NSString stringWithString:stringTemp];
+//    }
+
+
+    if(self.grammaticType.count == 0){
+        //NSLog(@"Grammatic types count = 0");
+    }else{
+        NSMutableArray *tempArray = [NSMutableArray new];
+        for(NSString *stringTempDontMutable in self.grammaticType){
+            if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                //NSLog(@"Type -  Empty or nil");
+            }else if([stringTempDontMutable containsString:@";"]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                NSRange range = [stringTemp rangeOfString:@";"];
+                [stringTemp deleteCharactersInRange:range];
+                [tempArray addObject: [NSString stringWithString:stringTemp]];
+            }else{
+                [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+            }
+        }
+        self.grammaticType = [NSArray arrayWithArray:tempArray];
+    }
+
+
+    if(self.grammaticForm.count == 0){
+        //NSLog(@"Grammatic forms count = 0");
+    }else{
+        NSMutableArray *tempArray = [NSMutableArray new];
+        for(NSString *stringTempDontMutable in self.grammaticForm){
+            if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                //NSLog(@"Type -  Empty or nil");
+            }else if([stringTempDontMutable containsString:@";"]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                NSRange range = [stringTemp rangeOfString:@";"];
+                [stringTemp deleteCharactersInRange:range];
+                [tempArray addObject: [NSString stringWithString:stringTemp]];
+            }else{
+                [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+            }
+        }
+        self.grammaticForm = [NSArray arrayWithArray:tempArray];
+    }
+
+
+    if(self.arrayRusMeaning.count > 0){
+
+        NSMutableArray *arrayRusMeaningTemp = [NSMutableArray new];
+
+        for(AVRusMeaning *rusMeaning in self.arrayRusMeaning){
+
+                NSArray<NSString *>* arrayMeaning = rusMeaning.arrayMeaning;
+                NSArray<NSString *> *accessory = rusMeaning.accessory;
+                NSString *dereviative = rusMeaning.dereviative;
+                NSArray<AVExample*>*arrayExample = rusMeaning.arrayExample;
+
+                if(arrayMeaning.count > 0){
+                    NSMutableArray *tempArray = [NSMutableArray new];
+                    for(NSString *stringTempDontMutable in arrayMeaning){
+                        if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                            //NSLog(@"Type -  Empty or nil");
+                        }else if([stringTempDontMutable containsString:@";"]){
+                            NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                            NSRange range = [stringTemp rangeOfString:@";"];
+                            [stringTemp deleteCharactersInRange:range];
+                            [tempArray addObject: [NSString stringWithString:stringTemp]];
+                        }else{
+                            [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+                        }
+                    }
+                    rusMeaning.arrayMeaning = [NSArray arrayWithArray:tempArray];
+                }
+
+                if(accessory.count > 0){
+                    NSMutableArray *tempArray = [NSMutableArray new];
+                    for(NSString *stringTempDontMutable in accessory){
+                        if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                            //NSLog(@"Type -  Empty or nil");
+                        }else if([stringTempDontMutable containsString:@";"]){
+                            NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                            NSRange range = [stringTemp rangeOfString:@";"];
+                            [stringTemp deleteCharactersInRange:range];
+                            [tempArray addObject: [NSString stringWithString:stringTemp]];
+                        }else{
+                            [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+                        }
+                    }
+                    rusMeaning.accessory = [NSArray arrayWithArray:tempArray];
+                }
+
+                if(dereviative == nil || [dereviative isEqualToString:@""]){
+                    //NSLog(@"England dereviative - Empty or nil");
+                }else if([dereviative containsString:@";"]){
+                    NSMutableString *stringTemp = [NSMutableString stringWithString:dereviative];
+                    NSRange range = [stringTemp rangeOfString:@";"];
+                    [stringTemp deleteCharactersInRange:range];
+                    rusMeaning.dereviative = [NSString stringWithString:stringTemp];
+                }
+
+
+                if(arrayExample.count > 0){
+                    NSMutableArray *tempArray = [NSMutableArray new];
+                    for(AVExample *example in arrayExample){
+
+                        if(example.accessory == nil || [example.accessory isEqualToString:@""]){
+                            //NSLog(@"example.accessory - Empty or nil");
+                        }else if([example.accessory containsString:@";"]){
+                            NSMutableString *stringTemp = [NSMutableString stringWithString:example.accessory];
+                            NSRange range = [stringTemp rangeOfString:@";"];
+                            [stringTemp deleteCharactersInRange:range];
+                            example.accessory = [NSString stringWithString:stringTemp];
+                        }
+
+                        if(example.meaning == nil || [example.meaning isEqualToString:@""]){
+                            //NSLog(@"example.meaning - Empty or nil");
+                        }else if([example.meaning containsString:@";"]){
+                            NSMutableString *stringTemp = [NSMutableString stringWithString:example.meaning];
+                            NSRange range = [stringTemp rangeOfString:@";"];
+                            [stringTemp deleteCharactersInRange:range];
+                            example.meaning = [NSString stringWithString:stringTemp];
+                        }
+                        [tempArray addObject:example];
+                    }
+                    rusMeaning.arrayExample = [NSArray arrayWithArray: tempArray];
+                }
+                [arrayRusMeaningTemp addObject:rusMeaning];
+        }
+        self.arrayRusMeaning = [NSArray arrayWithArray:arrayRusMeaningTemp];
+    }
+
+    if(self.arrayIdiom.count == 0){
+        //NSLog(@"Idiom count = 0");
+    }else{
+        NSMutableArray *tempArray = [NSMutableArray new];
+        for(NSString *stringTempDontMutable in self.arrayIdiom){
+            if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
+                //NSLog(@"Type -  Empty or nil");
+            }else if([stringTempDontMutable containsString:@";"]){
+                NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                NSRange range = [stringTemp rangeOfString:@";"];
+                [stringTemp deleteCharactersInRange:range];
+                [tempArray addObject: [NSString stringWithString:stringTemp]];
+            }else{
+                [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+            }
+        }
+        self.arrayIdiom = [NSArray arrayWithArray:tempArray];
+    }
+
+
+}
+
 
 #pragma mark - instead short word
 
@@ -1594,8 +1908,8 @@ AVIndexPathMeaning setIndexPathCountMeaningInObject(AVIndexPathMeaning r, int i)
 
 
 -(id)init{
-    static NSString * SelfTypeEngWord = @"SelfTypeEngWord";
-    static NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
+
+    
     self = [super init];
     if(self){
         self.selfType = ([self isMemberOfClass:[AVEnglWord class]]) ? SelfTypeEngWord : SelfTypePhraseVerb;

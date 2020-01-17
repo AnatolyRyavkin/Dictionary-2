@@ -11,6 +11,8 @@
 #import "AVExample.h"
 #import "AVRusMeaning.h"
 
+
+
 @class AVPhrasalVerb;
 
 
@@ -24,8 +26,11 @@ typedef struct AVIndexPathMeaning AVIndexPathMeaning;
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern const NSString *SelfTypeEngWord;
-extern const NSString *SelfTypePhraseVerb;
+extern const NSString *etcWithoutPoint;
+extern const NSString *etcWithPoint;
+
+extern NSString *SelfTypeEngWord;
+extern NSString *SelfTypePhraseVerb;
 
 @interface AVEnglWord : NSObject <NSCopying>
 
@@ -53,7 +58,8 @@ extern const NSString *SelfTypePhraseVerb;
 -(void)printObject;
 -(void)printObjectWhole;
 -(void)insteadShortWord;
-
+-(void)deleteSemicolon;
+-(void)instadEtc;
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
 
 AVIndexPathMeaning makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r);

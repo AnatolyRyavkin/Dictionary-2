@@ -27,6 +27,12 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 @property (nonatomic) NSArray* JSONObjects;
 
+@property (nonatomic) NSArray* JSONObjectsReady;
+
+
+
+@property UIBarButtonItem *barButtonSeparateComma;
+
 -(void)inputTable;
 
 //-(NSArray*)makeJSONFromArrayObjectsAVEngWord: (NSArray<AVEnglWord*>*) arrayEngWordObjects;
@@ -37,6 +43,14 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 -(void)printObjectJSONOnleEngMeaningAndRusMeaning: (NSDictionary*) objectDictionaryJSON;
 
 -(void)printObjectJSONWithShortWord: (NSDictionary*) objectDictionaryJSON;
+
+-(void)beginSeparateComma;
+
+-(NSArray *)separateArrayRusMeaning: (NSArray *) arrayOld;
+
+-(void)writeJSONInFile:(NSArray *) arrayWriting;
+
+
 
 @end
 

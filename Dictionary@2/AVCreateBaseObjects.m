@@ -131,60 +131,71 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     [self setBeginMeaning];
     for(NSArray*array in mainArray){
-        if(numberObjectJ == 100000 ){
-            pause();
+        if(numberObjectJ == 10 ){
+            break;
         }
         checkPrint = NO;
         typeObject = [self typeForArray:array];
         if(typeObject == AVTypeObjectSingle){
             [self makeEngObjTypeSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
-            [ew printObject:numberObjectJ];
-
+            [ew deleteSemicolon];
+            [ew instadEtc];
+            //[ew printObject:numberObjectJ];
 
 
         }else if(typeObject == AVTypeObjectCompose){
             [self makeEngObjTypeCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
-            [ew printObject:numberObjectJ];
+            [ew deleteSemicolon];
+            [ew instadEtc];
+            //[ew printObject:numberObjectJ];
 
 
         }else if(typeObject == AVTypeObjectPhraseVerbSingle){
             [self makePhraseVerbSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
-            [ew printObject:numberObjectJ];
+            [ew deleteSemicolon];
+            [ew instadEtc];
+            //[ew printObject:numberObjectJ];
+
 
         }else if(typeObject == AVTypeObjectPhraseVerbCompose){
             [self makePhraseVerbCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
-            [ew printObject:numberObjectJ];
+            [ew deleteSemicolon];
+            [ew instadEtc];
+            //[ew printObject:numberObjectJ];
+
 
         }else{
             NSLog(@"error type object");
         }
 
-        if(checkPrint){
 
-        }
-        if(numberObjectJ == 100000)
-            break;
-
-        if(numberObjectJ == 100000){
-            AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
-        }
+//
+//        if(checkPrint){
+//
+//        }
+//        if(numberObjectJ == 100000)
+//            break;
+//
+//        if(numberObjectJ == 100000){
+//            AVEnglWord*ew = [self.arrayEngWords lastObject];
+//            [ew printObject:numberObjectJ];
+//        }
 
         numberObjectJ++;
     }
