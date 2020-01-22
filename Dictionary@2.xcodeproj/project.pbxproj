@@ -22,6 +22,7 @@
 		FD2386AD2340E3DD001A7B18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2386AC2340E3DD001A7B18 /* main.m */; };
 		FD23C24B238D1F7F0010C95B /* AVCreateBaseObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */; };
 		FD696BA923543C1A0032423F /* savedStringEndingData.txt in Resources */ = {isa = PBXBuildFile; fileRef = FD696BA823543C1A0032423F /* savedStringEndingData.txt */; };
+		FD8DD66223D8319A001655C9 /* AVSeparateStringAtComma.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8DD66123D8319A001655C9 /* AVSeparateStringAtComma.m */; };
 		FDA01122237D1CDD00326094 /* AVRusMeaning.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01121237D1CDD00326094 /* AVRusMeaning.m */; };
 		FDA01125237D237D00326094 /* AVMakeBASE.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA01124237D237D00326094 /* AVMakeBASE.m */; };
 		FDA49D6B23436C8E00DC80F5 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA49D6A23436C8E00DC80F5 /* TableViewController.m */; };
@@ -56,6 +57,8 @@
 		FD23C249238D1F7F0010C95B /* AVCreateBaseObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVCreateBaseObjects.h; sourceTree = "<group>"; };
 		FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVCreateBaseObjects.m; sourceTree = "<group>"; };
 		FD696BA823543C1A0032423F /* savedStringEndingData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = savedStringEndingData.txt; sourceTree = "<group>"; };
+		FD8DD66023D8319A001655C9 /* AVSeparateStringAtComma.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVSeparateStringAtComma.h; sourceTree = "<group>"; };
+		FD8DD66123D8319A001655C9 /* AVSeparateStringAtComma.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVSeparateStringAtComma.m; sourceTree = "<group>"; };
 		FDA01120237D1CDD00326094 /* AVRusMeaning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVRusMeaning.h; sourceTree = "<group>"; };
 		FDA01121237D1CDD00326094 /* AVRusMeaning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVRusMeaning.m; sourceTree = "<group>"; };
 		FDA01123237D237D00326094 /* AVMakeBASE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVMakeBASE.h; sourceTree = "<group>"; };
@@ -98,6 +101,10 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
+				FD8DD66023D8319A001655C9 /* AVSeparateStringAtComma.h */,
+				FD8DD66123D8319A001655C9 /* AVSeparateStringAtComma.m */,
+				FD2386A02340E3D9001A7B18 /* ViewController.h */,
+				FD2386A12340E3D9001A7B18 /* ViewController.m */,
 				FD23C249238D1F7F0010C95B /* AVCreateBaseObjects.h */,
 				FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */,
 				FD1E5D0D238412610082DA44 /* NSStrign+extension.h */,
@@ -106,8 +113,6 @@
 				FD12719A236C289700C2B8A4 /* AVMeaningShortWords.m */,
 				FD15C424234F4E9100F3B69C /* AVButton.h */,
 				FD15C425234F4E9100F3B69C /* AVButton.m */,
-				FD2386A02340E3D9001A7B18 /* ViewController.h */,
-				FD2386A12340E3D9001A7B18 /* ViewController.m */,
 				FD1271962369BA1200C2B8A4 /* AVEnglWord.h */,
 				FD1271972369BA1200C2B8A4 /* AVEnglWord.m */,
 				FDB522D3237420B1008F199F /* AVPhrasalVerb.h */,
@@ -218,6 +223,7 @@
 				FD2386A22340E3D9001A7B18 /* ViewController.m in Sources */,
 				FD2386AD2340E3DD001A7B18 /* main.m in Sources */,
 				FDA49D6E23436D0D00DC80F5 /* AVMainManager.m in Sources */,
+				FD8DD66223D8319A001655C9 /* AVSeparateStringAtComma.m in Sources */,
 				FD12719B236C289700C2B8A4 /* AVMeaningShortWords.m in Sources */,
 				FDA01122237D1CDD00326094 /* AVRusMeaning.m in Sources */,
 				FD1AC80223B400740034316E /* AVConstants.m in Sources */,

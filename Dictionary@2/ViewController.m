@@ -444,24 +444,48 @@
 
     }
 
-    self.JSONObjectsReady = [NSArray arrayWithArray:arrayMutableJSONNew];
+    //self.JSONObjectsReady = [NSArray arrayWithArray:arrayMutableJSONNew];
 
-    [self writeJSONInFile: self.JSONObjectsReady];
+    //[self writeJSONInFile: self.JSONObjectsReady];
 
 }
 
 #pragma mark - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
 #pragma mark - SeparateArrayAtPoint
 
 -(NSArray *)separateArrayRusMeaning: (NSArray *) arrayOld{
 
-    //change array
+    NSMutableArray *arrayMutableNew = [NSMutableArray new];
 
+    NSString *stringOrigin = arrayOld[0];
+    //for(NSString *stringOrigin in arrayOld){                                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        NSString* string = [NSString stringWithString:stringOrigin];
+        if([[string lastCharString] isEqualToString:@","])
+            string =  [string stringWithoutLastSimbol];
+        if([[string firstCharString] isEqualToString:@","])
+            string = [string stringWithoutFirstSimbol];
+        NSArray *arraySeparateComma = [string componentsSeparatedByString:@","];
+        if(arraySeparateComma.count == 1){
+            [arrayMutableNew addObject:string];
+        }else if(arraySeparateComma.count != 0){
+            BOOL allStringIsSingle = YES;
+            for(NSString *stringSeparateComma in arraySeparateComma){
+                if( ([stringSeparateComma componentsSeparatedByString:@" "]).count != 1)
+                    allStringIsSingle = NO;
+            }
+            if(allStringIsSingle){
+               [arrayMutableNew addObjectsFromArray:arraySeparateComma];
+            }else{
+                AVSeparateStringAtComma *separStringComma = [[AVSeparateStringAtComma alloc] initNavigationController:[self navigationController] andViewController:self];
+                arrayMutableNew = [NSMutableArray arrayWithArray: [separStringComma mutatingString:string]];
+            }
+        }
+        return [NSArray arrayWithArray: arrayMutableNew];
+    //}
     return arrayOld;
-
 }
+
 
 #pragma mark - WriteInFile
 

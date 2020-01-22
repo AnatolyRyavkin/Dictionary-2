@@ -10,6 +10,7 @@
 #import "TableViewController.h"
 #import "NSStrign+extension.h"
 #import "AVCreateBaseObjects.h"
+#import "AVSeparateStringAtComma.h"
 
 #import "AVConstants.h"
 
@@ -28,6 +29,10 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 @property (nonatomic) NSArray* JSONObjects;
 
 @property (nonatomic) NSArray* JSONObjectsReady;
+
+@property UINavigationController *nc;
+
+@property BOOL isCycle;
 
 
 
@@ -50,7 +55,7 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 -(void)writeJSONInFile:(NSArray *) arrayWriting;
 
-
+-(void)isCycleEnd;
 
 @end
 
