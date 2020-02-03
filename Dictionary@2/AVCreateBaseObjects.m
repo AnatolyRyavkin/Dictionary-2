@@ -131,8 +131,11 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     [self setBeginMeaning];
     for(NSArray*array in mainArray){
-        if(numberObjectJ == 10 ){
-            break;
+#pragma mark - Temp numberObject
+
+        if(numberObjectJ > 18000){
+            //numberObjectJ++;
+            //continue;
         }
         checkPrint = NO;
         typeObject = [self typeForArray:array];
@@ -143,7 +146,7 @@ typedef NS_ENUM(NSInteger, AVState) {
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
-            [ew instadEtc];
+            [ew instadEtcAndDeleteColon];
             //[ew printObject:numberObjectJ];
 
 
@@ -154,7 +157,7 @@ typedef NS_ENUM(NSInteger, AVState) {
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
-            [ew instadEtc];
+            [ew instadEtcAndDeleteColon];
             //[ew printObject:numberObjectJ];
 
 
@@ -165,7 +168,7 @@ typedef NS_ENUM(NSInteger, AVState) {
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
-            [ew instadEtc];
+            [ew instadEtcAndDeleteColon];
             //[ew printObject:numberObjectJ];
 
 
@@ -176,7 +179,7 @@ typedef NS_ENUM(NSInteger, AVState) {
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
-            [ew instadEtc];
+            [ew instadEtcAndDeleteColon];
             //[ew printObject:numberObjectJ];
 
 
@@ -192,10 +195,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 //        if(numberObjectJ == 100000)
 //            break;
 //
-//        if(numberObjectJ == 100000){
-//            AVEnglWord*ew = [self.arrayEngWords lastObject];
-//            [ew printObject:numberObjectJ];
-//        }
+        if(numberObjectJ == 13312){
+            AVEnglWord*ew = [self.arrayEngWords lastObject];
+            [ew printObject:numberObjectJ];
+        }
 
         numberObjectJ++;
     }
@@ -336,6 +339,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         NSString * string = array[numString];
 
+//        if([string containsString:@"употр"]){
+//            NSLog(@"containt употр in object number %d",numberObjectJ);
+//        }
+
         if([string isEqualToString:@"текст"]){
             
         }
@@ -450,6 +457,7 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - derevative
 
         if(([string isEqualToString:@"pl"] && [array[numString+1] isEqualToString:@"от"]) ||
+           ([string isEqualToString:@"pl present"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"superl"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compare"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compar"] && [array[numString+1] isEqualToString:@"от"]) ||
@@ -727,6 +735,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         NSString * string = array[numString];
 
+//        if([string containsString:@"употр"]){
+//            NSLog(@"containt употр in object number %d",numberObjectJ);
+//        }
+
         if([string isEqualToString:@"текст"]){
 
         }
@@ -943,6 +955,7 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - derevative
 
         if(([string isEqualToString:@"pl"] && [array[numString+1] isEqualToString:@"от"]) ||
+           ([string isEqualToString:@"pl present"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"superl"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compare"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compar"] && [array[numString+1] isEqualToString:@"от"]) ||
@@ -1329,6 +1342,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         NSString * string = array[numString];
 
+//        if([string containsString:@"употр"]){
+//            NSLog(@"containt употр in object number %d",numberObjectJ);
+//        }
+
         if([string isEqualToString:@"текст"]){
 
         }
@@ -1449,6 +1466,7 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - derevative
 
         if(([string isEqualToString:@"pl"] && [array[numString+1] isEqualToString:@"от"]) ||
+           ([string isEqualToString:@"pl present"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"superl"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compare"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compar"] && [array[numString+1] isEqualToString:@"от"]) ||
@@ -1720,6 +1738,10 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         NSString * string = array[numString];
+
+//        if([string containsString:@"употр"]){
+//            NSLog(@"containt употр in object number %d",numberObjectJ);
+//        }
 
         if([string isEqualToString:@"текст"]){
 
@@ -2018,6 +2040,7 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - derevative
 
         if(([string isEqualToString:@"pl"] && [array[numString+1] isEqualToString:@"от"]) ||
+           ([string isEqualToString:@"pl present"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"superl"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compare"] && [array[numString+1] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"compar"] && [array[numString+1] isEqualToString:@"от"]) ||

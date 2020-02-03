@@ -32,6 +32,10 @@ const NSString*accessoryExampleKey = @"accessoryExample";
 
 const NSString*typeObjectKey = @"typeObject";
 
+const NSString *reuseIdentifierCell = @"reuseIdentifierCell";
+const NSString *reuseIdentifierHeader = @"reuseIdentifierHeader";
+
+
 NSString const *example;
 const NSString *example1;
 

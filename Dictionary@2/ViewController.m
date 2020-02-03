@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "AVMakeBASE.h"
+#import "AVSeparateStringAtComma.h"
+
 
 #define NSLOGSTRING NSLog(@"- - - - - - -  object j = %d  i = %d, string = %@",j,i,string);
 #define NSLOGS NSLog(@"- - - - - - -  object j = %d  string = %@",j,string);
@@ -28,6 +30,10 @@
 @implementation ViewController
 
 @synthesize manager = _manager,sharedMeaningShortWords = _sharedMeaningShortWords;
+
+-(void)dealloc{
+    NSLog(@"dealloc ViewController");
+}
 
 
 #pragma mark - JSON1
@@ -344,13 +350,121 @@
         self.view.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
 
         UIBarButtonItem*barButtonSeparateComma = [[UIBarButtonItem alloc]initWithTitle:@"BeginSeparateComma" style:UIBarButtonItemStylePlain target:self action:@selector(beginSeparateComma)];
-        [self.navigationItem setLeftBarButtonItem:barButtonSeparateComma];
         self.barButtonSeparateComma = barButtonSeparateComma;
         self.barButtonSeparateComma.enabled = NO;
 
+        UIBarButtonItem*barButtonPrintRusMeaning = [[UIBarButtonItem alloc]initWithTitle:@"PrintRusMeaning" style:UIBarButtonItemStylePlain target:self action:@selector(outputRusMeaning)];
+        [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects: barButtonSeparateComma,barButtonPrintRusMeaning, nil]];
+        self.barButtonPrintRusMeaning = barButtonPrintRusMeaning;
+        self.barButtonPrintRusMeaning.enabled = NO;
+        
     }
     return self;
 }
+
+#pragma mark - outputRusMeaning
+
+
+-(void)outputRusMeaning{
+
+    UITableView*tableRusMeaning = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
+    tableRusMeaning.delegate = self;
+    tableRusMeaning.dataSource = self;
+
+    tableRusMeaning.sectionHeaderHeight = 100;
+
+    tableRusMeaning.rowHeight = 70;
+
+    [self.view addSubview:tableRusMeaning];
+
+}
+
+#pragma mark - Table dataSourse and delegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSInteger countRusObjects = 0;
+    NSInteger countRusStrings = 0;
+    if([self.JSONObjects[section] objectForKey:arrayRusMeaningKey]){
+        NSArray *arrayRusObject = [self.JSONObjects[section] objectForKey:arrayRusMeaningKey];
+        countRusObjects = arrayRusObject.count;
+        for(NSDictionary *dictionaryRusObject in arrayRusObject){
+            if([dictionaryRusObject objectForKey:arrayMeaningRusMeaningKey]){
+                NSArray *arrayStrings = [dictionaryRusObject objectForKey:arrayMeaningRusMeaningKey];
+                countRusStrings += arrayStrings.count;
+            }
+        }
+    }
+    return countRusObjects + countRusStrings;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UITableViewCell *cell = nil;
+    cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierCell];
+    if(!cell){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifierCell];
+    }
+    cell.contentView.backgroundColor = [UIColor whiteColor] ;
+
+
+    NSInteger numberOutput = indexPath.row;
+    NSInteger countRusObjects = 0;
+    NSInteger countRusStrings = 0;
+
+    NSString *stringOutput;
+
+    if([self.JSONObjects[indexPath.section] objectForKey:arrayRusMeaningKey]){
+        NSArray *arrayRusObject = [self.JSONObjects[indexPath.section] objectForKey:arrayRusMeaningKey];
+        for(NSDictionary *dictionaryRusObject in arrayRusObject){
+            if(countRusObjects + countRusStrings == numberOutput){
+                stringOutput = [NSString stringWithFormat:@"                                                                                                                           %ld",countRusObjects];
+                cell.textLabel.font = [UIFont systemFontOfSize:20];
+                cell.textLabel.text = stringOutput;
+                cell.contentView.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.025];
+                return  cell;
+            }
+            countRusObjects++;
+            if([dictionaryRusObject objectForKey:arrayMeaningRusMeaningKey]){
+                NSArray *arrayStrings = [dictionaryRusObject objectForKey:arrayMeaningRusMeaningKey];
+                for(NSString*string in arrayStrings){
+                    if(countRusObjects + countRusStrings == numberOutput){
+                        cell.textLabel.font = [UIFont systemFontOfSize:30];
+                        cell.textLabel.text = string;
+                        cell.contentView.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.05];
+                        return  cell;
+                    }
+                    countRusStrings++;
+                }
+            }
+        }
+    }
+    cell.contentView.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:1];
+    cell.textLabel.text = @"      empty!!!!!!!!";
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.JSONObjects.count;
+}
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView*viewHeader;
+    UILabel *label;
+    viewHeader = [tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifierHeader];
+    if(!viewHeader){
+        viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1000, 100)];
+        viewHeader.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.1];
+        [viewHeader addSubview:[[UILabel alloc]initWithFrame:viewHeader.frame]];
+    }
+    label = viewHeader.subviews[0];
+    [label setFont:[UIFont systemFontOfSize:50]];
+    [label setText: ([self.JSONObjects[section] objectForKey:engMeaningObjectKey])
+    ? [NSString stringWithFormat:@"%ld                       %@",section+0,[self.JSONObjects[section] objectForKey:engMeaningObjectKey]]
+    :  [NSString stringWithFormat:@"%ld                    object have not england meaning",section]];
+
+    return viewHeader;
+}
+
 
 -(void)inputTable{
     TableViewController*tvc = [[TableViewController alloc]initWithStyle:UITableViewStylePlain];
@@ -365,126 +479,10 @@
 #pragma mark - BeginSeparateComma
 
 -(void)beginSeparateComma{
-    NSLog(@"beginSeparateComma");
-
-    NSMutableArray *arrayMutableJSONNew = [NSMutableArray new];
-
-    for(NSDictionary*objectDictionaryJSON in self.JSONObjects){
-
-        NSMutableDictionary *objectMutableDictionaryJSON = [NSMutableDictionary new];
-
-        if([objectDictionaryJSON objectForKey:typeObjectKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:typeObjectKey]
-                                            forKey:typeObjectKey];
-        }
-
-        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathGlobalKey]
-                                        forKey:indexPathGlobalKey];
-        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathLocalKey]
-                                        forKey:indexPathLocalKey];
-        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathCountKey]
-                                        forKey:indexPathCountKey];
-
-
-        if( [objectDictionaryJSON objectForKey:engMeaningObjectKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:engMeaningObjectKey]
-                                            forKey:engMeaningObjectKey];
-        }
-
-        if( [objectDictionaryJSON objectForKey:engTranscriptKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:engTranscriptKey]
-                                            forKey:engTranscriptKey];
-        }
-
-        if( [objectDictionaryJSON objectForKey:grammaticTypeKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:grammaticTypeKey]
-                                            forKey:grammaticTypeKey];
-        }
-
-        if( [objectDictionaryJSON objectForKey:grammaticFormKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:grammaticFormKey]
-                                            forKey:grammaticFormKey];
-        }
-
-        if( [objectDictionaryJSON objectForKey:arrayIdiomKey]){
-            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:arrayIdiomKey]
-                                            forKey:arrayIdiomKey];
-        }
-
-
-        if( [objectDictionaryJSON objectForKey:arrayRusMeaningKey]){
-
-            NSArray *arryaRusObject = [objectDictionaryJSON objectForKey:arrayRusMeaningKey];
-
-            NSMutableArray *arrayMutableRusObject = [NSMutableArray new];
-
-            for(NSDictionary *dictionaryRusMeaning in arryaRusObject){
-
-                NSMutableDictionary *dictionaryMutableRusMeaning = [NSMutableDictionary dictionaryWithDictionary:dictionaryRusMeaning];
-
-                if( [dictionaryRusMeaning objectForKey:arrayMeaningRusMeaningKey]){
-
-                    NSArray *arrayMeaningRusMeaningOld = [dictionaryRusMeaning objectForKey:arrayMeaningRusMeaningKey];
-
-                    NSArray *arrayMeaningRusMeaningNew = [self separateArrayRusMeaning:arrayMeaningRusMeaningOld];
-
-                    [dictionaryMutableRusMeaning setObject:arrayMeaningRusMeaningNew forKeyedSubscript:arrayMeaningRusMeaningKey];
-
-                }
-
-                [arrayMutableRusObject addObject:[NSDictionary dictionaryWithDictionary:dictionaryMutableRusMeaning]];
-
-            }
-
-            [objectMutableDictionaryJSON setObject:[NSArray arrayWithArray:arrayMutableRusObject]
-                                            forKey:arrayRusMeaningKey];
-        }
-
-        [arrayMutableJSONNew addObject: [NSDictionary dictionaryWithDictionary:objectMutableDictionaryJSON]];
-
-    }
-
-    //self.JSONObjectsReady = [NSArray arrayWithArray:arrayMutableJSONNew];
-
-    //[self writeJSONInFile: self.JSONObjectsReady];
-
+    self.objectSeparateStringAtComma = [[AVSeparateStringAtComma alloc] initNavigationController:[self navigationController] andViewController:self];
+    [self.objectSeparateStringAtComma changeJSON: self.JSONObjects];
 }
 
-#pragma mark - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-#pragma mark - SeparateArrayAtPoint
-
--(NSArray *)separateArrayRusMeaning: (NSArray *) arrayOld{
-
-    NSMutableArray *arrayMutableNew = [NSMutableArray new];
-
-    NSString *stringOrigin = arrayOld[0];
-    //for(NSString *stringOrigin in arrayOld){                                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        NSString* string = [NSString stringWithString:stringOrigin];
-        if([[string lastCharString] isEqualToString:@","])
-            string =  [string stringWithoutLastSimbol];
-        if([[string firstCharString] isEqualToString:@","])
-            string = [string stringWithoutFirstSimbol];
-        NSArray *arraySeparateComma = [string componentsSeparatedByString:@","];
-        if(arraySeparateComma.count == 1){
-            [arrayMutableNew addObject:string];
-        }else if(arraySeparateComma.count != 0){
-            BOOL allStringIsSingle = YES;
-            for(NSString *stringSeparateComma in arraySeparateComma){
-                if( ([stringSeparateComma componentsSeparatedByString:@" "]).count != 1)
-                    allStringIsSingle = NO;
-            }
-            if(allStringIsSingle){
-               [arrayMutableNew addObjectsFromArray:arraySeparateComma];
-            }else{
-                AVSeparateStringAtComma *separStringComma = [[AVSeparateStringAtComma alloc] initNavigationController:[self navigationController] andViewController:self];
-                arrayMutableNew = [NSMutableArray arrayWithArray: [separStringComma mutatingString:string]];
-            }
-        }
-        return [NSArray arrayWithArray: arrayMutableNew];
-    //}
-    return arrayOld;
-}
 
 
 #pragma mark - WriteInFile
@@ -545,30 +543,31 @@
 
         NSArray<AVEnglWord*>* arrayObjects = [cb makeArrayEngFromMainArrayAtArrayWords:self.manager.mainArray];
 
-        NSArray *JSONMain = [self makeJSONFromArrayObjectsAVEngWord1:arrayObjects];
-
-        self.JSONObjects = JSONMain;
-
-        NSError*errorData = nil;
-
-        NSData *data = [NSPropertyListSerialization dataWithPropertyList:JSONMain format:NSPropertyListXMLFormat_v1_0 options:0 error:&errorData];
-
-        if(errorData!=nil)
-            NSLog(@"error :%@",[errorData description]);
-
-        NSString* pathFileBase = @"/Users/ryavkinto/Documents/baseEnglishDictionary/fileBase.txt";
-
-            //for real devace ->
-            //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
-
-        [[NSFileManager defaultManager] createFileAtPath:pathFileBase contents:nil attributes:nil];
-
-        [data writeToFile:pathFileBase atomically:YES];
-
-        dispatch_queue_main_t  _Nonnull d1 = dispatch_get_main_queue();
-        dispatch_async(d1, ^{
-            self.barButtonSeparateComma.enabled = YES;
-        });
+//        NSArray *JSONMain = [self makeJSONFromArrayObjectsAVEngWord1:arrayObjects];
+//
+//        self.JSONObjects = JSONMain;
+//
+//        NSError*errorData = nil;
+//
+//        NSData *data = [NSPropertyListSerialization dataWithPropertyList:JSONMain format:NSPropertyListXMLFormat_v1_0 options:0 error:&errorData];
+//
+//        if(errorData!=nil)
+//            NSLog(@"error :%@",[errorData description]);
+//
+//        NSString* pathFileBase = @"/Users/ryavkinto/Documents/baseEnglishDictionary/fileBase.txt";
+//
+//            //for real devace ->
+//            //NSString* nameTextFileInBandle = [[NSBundle mainBundle] pathForResource:@"arrayCommit.txt" ofType:nil];
+//
+//        [[NSFileManager defaultManager] createFileAtPath:pathFileBase contents:nil attributes:nil];
+//
+//        [data writeToFile:pathFileBase atomically:YES];
+//
+//        dispatch_queue_main_t  _Nonnull d1 = dispatch_get_main_queue();
+//        dispatch_async(d1, ^{
+//            self.barButtonSeparateComma.enabled = YES;
+//            self.barButtonPrintRusMeaning.enabled = YES;
+//        });
 
     });
 
@@ -579,6 +578,140 @@
 }
 
 #pragma mark - End
+
+
+
+
+
+
+
+
+
+
+
+
+    //-(void)beginSeparateComma{
+    //    NSLog(@"beginSeparateComma");
+    //
+    //    NSMutableArray *arrayMutableJSONNew = [NSMutableArray new];
+    //
+    //    NSDictionary*objectDictionaryJSON = self.JSONObjects[self.numberObjectRus];
+    //    //for(NSDictionary*objectDictionaryJSON in self.JSONObjects){
+    //
+    //        NSMutableDictionary *objectMutableDictionaryJSON = [NSMutableDictionary new];
+    //
+    //        if([objectDictionaryJSON objectForKey:typeObjectKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:typeObjectKey]
+    //                                            forKey:typeObjectKey];
+    //        }
+    //
+    //        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathGlobalKey]
+    //                                        forKey:indexPathGlobalKey];
+    //        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathLocalKey]
+    //                                        forKey:indexPathLocalKey];
+    //        [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:indexPathCountKey]
+    //                                        forKey:indexPathCountKey];
+    //
+    //
+    //        if( [objectDictionaryJSON objectForKey:engMeaningObjectKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:engMeaningObjectKey]
+    //                                            forKey:engMeaningObjectKey];
+    //        }
+    //
+    //        if( [objectDictionaryJSON objectForKey:engTranscriptKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:engTranscriptKey]
+    //                                            forKey:engTranscriptKey];
+    //        }
+    //
+    //        if( [objectDictionaryJSON objectForKey:grammaticTypeKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:grammaticTypeKey]
+    //                                            forKey:grammaticTypeKey];
+    //        }
+    //
+    //        if( [objectDictionaryJSON objectForKey:grammaticFormKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:grammaticFormKey]
+    //                                            forKey:grammaticFormKey];
+    //        }
+    //
+    //        if( [objectDictionaryJSON objectForKey:arrayIdiomKey]){
+    //            [objectMutableDictionaryJSON setObject:[objectDictionaryJSON objectForKey:arrayIdiomKey]
+    //                                            forKey:arrayIdiomKey];
+    //        }
+    //
+    //
+    //        if( [objectDictionaryJSON objectForKey:arrayRusMeaningKey]){
+    //
+    //            NSArray *arryaRusObject = [objectDictionaryJSON objectForKey:arrayRusMeaningKey];
+    //
+    //            NSMutableArray *arrayMutableRusObject = [NSMutableArray new];
+    //
+    //            for(NSDictionary *dictionaryRusMeaning in arryaRusObject){
+    //
+    //                NSMutableDictionary *dictionaryMutableRusMeaning = [NSMutableDictionary dictionaryWithDictionary:dictionaryRusMeaning];
+    //
+    //                if( [dictionaryRusMeaning objectForKey:arrayMeaningRusMeaningKey]){
+    //
+    //                    NSArray *arrayMeaningRusMeaningOld = [dictionaryRusMeaning objectForKey:arrayMeaningRusMeaningKey];
+    //
+    //                    NSArray *arrayMeaningRusMeaningNew = [self separateArrayRusMeaning:arrayMeaningRusMeaningOld];
+    //
+    //                    [dictionaryMutableRusMeaning setObject:arrayMeaningRusMeaningNew forKeyedSubscript:arrayMeaningRusMeaningKey];
+    //
+    //                }
+    //
+    //                [arrayMutableRusObject addObject:[NSDictionary dictionaryWithDictionary:dictionaryMutableRusMeaning]];
+    //
+    //            }
+    //
+    //            [objectMutableDictionaryJSON setObject:[NSArray arrayWithArray:arrayMutableRusObject]
+    //                                            forKey:arrayRusMeaningKey];
+    //        }
+    //
+    //        [arrayMutableJSONNew addObject: [NSDictionary dictionaryWithDictionary:objectMutableDictionaryJSON]];
+    //
+    //    //}
+    //
+    //    //self.JSONObjectsReady = [NSArray arrayWithArray:arrayMutableJSONNew];
+    //
+    //    //[self writeJSONInFile: self.JSONObjectsReady];
+    //
+    //}
+    //
+    //#pragma mark - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //
+    //#pragma mark - SeparateArrayAtPoint
+    //
+    //-(NSArray *)separateArrayRusMeaning: (NSArray *) arrayOld{
+    //
+    //    NSMutableArray *arrayMutableNew = [NSMutableArray new];
+    //
+    //    NSString *stringOrigin = arrayOld[0];
+    //    //for(NSString *stringOrigin in arrayOld){                                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //        NSString* string = [NSString stringWithString:stringOrigin];
+    //        if([[string lastCharString] isEqualToString:@","])
+    //            string =  [string stringWithoutLastSimbol];
+    //        if([[string firstCharString] isEqualToString:@","])
+    //            string = [string stringWithoutFirstSimbol];
+    //        NSArray *arraySeparateComma = [string componentsSeparatedByString:@","];
+    //        if(arraySeparateComma.count == 1){
+    //            [arrayMutableNew addObject:string];
+    //        }else if(arraySeparateComma.count != 0){
+    //            BOOL allStringIsSingle = YES;
+    //            for(NSString *stringSeparateComma in arraySeparateComma){
+    //                if( ([stringSeparateComma componentsSeparatedByString:@" "]).count != 1)
+    //                    allStringIsSingle = NO;
+    //            }
+    //            if(allStringIsSingle){
+    //               [arrayMutableNew addObjectsFromArray:arraySeparateComma];
+    //            }else{
+    //                AVSeparateStringAtComma *separStringComma = [[AVSeparateStringAtComma alloc] initNavigationController:[self navigationController] andViewController:self];
+    //                arrayMutableNew = [NSMutableArray arrayWithArray: [separStringComma mutatingString:string]];
+    //            }
+    //        }
+    //        return [NSArray arrayWithArray: arrayMutableNew];
+    //    //}
+    //    return arrayOld;
+    //}
 
     //
     //-(NSArray*)makeJSONFromArrayObjectsAVEngWord: (NSArray<AVEnglWord*>*) arrayEngWordObjects{

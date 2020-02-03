@@ -8,15 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "TableViewController.h"
-#import "NSStrign+extension.h"
+//#import "NSStrign+extension.m"
 #import "AVCreateBaseObjects.h"
-#import "AVSeparateStringAtComma.h"
-
 #import "AVConstants.h"
+
+@class AVSeparateStringAtComma;
+
+
+NS_ASSUME_NONNULL_BEGIN
+
 
 typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, NSArray *arrayMain);
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 
 @property BlockExecution block;
 
@@ -34,9 +38,10 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 @property BOOL isCycle;
 
-
-
 @property UIBarButtonItem *barButtonSeparateComma;
+@property UIBarButtonItem *barButtonPrintRusMeaning;
+
+@property AVSeparateStringAtComma *objectSeparateStringAtComma;
 
 -(void)inputTable;
 
@@ -51,11 +56,10 @@ typedef void (^BlockExecution) (NSString* string, NSArray *array, int i, int j, 
 
 -(void)beginSeparateComma;
 
--(NSArray *)separateArrayRusMeaning: (NSArray *) arrayOld;
-
 -(void)writeJSONInFile:(NSArray *) arrayWriting;
 
--(void)isCycleEnd;
+
 
 @end
 
+NS_ASSUME_NONNULL_END

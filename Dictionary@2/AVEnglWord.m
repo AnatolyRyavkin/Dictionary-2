@@ -7,6 +7,7 @@
 //
 
 #import "AVEnglWord.h"
+//#import "NSStrign+extension.h"
 
 
 
@@ -83,7 +84,7 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
 #pragma mark - instad etc.
 
 
--(void)instadEtc{
+-(void)instadEtcAndDeleteColon{
 
 
     if(self.grammaticForm.count == 0){
@@ -117,18 +118,32 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
             NSString *dereviative = rusMeaning.dereviative;
             NSArray<AVExample*>*arrayExample = rusMeaning.arrayExample;
 
+            NSString* stringWithoutColon;
+            
+#pragma mark - Delete colon
+
             if(arrayMeaning.count > 0){
                 NSMutableArray *tempArray = [NSMutableArray new];
                 for(NSString *stringTempDontMutable in arrayMeaning){
                     if(stringTempDontMutable == nil || [stringTempDontMutable isEqualToString:@""]){
                             //NSLog(@"Type -  Empty or nil");
                     }else if([stringTempDontMutable containsString:etcWithoutPoint]){
-                        NSMutableString *stringTemp = [NSMutableString stringWithString:stringTempDontMutable];
+                        if([[stringTempDontMutable lastCharString] isEqualToString:@":"]){
+                            //NSLog(@"del colon");
+                        }
+
+                        stringWithoutColon = ([[stringTempDontMutable lastCharString] isEqualToString:@":"]) ? [stringTempDontMutable stringWithoutLastSimbol] : stringTempDontMutable;
+
+                        NSMutableString *stringTemp = [NSMutableString stringWithString:stringWithoutColon];
                         NSRange range = [stringTemp rangeOfString:etcWithoutPoint];
                         [stringTemp replaceCharactersInRange:range withString:etcWithPoint];
                         [tempArray addObject: [NSString stringWithString:stringTemp]];
                     }else{
-                        [tempArray addObject: [NSString stringWithString:stringTempDontMutable]];
+                        if([[stringTempDontMutable lastCharString] isEqualToString:@":"]){
+                            //NSLog(@"del colon");
+                        }
+                        stringWithoutColon = ([[stringTempDontMutable lastCharString] isEqualToString:@":"]) ? [stringTempDontMutable stringWithoutLastSimbol] : stringTempDontMutable;
+                        [tempArray addObject: [NSString stringWithString:stringWithoutColon]];
                     }
                 }
                 rusMeaning.arrayMeaning = [NSArray arrayWithArray:tempArray];
@@ -430,8 +445,38 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                         [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
                 }else
                     [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
-
             }
+
+            if([stringTemp containsString:@"каким-л"]){
+                NSRange range = [stringTemp rangeOfString:@"каким-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"каким-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+            }
+
+            if([stringTemp containsString:@"какую-л"]){
+            NSRange range = [stringTemp rangeOfString:@"какую-л"];
+            NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+            if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"какую-либо"])
+                    [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+            }else
+                [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+            }
+
+            if([stringTemp containsString:@"какое-л"]){
+               NSRange range = [stringTemp rangeOfString:@"какое-л"];
+               NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+               if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                   if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какое-либо"])
+                       [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+               }else
+                   [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+            }
+
             if([stringTemp containsString:@"кого-л"]){
                 NSRange range = [stringTemp rangeOfString:@"кого-л"];
                 NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
@@ -489,6 +534,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                         [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
                 }else
                     [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+            }
+            if([stringTemp containsString:@"кто-л"]){
+                NSRange range = [stringTemp rangeOfString:@"кто-л"];
+                NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                    if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кто-либо"])
+                        [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
+                }else
+                    [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
             }
             if([stringTemp containsString:@"чьему-л"]){
                 NSRange range = [stringTemp rangeOfString:@"чьему-л"];
@@ -680,6 +734,35 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                             [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
 
                     }
+
+                    if([stringTemp containsString:@"каким-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"каким-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"каким-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                    }
+
+                    if([stringTemp containsString:@"какую-л"]){
+                    NSRange range = [stringTemp rangeOfString:@"какую-л"];
+                    NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                    if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                        if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"какую-либо"])
+                            [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }else
+                        [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }
+                    if([stringTemp containsString:@"какое-л"]){
+                       NSRange range = [stringTemp rangeOfString:@"какое-л"];
+                       NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                       if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                           if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какое-либо"])
+                               [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+                       }else
+                           [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+                    }
                     if([stringTemp containsString:@"кого-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кого-л"];
                         NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
@@ -737,6 +820,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
                         }else
                             [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTemp containsString:@"кто-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"кто-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кто-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
                     }
                     if([stringTemp containsString:@"чьему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьему-л"];
@@ -925,6 +1017,26 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                             [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
 
                     }
+
+                    if([stringTemp containsString:@"каким-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"каким-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"каким-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                    }
+
+                    if([stringTemp containsString:@"какую-л"]){
+                    NSRange range = [stringTemp rangeOfString:@"какую-л"];
+                    NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                    if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                        if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"какую-либо"])
+                            [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }else
+                        [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }
                     if([stringTemp containsString:@"кого-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кого-л"];
                         NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
@@ -933,7 +1045,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
                         }else
                             [stringTemp replaceCharactersInRange:range withString:@"кого-либо"];
-
+                    }
+                    if([stringTemp containsString:@"какое-л"]){
+                       NSRange range = [stringTemp rangeOfString:@"какое-л"];
+                       NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                       if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                           if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какое-либо"])
+                               [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+                       }else
+                           [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
                     }
                     if([stringTemp containsString:@"чему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чему-л"];
@@ -982,6 +1102,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
                         }else
                             [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTemp containsString:@"кто-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"кто-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кто-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
                     }
                     if([stringTemp containsString:@"чьему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьему-л"];
@@ -1156,7 +1285,34 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
                         }else
                             [stringTemp replaceCharactersInRange:range withString:@"чего-либо"];
+                    }
+                    if([stringTemp containsString:@"каким-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"каким-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"каким-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"каким-либо"];
+                    }
 
+                    if([stringTemp containsString:@"какую-л"]){
+                    NSRange range = [stringTemp rangeOfString:@"какую-л"];
+                    NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                    if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                        if(![[stringTemp substringWithRange:rangeCheck] isEqualToString: @"какую-либо"])
+                            [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }else
+                        [stringTemp replaceCharactersInRange:range withString:@"какую-либо"];
+                    }
+                    if([stringTemp containsString:@"какое-л"]){
+                       NSRange range = [stringTemp rangeOfString:@"какое-л"];
+                       NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                       if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                           if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"какое-либо"])
+                               [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
+                       }else
+                           [stringTemp replaceCharactersInRange:range withString:@"какое-либо"];
                     }
                     if([stringTemp containsString:@"кого-л"]){
                         NSRange range = [stringTemp rangeOfString:@"кого-л"];
@@ -1215,6 +1371,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
                         }else
                             [stringTemp replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTemp containsString:@"кто-л"]){
+                        NSRange range = [stringTemp rangeOfString:@"кто-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTemp.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTemp substringWithRange:rangeCheck] isEqualToString: @"кто-либо"])
+                                [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
+                        }else
+                            [stringTemp replaceCharactersInRange:range withString:@"кто-либо"];
                     }
                     if([stringTemp containsString:@"чьему-л"]){
                         NSRange range = [stringTemp rangeOfString:@"чьему-л"];
@@ -1391,6 +1556,36 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                             [stringTempExMean replaceCharactersInRange:range withString:@"чего-либо"];
 
                     }
+
+                    if([stringTempExMean containsString:@"какую-л"]){
+                    NSRange range = [stringTempExMean rangeOfString:@"какую-л"];
+                    NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                    if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                        if(![[stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"какую-либо"])
+                            [stringTempExMean replaceCharactersInRange:range withString:@"какую-либо"];
+                    }else
+                        [stringTempExMean replaceCharactersInRange:range withString:@"какую-либо"];
+                    }
+
+                    if([stringTempExMean containsString:@"каким-л"]){
+                    NSRange range = [stringTempExMean rangeOfString:@"каким-л"];
+                    NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                    if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                        if(![[stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"каким-либо"])
+                            [stringTempExMean replaceCharactersInRange:range withString:@"каким-либо"];
+                    }else
+                        [stringTempExMean replaceCharactersInRange:range withString:@"каким-либо"];
+                    }
+
+                    if([stringTempExMean containsString:@"какое-л"]){
+                       NSRange range = [stringTempExMean rangeOfString:@"какое-л"];
+                       NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                       if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                           if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"какое-либо"])
+                               [stringTempExMean replaceCharactersInRange:range withString:@"какое-либо"];
+                       }else
+                           [stringTempExMean replaceCharactersInRange:range withString:@"какое-либо"];
+                    }
                     if([stringTempExMean containsString:@"кого-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"кого-л"];
                         NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
@@ -1448,6 +1643,15 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                                 [stringTempExMean replaceCharactersInRange:range withString:@"что-либо"];
                         }else
                             [stringTempExMean replaceCharactersInRange:range withString:@"что-либо"];
+                    }
+                    if([stringTempExMean containsString:@"кто-л"]){
+                        NSRange range = [stringTempExMean rangeOfString:@"кто-л"];
+                        NSRange rangeCheck = NSMakeRange(range.location, range.length + 3);
+                        if(stringTempExMean.length >= rangeCheck.location + rangeCheck.length){
+                            if(! [ [stringTempExMean substringWithRange:rangeCheck] isEqualToString: @"кто-либо"])
+                                [stringTempExMean replaceCharactersInRange:range withString:@"кто-либо"];
+                        }else
+                            [stringTempExMean replaceCharactersInRange:range withString:@"кто-либо"];
                     }
                     if([stringTempExMean containsString:@"чьему-л"]){
                         NSRange range = [stringTempExMean rangeOfString:@"чьему-л"];

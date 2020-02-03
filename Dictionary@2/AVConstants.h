@@ -34,6 +34,9 @@ extern NSString*typeObjectKey;
 extern const NSString *example;
 extern NSString const *example1;
 
+extern NSString *reuseIdentifierCell;
+extern NSString *reuseIdentifierHeader;
+
 
 @interface AVConstants : NSObject
 

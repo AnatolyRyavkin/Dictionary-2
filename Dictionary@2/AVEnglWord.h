@@ -11,7 +11,7 @@
 #import "AVExample.h"
 #import "AVRusMeaning.h"
 
-
+#import "NSStrign+extension.h"
 
 @class AVPhrasalVerb;
 
@@ -59,7 +59,7 @@ extern NSString *SelfTypePhraseVerb;
 -(void)printObjectWhole;
 -(void)insteadShortWord;
 -(void)deleteSemicolon;
--(void)instadEtc;
+-(void)instadEtcAndDeleteColon;
 AVIndexPathMeaning makeIndexPathMeaning(int numberGlobalMeaning, int numberLokalMeaning, int numberMeaning);
 
 AVIndexPathMeaning makeIndexPathMeaningNextGlobal(AVIndexPathMeaning r);

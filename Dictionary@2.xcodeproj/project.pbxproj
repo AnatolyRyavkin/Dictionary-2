@@ -101,10 +101,10 @@
 		FD23869C2340E3D9001A7B18 /* Dictionary@2 */ = {
 			isa = PBXGroup;
 			children = (
-				FD8DD66023D8319A001655C9 /* AVSeparateStringAtComma.h */,
-				FD8DD66123D8319A001655C9 /* AVSeparateStringAtComma.m */,
 				FD2386A02340E3D9001A7B18 /* ViewController.h */,
 				FD2386A12340E3D9001A7B18 /* ViewController.m */,
+				FD8DD66023D8319A001655C9 /* AVSeparateStringAtComma.h */,
+				FD8DD66123D8319A001655C9 /* AVSeparateStringAtComma.m */,
 				FD23C249238D1F7F0010C95B /* AVCreateBaseObjects.h */,
 				FD23C24A238D1F7F0010C95B /* AVCreateBaseObjects.m */,
 				FD1E5D0D238412610082DA44 /* NSStrign+extension.h */,
