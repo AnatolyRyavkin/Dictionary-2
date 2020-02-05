@@ -1907,6 +1907,16 @@ NSString * SelfTypePhraseVerb = @"SelfTypePhraseVerb";
                     [rusMeaningTemp addObject:rusMeaning];
                     continue;
                 }
+
+                if([rusMeaning.dereviative containsString :@"#"]){
+                    NSMutableString *tempString = [NSMutableString stringWithString:rusMeaning.dereviative];
+                    NSRange range = [tempString rangeOfString: @"#"];
+                    [tempString replaceCharactersInRange: range withString:@"происходит от:"];
+                    rusMeaning.dereviative = tempString;
+                    [rusMeaningTemp addObject:rusMeaning];
+                    continue;
+                }
+
             }
 
             [rusMeaningTemp addObject:rusMeaning];

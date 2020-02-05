@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, AVState) {
     AVState arrayIdiom;
     AVState arrayExample;
 
-    BOOL checkPrint;
+    NSString* checkPrint;
 
     }
 
@@ -112,6 +112,24 @@ typedef NS_ENUM(NSInteger, AVState) {
     }
 }
 
+-(NSString*)checkOnSpetcialWordsInRusMeaning:(NSString*)string{
+    NSArray *array = @[@"присоединяет",@"выражает",@"соединяет",@"служит",@"указывает",@"образует",@"употр",@"показывает"];
+    for(NSString* stringFromArray in array){
+        if([string isEqualToString:stringFromArray])
+            return stringFromArray;
+    }
+    return nil;
+}
+
+
+-(NSString*)checkOnNumber:(NSString*)string{
+    int num = 0;
+    num = [string intValue];
+        if(num > 0)
+            return string;
+    return nil;
+}
+
 #pragma mark - set inithinal meaning
 
     -(void)setBeginMeaning{
@@ -131,56 +149,44 @@ typedef NS_ENUM(NSInteger, AVState) {
 
     [self setBeginMeaning];
     for(NSArray*array in mainArray){
-#pragma mark - Temp numberObject
 
-        if(numberObjectJ > 18000){
-            //numberObjectJ++;
-            //continue;
-        }
-        checkPrint = NO;
+        checkPrint = nil;
+
         typeObject = [self typeForArray:array];
         if(typeObject == AVTypeObjectSingle){
             [self makeEngObjTypeSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
             [ew instadEtcAndDeleteColon];
-            //[ew printObject:numberObjectJ];
 
 
         }else if(typeObject == AVTypeObjectCompose){
             [self makeEngObjTypeCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
             [ew instadEtcAndDeleteColon];
-            //[ew printObject:numberObjectJ];
 
 
         }else if(typeObject == AVTypeObjectPhraseVerbSingle){
             [self makePhraseVerbSingle:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
             [ew instadEtcAndDeleteColon];
-            //[ew printObject:numberObjectJ];
 
 
         }else if(typeObject == AVTypeObjectPhraseVerbCompose){
             [self makePhraseVerbCompose:array];
             AVEnglWord*ew = [self.arrayEngWords lastObject];
-            //[ew printObject:numberObjectJ];
             [ew insteadShortWord];
             [ew insteadShortWord];
             [ew deleteSemicolon];
             [ew instadEtcAndDeleteColon];
-            //[ew printObject:numberObjectJ];
 
 
         }else{
@@ -188,16 +194,20 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
 
-//
-//        if(checkPrint){
-//
-//        }
-//        if(numberObjectJ == 100000)
-//            break;
-//
-        if(numberObjectJ == 13312){
-            AVEnglWord*ew = [self.arrayEngWords lastObject];
-            [ew printObject:numberObjectJ];
+
+        if(checkPrint){
+            NSLog(@"-------------------------WORD = %@ ", checkPrint);
+            //AVEnglWord*ew = [self.arrayEngWords lastObject];
+            //[ew printObject:numberObjectJ];
+            NSLog(@"--------------------------------------------------");
+            NSLog(@"");
+        }
+
+
+        if(numberObjectJ == 1730 || numberObjectJ == 7410 || numberObjectJ == 8284 || numberObjectJ == 16704 || numberObjectJ == 17334 ||
+           numberObjectJ == 26652 || numberObjectJ == 31026 || numberObjectJ == 22228 || numberObjectJ == 34026){
+                   AVEnglWord*ew = [self.arrayEngWords lastObject];
+                   [ew printObject:numberObjectJ];
         }
 
         numberObjectJ++;
@@ -329,11 +339,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 
 #pragma mark - cycle Begin
 
-
-
     for(int numString = 0; numString < array.count; numString++){
 
-        if(numberObjectJ == 8707 && numString == 5){
+        if(numberObjectJ == 17518 && numString == 17518){
             numString = numString;
         }
 
@@ -343,8 +351,8 @@ typedef NS_ENUM(NSInteger, AVState) {
 //            NSLog(@"containt употр in object number %d",numberObjectJ);
 //        }
 
-        if([string isEqualToString:@"текст"]){
-            
+        if([string isEqualToString:@"ч"]){
+            NSLog(@"!!!!!!!!!!!!");
         }
 
         if(!string || [string isEqualToString:@""] || [string isEqualToString:@" "])
@@ -354,21 +362,27 @@ typedef NS_ENUM(NSInteger, AVState) {
 
 #pragma mark - Exeption
 
-        if( (numberObjectJ == 886 || numberObjectJ == 15022 || numberObjectJ == 17518) && numString == 0 ){
-            arrayRusMean = [NSMutableArray arrayWithObject:@""];
-        }
+//        if( (numberObjectJ == 886 || numberObjectJ == 15022) && numString == 0 ){
+//        //if( (numberObjectJ == 886 || numberObjectJ == 15022 || numberObjectJ == 17518) && numString == 0 ){
+//
+//            arrayRusMean = [NSMutableArray arrayWithObject:@""];
+//        }
 
-        if( (numberObjectJ == 886 || numberObjectJ == 15022 || numberObjectJ == 17518) && engTranscript == AVStateEnd ){
-            NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
-            [arrayRusMean replaceObjectAtIndex:arrayRusMean.count -1 withObject:tempString];
-            rusMeaningObject.arrayMeaning = [NSArray arrayWithArray:arrayRusMean];
-            continue;
-        }
+//        if( (numberObjectJ == 886 || numberObjectJ == 15022) && engTranscript == AVStateEnd ){
+//        //if( (numberObjectJ == 886 || numberObjectJ == 15022 || numberObjectJ == 17518) && engTranscript == AVStateEnd ){
+//
+//            NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
+//            [arrayRusMean replaceObjectAtIndex:arrayRusMean.count -1 withObject:tempString];
+//            rusMeaningObject.arrayMeaning = [NSArray arrayWithArray:arrayRusMean];
+//            continue;
+//        }
 
 
 
 #pragma mark - Derevative Continios
         if(dereviative == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string]: checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
             NSString *stringDer = (typeString & ( AVStringTypeEndComma | AVStringTypeEndPoint | AVStringTypeEndSemicolon)) ? [string stringWithoutLastSimbol] :string;
             rusMeaningObject.dereviative = [rusMeaningObject.dereviative stringByAppendingFormat:@" %@",stringDer];
             continue;
@@ -377,6 +391,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Idiom
 
         if(arrayIdiom == AVStateWork){
+
+            checkPrint = (!checkPrint) ?[self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
 
             if( (typeString & AVStringTypeEng) && ([array[numString-1] isContaintRusChars]) ){
                 [arrayIdiomTemp addObject:[NSString new]];
@@ -413,6 +431,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - English Meaning
 
         if( engMeaning == AVStateBegin || engMeaning == AVStateWork){
+
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             if( (typeString & AVStringTypeEng) & !(typeString & AVStringTypeEngEndNumberLat) & !(typeString & AVStringTypeSquareBrackets) & !(typeString & AVStringTypeEngEndNumberRoma)){
                 engMeaning = AVStateWork;
                 objectEng.engMeaningObject = [objectEng.engMeaningObject stringByAppendingFormat:@" %@",string];
@@ -465,6 +487,7 @@ typedef NS_ENUM(NSInteger, AVState) {
            ([string isEqualToString:@"past"] && [array[numString+1] isEqualToString:@"и"]) ||
            ([string isEqualToString:@"p"] && [array[numString+1] isEqualToString:@"p"] && [array[numString+2] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"косв"] && [array[numString+1] isEqualToString:@"падеж"] && [array[numString+2] isEqualToString:@"от"]) ||
+            [string isEqualToString:@"#"] ||
             [string isEqualToString:@"="]){
             rusMeaningObject.dereviative = string;
             dereviative = AVStateWork;
@@ -598,6 +621,9 @@ typedef NS_ENUM(NSInteger, AVState) {
         if( ([self.managerMeaningShort.arrayShortRusProperty containsObject:string]) &&
            (grammatic == AVStateWork || grammaticForm == AVStateWork || accessory == AVStateWork || rusMeaning == AVStateBegin || rusMeaning == AVStateWork)
           ){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
            rusMeaningObject.accessory =  [rusMeaningObject.accessory arrayByAddingObject:string];
             accessory = AVStateWork;
 
@@ -608,6 +634,9 @@ typedef NS_ENUM(NSInteger, AVState) {
            (grammatic == AVStateWork || grammaticForm == AVStateWork || accessory == AVStateWork || rusMeaning == AVStateBegin || rusMeaning == AVStateWork) &&
            (typeString & (AVStringTypeEndComma | AVStringTypeEndSemicolon | AVStringTypeEndColon))
            ){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             rusMeaningObject.accessory =  [rusMeaningObject.accessory arrayByAddingObject:[string stringWithoutLastSimbol]];
             accessory = AVStateWork;
             if(typeString & AVStringTypeEndColon){
@@ -621,6 +650,8 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         if( rusMeaning == AVStateWork && (typeString & (AVStringTypeParenthesis | AVStringTypeParenthesisWithEndSimbol) ) ){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
 
             rusMeaningObject.accessory = ( typeString & AVStringTypeParenthesisWithEndSimbol ) ? [rusMeaningObject.accessory arrayByAddingObject:[[[string stringWithoutLastSimbol] stringWithoutFirstSimbol] stringWithoutLastSimbol] ] :
             [rusMeaningObject.accessory arrayByAddingObject: [[string stringWithoutLastSimbol] stringWithoutFirstSimbol] ];
@@ -663,6 +694,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 
         if( arrayExample ==AVStateWork){
 
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             if( !(typeString & AVStringTypeRus) && (typeString & AVStringTypeEng) && [array[numString-1] isContaintRusChars] && !([tempExample.meaning isEqual:@""] && [tempExample.accessory isEqual:@""]) &&
                !([[array[numString-1] firstCharString] isEqualToString:@"("]) ){
                  rusMeaningObject.arrayExample = [rusMeaningObject.arrayExample arrayByAddingObject: [[AVExample alloc]init]];
@@ -697,7 +731,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Rus Meaning
 
         if( rusMeaning == AVStateWork){
-                NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+            NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
                 [arrayRusMean replaceObjectAtIndex:arrayRusMean.count -1 withObject:tempString];
                 rusMeaningObject.arrayMeaning = [NSArray arrayWithArray:arrayRusMean];
             if(typeString & AVStringTypeEndSemicolon)
@@ -739,6 +776,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 //            NSLog(@"containt употр in object number %d",numberObjectJ);
 //        }
 
+        if([string isEqualToString:@"ч"]){
+            NSLog(@"!!!!!!!!!!!!");
+        }
+
         if([string isEqualToString:@"текст"]){
 
         }
@@ -766,6 +807,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - AccessoryStateWork
 
         if(accessory == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             rusMeaningObject.accessory = (typeString & (AVStringTypeEndComma    |
                                                              AVStringTypeEndPoint      |
                                                              AVStringTypeEndSemicolon |
@@ -862,6 +906,8 @@ typedef NS_ENUM(NSInteger, AVState) {
 
 #pragma mark - Derevative Continios
         if(dereviative == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
 
             NSString *stringDer = (typeString & ( AVStringTypeEndComma | AVStringTypeEndPoint | AVStringTypeEndSemicolon)) ? [string stringWithoutLastSimbol] :string;
             rusMeaningObject.dereviative = [rusMeaningObject.dereviative stringByAppendingFormat:@" %@",stringDer];
@@ -911,6 +957,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - English Meaning
 
         if( engMeaning == AVStateBegin || engMeaning == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             if( (typeString & AVStringTypeEng) & !(typeString & AVStringTypeEngEndNumberLat) & !(typeString & AVStringTypeSquareBrackets) & !(typeString & AVStringTypeEngEndNumberRoma)){
                 engMeaning = AVStateWork;
                 objectEng.engMeaningObject = [objectEng.engMeaningObject stringByAppendingFormat:@" %@",string];
@@ -963,6 +1012,7 @@ typedef NS_ENUM(NSInteger, AVState) {
            ([string isEqualToString:@"past"] && [array[numString+1] isEqualToString:@"и"]) ||
            ([string isEqualToString:@"p"] && [array[numString+1] isEqualToString:@"p"] && [array[numString+2] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"косв"] && [array[numString+1] isEqualToString:@"падеж"] && [array[numString+2] isEqualToString:@"от"]) ||
+            [string isEqualToString:@"#"] ||
            [string isEqualToString:@"="]){
             rusMeaningObject.dereviative = string;
             dereviative = AVStateWork;
@@ -1157,6 +1207,8 @@ typedef NS_ENUM(NSInteger, AVState) {
         }
 
         if( rusMeaning == AVStateWork && (typeString & (AVStringTypeParenthesis | AVStringTypeParenthesisWithEndSimbol) ) ){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
 
             rusMeaningObject.accessory = ( typeString & AVStringTypeParenthesisWithEndSimbol ) ?
             [rusMeaningObject.accessory arrayByAddingObject:[[[string stringWithoutLastSimbol] stringWithoutFirstSimbol] stringWithoutLastSimbol] ] :
@@ -1202,6 +1254,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Example
 
         if( arrayExample ==AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
 
             if(typeString & (AVStringTypeParenthesis | AVStringTypeParenthesisWithEndSimbol)){
                 tempExample.accessory = (typeString & AVStringTypeParenthesis) ? [tempExample.accessory stringByAppendingFormat:@" %@",[[string stringWithoutLastSimbol] stringWithoutFirstSimbol]] :
@@ -1293,7 +1348,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Rus Meaning
 
         if( rusMeaning == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
 
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
             NSString* tempString = [[rusMeaningObject.arrayMeaning lastObject] stringByAppendingFormat:@" %@",string];
             NSMutableArray* arrayTemp = [NSMutableArray arrayWithArray:rusMeaningObject.arrayMeaning];
             [arrayTemp removeLastObject];
@@ -1345,6 +1402,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 //        if([string containsString:@"употр"]){
 //            NSLog(@"containt употр in object number %d",numberObjectJ);
 //        }
+
+        if([string isEqualToString:@"ч"]){
+            NSLog(@"!!!!!!!!!!!!");
+        }
 
         if([string isEqualToString:@"текст"]){
 
@@ -1474,7 +1535,8 @@ typedef NS_ENUM(NSInteger, AVState) {
            ([string isEqualToString:@"past"] && [array[numString+1] isEqualToString:@"и"]) ||
            ([string isEqualToString:@"p"] && [array[numString+1] isEqualToString:@"p"] && [array[numString+2] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"косв"] && [array[numString+1] isEqualToString:@"падеж"] && [array[numString+2] isEqualToString:@"от"]) ||
-           [string isEqualToString:@"="]){
+            [string isEqualToString:@"="] ||
+           [string isEqualToString:@"#"]){
             rusMeaningObject.dereviative = string;
             dereviative = AVStateWork;
             continue;
@@ -1664,6 +1726,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Example
 
         if( arrayExample ==AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
 
             if( !(typeString & AVStringTypeRus) && (typeString & AVStringTypeEng) && [array[numString-1] isContaintRusChars] && !([tempExample.meaning isEqual:@""] && [tempExample.accessory isEqual:@""]) &&
                !([[array[numString-1] firstCharString] isEqualToString:@"("]) ){
@@ -1699,6 +1764,10 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Rus Meaning
 
         if( rusMeaning == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
             NSString* tempString = [[arrayRusMean lastObject] stringByAppendingFormat:@" %@",string];
             [arrayRusMean replaceObjectAtIndex:arrayRusMean.count -1 withObject:tempString];
             rusMeaningObject.arrayMeaning = [NSArray arrayWithArray:arrayRusMean];
@@ -1742,6 +1811,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 //        if([string containsString:@"употр"]){
 //            NSLog(@"containt употр in object number %d",numberObjectJ);
 //        }
+        if([string isEqualToString:@"ч"]){
+            NSLog(@"!!!!!!!!!!!!");
+        }
 
         if([string isEqualToString:@"текст"]){
 
@@ -2048,7 +2120,8 @@ typedef NS_ENUM(NSInteger, AVState) {
            ([string isEqualToString:@"past"] && [array[numString+1] isEqualToString:@"и"]) ||
            ([string isEqualToString:@"p"] && [array[numString+1] isEqualToString:@"p"] && [array[numString+2] isEqualToString:@"от"]) ||
            ([string isEqualToString:@"косв"] && [array[numString+1] isEqualToString:@"падеж"] && [array[numString+2] isEqualToString:@"от"]) ||
-           [string isEqualToString:@"="]){
+            [string isEqualToString:@"="] ||
+           [string isEqualToString:@"#"]){
             rusMeaningObject.dereviative = string;
             dereviative = AVStateWork;
             accessory = AVStateBegin;
@@ -2287,6 +2360,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Example
 
         if( arrayExample ==AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
+
 
             if(typeString & (AVStringTypeParenthesis | AVStringTypeParenthesisWithEndSimbol)){
                 tempExample.accessory = (typeString & AVStringTypeParenthesis) ? [tempExample.accessory stringByAppendingFormat:@" %@",[[string stringWithoutLastSimbol] stringWithoutFirstSimbol]] :
@@ -2378,7 +2454,9 @@ typedef NS_ENUM(NSInteger, AVState) {
 #pragma mark - Rus Meaning
 
         if( rusMeaning == AVStateWork){
+            checkPrint = (!checkPrint) ? [self checkOnNumber:string] : checkPrint;
 
+            checkPrint = (!checkPrint) ? [self checkOnSpetcialWordsInRusMeaning:string] : checkPrint;
             NSString* tempString = [[rusMeaningObject.arrayMeaning lastObject] stringByAppendingFormat:@" %@",string];
             NSMutableArray* arrayTemp = [NSMutableArray arrayWithArray:rusMeaningObject.arrayMeaning];
             [arrayTemp removeLastObject];

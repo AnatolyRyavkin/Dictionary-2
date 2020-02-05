@@ -46,12 +46,7 @@
 
     for(AVEnglWord *objectEngWord in arrayEngWordObjects){
 
-//        NSLog(@"count = %d",count);
         count++;
-
-//        if(count == 105){
-//
-//        }
 
         NSMutableArray* arrayRusMeaningObject = [NSMutableArray new];
 
